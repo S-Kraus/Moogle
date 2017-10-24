@@ -14,6 +14,11 @@ import javax.xml.stream.events.XMLEvent;
 import crawler.model.Feed;
 import crawler.model.FeedMessage;
 
+
+/*
+ * Beispiel Parser
+ * 
+ */
 public class RSSFeedParser {
     static final String TITLE = "title";
     static final String DESCRIPTION = "description";
