@@ -7,7 +7,7 @@ import crawler.read.RSSFeedParser;
 public class ReadTest {
     public static void main(String[] args) {
         RSSFeedParser parser = new RSSFeedParser(
-                "http://www.vogella.com/article.rss");
+                "https://www.jungewelt.de/feeds/newsticker.rss");
         Feed feed = parser.readFeed();
         System.out.println(feed);
         for (FeedMessage message : feed.getMessages()) {
