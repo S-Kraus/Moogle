@@ -24,13 +24,14 @@ public class SAXRSSParser {
 	
 	final URL url;
 	final File xsdFile;
+	final String suffix = ".xml";
 	
 	public SAXRSSParser(String feedUrl, String xsdFileName) {
 		try{
 			
 			this.url = new URL(feedUrl);
 			ClassLoader cloader = Thread.currentThread().getContextClassLoader();
-			this.xsdFile = new File(cloader.getResource(xsdFileName).getFile());
+			this.xsdFile = new File(cloader.getResource(xsdFileName.concat(suffix)).getFile());
 		} catch( MalformedURLException e){
 			throw new RuntimeException(e);
 		}
