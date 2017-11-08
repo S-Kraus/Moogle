@@ -1,47 +1,79 @@
 package crawler.saxread;
 
-import javax.xml.stream.events.Attribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import crawler.model.fourplayers.FeedMessage;
+
 public class RSSHandler extends DefaultHandler{
 	
-	@Override
-	public void startDocument() {
-		System.out.println("Anfang");
-	}
+	List<FeedMessage> items = new ArrayList<FeedMessage>();
+	FeedMessage feed = null;
+	boolean bItem = false;
+	boolean bTitle = false;
+	boolean bLink = false;
+	boolean bDescription = false;
+	boolean bPubDate = false;
+	boolean bGuid = false;
 	
-	@Override
-	public void endDocument() {
-		System.out.println("Ende");
+	public List<FeedMessage> getItems() {
+		return items;
 	}
-	
+
 	@Override
 	public void startElement(String uri, String localName, 
             String qName, Attributes attributes) throws SAXException {
-//		System.out.println("URI: " + uri);
-//		System.out.println("localName: " + localName);
-		System.out.println("qName: " + qName);
-		for(int i = 0; i < attributes.getLength(); i++) {
-			System.out.printf( "Attribut no. %d: %s = %s%n", i,attributes.getQName(i),attributes.getValue(i));
-			
+
+		if(qName.equalsIgnoreCase("item")) {
+			feed = new FeedMessage();
+			feed.setTitle("Test");
+			bItem = true;
+		} else if(bItem) {
+			if(qName.equalsIgnoreCase("title")) {
+				bTitle = true;			
+			} else if(qName.equalsIgnoreCase("link")) {
+				bLink = true;
+			} else if(qName.equalsIgnoreCase("description")) {
+				bDescription = true;
+			} else if(qName.equalsIgnoreCase("pubDate")) {
+				bPubDate = true;
+			} else if(qName.equalsIgnoreCase("guid")) {
+				bGuid = true;
+			}
 		}
 }
 	@Override
     public void characters(char ch[], int start, int length) 
             throws SAXException { 
-	    System.out.println( "Characters:" );
 
-	    for ( int i = start; i < (start + length); i++ )
-	      System.out.printf( "%1$c", (int) ch[i] );
-
-	    System.out.println();
+		if(bTitle) {
+			feed.setTitle(new String(ch, start, length));
+			bTitle = false;
+		} else if(bLink) {
+			feed.setLink(new String(ch, start, length));
+			bLink = false;
+		} else if(bDescription) {
+			feed.setDescription(new String(ch, start, length));
+			bDescription = false;
+		} else if(bPubDate) {
+			feed.setPubDate(new String(ch, start, length));
+			bPubDate = false;
+		} else if(bGuid) {
+			feed.setGuid(new String(ch, start, length));
+			bGuid = false;
+		}
 }  
 	@Override
     public void endElement(String uri, String localName,
           String qName) throws SAXException {
+		if(qName.equalsIgnoreCase("item")) {
+			items.add(feed);
+		}
 }
 
 }

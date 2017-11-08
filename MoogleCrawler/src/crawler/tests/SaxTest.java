@@ -6,7 +6,7 @@ public class SaxTest {
 
 	public static void main(String[] args) {
 		
-		SAXRSSParser parser = new SAXRSSParser("http://www.chip.de/rss/rss_spiele.xml","ChipXSD");
+		SAXRSSParser parser = new SAXRSSParser("http://feeds.4players.de/Allgemein/articles/-/rss.xml","ChipXSD");
 		parser.readFeed();
 		
 	}

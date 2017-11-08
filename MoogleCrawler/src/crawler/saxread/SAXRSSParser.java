@@ -14,9 +14,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
-import crawler.model.Feed;
+import crawler.model.fourplayers.Feed;
+
 
 
 
@@ -49,6 +49,7 @@ public class SAXRSSParser {
 			InputStream in = read();
 			RSSHandler handler = new RSSHandler();
 			parser.parse(in, handler);
+			System.out.println(handler.getItems());
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
