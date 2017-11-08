@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +17,7 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
 
 import crawler.model.fourplayers.Feed;
+import crawler.model.fourplayers.FeedMessage;
 
 
 
@@ -37,8 +39,8 @@ public class SAXRSSParser {
 		}
 	}
 	
-	public Feed readFeed() {
-		Feed feed = null;
+	public List<FeedMessage> readFeed() {
+		List<FeedMessage> list = null;
 		try {
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			
@@ -49,7 +51,8 @@ public class SAXRSSParser {
 			InputStream in = read();
 			RSSHandler handler = new RSSHandler();
 			parser.parse(in, handler);
-			System.out.println(handler.getItems());
+			list = handler.getItems();
+
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,7 +65,7 @@ public class SAXRSSParser {
 		}
 		
 		
-		return feed;
+		return list;
 	}
 	
 	private InputStream read() {
