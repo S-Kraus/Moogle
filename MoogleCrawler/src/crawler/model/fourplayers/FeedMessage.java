@@ -10,6 +10,7 @@ public class FeedMessage {
 	String description;
 	String pubDate;
 	String guid;
+	String extracedText;
 	
 
 	public String getTitle() {
@@ -42,11 +43,19 @@ public class FeedMessage {
 	public void setGuid(String guid) {
 		this.guid = guid;
 	}
+	public String getExtracedText() {
+		return extracedText;
+	}
+	public void setExtracedText(String extracedText) {
+		this.extracedText = extracedText;
+	}
 	@Override
 	public String toString() {
 		return "FeedMessage [title=" + title + ", link=" + link + ", description=" + description + ", pubDate="
-				+ pubDate + ", guid=" + guid + "]";
+				+ pubDate + ", guid=" + guid + ", extracedText=" + extracedText + "]";
 	}
+	
+
 	
 	
 
