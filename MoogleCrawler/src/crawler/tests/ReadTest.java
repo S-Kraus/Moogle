@@ -3,13 +3,13 @@ package crawler.tests;
 import java.util.List;
 
 import crawler.model.fourplayers.FeedMessage;
-import crawler.read.SAXRSSParser;
+import crawler.read.RSSParser;
 
-public class SaxTest {
+public class ReadTest {
 
 	public static void main(String[] args) {
 		
-		SAXRSSParser parser = new SAXRSSParser("http://feeds.4players.de/Allgemein/articles/-/rss.xml","ChipXSD");
+		RSSParser parser = new RSSParser("http://feeds.4players.de/Allgemein/articles/-/rss.xml","ChipXSD");
 		List<FeedMessage> list = parser.readFeed();
 		
 		for(FeedMessage message: list) {

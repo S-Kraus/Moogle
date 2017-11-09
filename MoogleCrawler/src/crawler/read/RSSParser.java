@@ -22,13 +22,13 @@ import crawler.model.fourplayers.FeedMessage;
 
 
 
-public class SAXRSSParser {
+public class RSSParser {
 	
 	final URL url;
 	final File xsdFile;
 	final String suffix = ".xml";
 	
-	public SAXRSSParser(String feedUrl, String xsdFileName) {
+	public RSSParser(String feedUrl, String xsdFileName) {
 		try{
 			
 			this.url = new URL(feedUrl);
