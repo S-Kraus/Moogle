@@ -3,7 +3,7 @@ package crawler.tests;
 import java.util.List;
 
 import crawler.model.fourplayers.FeedMessage;
-import crawler.saxread.SAXRSSParser;
+import crawler.read.SAXRSSParser;
 
 public class SaxTest {
 

@@ -1,6 +1,8 @@
 package crawler.model.fourplayers;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "feedmessage")
 public class FeedMessage {
 	
 	String title;
