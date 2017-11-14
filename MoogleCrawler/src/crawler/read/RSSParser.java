@@ -16,7 +16,6 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import crawler.model.fourplayers.Feed;
 import crawler.model.fourplayers.FeedMessage;
 
 
