@@ -1,0 +1,69 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="related_feed_url" type="xs:string"/>
+  <xs:element name="id" type="xs:int"/>
+  <xs:element name="pubDate" type="xs:string"/>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="author" type="xs:string"/>
+  <xs:element name="kicker" type="xs:string"/>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="excerpt" type="xs:string"/>
+  <xs:element name="content" type="xs:string"/>
+  <xs:element name="guid">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:anyURI">
+          <xs:attribute type="xs:string" name="isPermalink" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="link" type="xs:anyURI"/>
+  <xs:element name="thumbnail" type="xs:string"/>
+  <xs:element name="enclosure_url" type="xs:string"/>
+  <xs:element name="lastBuildDate" type="xs:string"/>
+  <xs:element name="ttl" type="xs:short"/>
+  <xs:element name="copyright" type="xs:string"/>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="related_feed_url"/>
+        <xs:element ref="id"/>
+        <xs:element ref="pubDate"/>
+        <xs:element ref="title"/>
+        <xs:element ref="author"/>
+        <xs:element ref="ns:creator" xmlns:ns="http://purl.org/dc/elements/1.1/"/>
+        <xs:element ref="kicker"/>
+        <xs:element ref="description"/>
+        <xs:element ref="excerpt"/>
+        <xs:element ref="content"/>
+        <xs:element ref="con:encoded" xmlns:con="http://purl.org/rss/1.0/modules/content/"/>
+        <xs:element ref="guid"/>
+        <xs:element ref="link"/>
+        <xs:element ref="thumbnail"/>
+        <xs:element ref="enclosure_url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="description"/>
+        <xs:element ref="link"/>
+        <xs:element ref="lastBuildDate"/>
+        <xs:element ref="pubDate"/>
+        <xs:element ref="ttl"/>
+        <xs:element ref="copyright"/>
+        <xs:element ref="item" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rss">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="channel"/>
+      </xs:sequence>
+      <xs:attribute type="xs:float" name="version"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
