@@ -20,6 +20,14 @@ import crawler.write.RSSWriter;
 
 public class WriteTest {
 	
+	final String fourplayers = "http://feeds.4players.de/Allgemein/articles/-/rss.xml";
+	final String chip = "http://www.chip.de/rss/rss_spiele.xml";
+	final String gamepro = "http://www.gamepro.de/rss/gpnews.rss";
+	final String gamestar = "http://www.gamestar.de/news/rss/news.rss";
+	final String giga = "http://www.giga.de/games/feed/";
+	final String golem = "https://rss.golem.de/rss.php?tp=games&feed=RSS2.0";
+	final String ign = "http://de.ign.com/news.xml";
+	
 	
 
 	public static void main(String[] args) throws JAXBException {
@@ -30,8 +38,8 @@ public class WriteTest {
 		RSSWriter writer = new RSSWriter();
 		
 		for(int i = 0; i < list.size(); i++) {
-			String id = Integer.toString(i);
-			writer.write(list.get(i), id);
+			String hash = Integer.toString(Math.abs(list.get(i).getTitle().hashCode()));
+			writer.write(list.get(i), hash);
 		}
 
 		

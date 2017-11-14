@@ -17,7 +17,7 @@ import crawler.model.fourplayers.FeedMessage;
 
 public class RSSWriter {
 	
-	final static String dir = "output/4players_";
+	final static String dir = "output/RSS";
 	final static String suffix = ".xml";
 	
 	JAXBContext jContext;
