@@ -39,7 +39,7 @@ import edu.stanford.nlp.util.Triple;
 
 public class NERDemo {
 
-	public static void main(String[] args) throws Exception {
+	public static void startNer(String file) throws Exception {
 
 		String serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
 
@@ -50,7 +50,7 @@ public class NERDemo {
 		 * file shows several ways to process the input, for teaching purposes.
 		 */
 		
-		String fileContents = IOUtils.slurpFile("4players_0.xml");
+		String fileContents = IOUtils.slurpFile(file);
 		System.out.println("---");
 		LinkedHashSet<String> orgs = new LinkedHashSet<String>();
 		LinkedHashSet<String> pers = new LinkedHashSet<String>();
