@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 //import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
  
-public class GUIController {
+public class SearchController {
 	
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche", "Organisationssuche");
 	
