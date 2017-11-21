@@ -1,5 +1,7 @@
+import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.logging.Logger;
 
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
@@ -38,8 +40,13 @@ import edu.stanford.nlp.util.Triple;
  */
 
 public class NERDemo {
+	
+	private static final Logger log = Logger.getLogger(NERDemo.class.getName());
+	private LinkedHashSet<String> orgs = new LinkedHashSet<String>();
 
-	public static void startNer(String file) throws Exception {
+	private LinkedHashSet<String> pers = new LinkedHashSet<String>();
+
+	public void initSets(String file) throws ClassCastException, ClassNotFoundException, IOException {
 
 		String serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
 
@@ -51,9 +58,6 @@ public class NERDemo {
 		 */
 		
 		String fileContents = IOUtils.slurpFile(file);
-		System.out.println("---");
-		LinkedHashSet<String> orgs = new LinkedHashSet<String>();
-		LinkedHashSet<String> pers = new LinkedHashSet<String>();
 		List<Triple<String, Integer, Integer>> list = classifier.classifyToCharacterOffsets(fileContents);
 		for (Triple<String, Integer, Integer> item : list) {
 			String identifier = item.first();
@@ -66,14 +70,19 @@ public class NERDemo {
 				pers.add(name);
 				break;
 			}
-			System.out.println(item.first() + ": " + fileContents.substring(item.second(), item.third()));
+			log.info(item.first() + ": " + fileContents.substring(item.second(), item.third()));
 		}
-		System.out.println("-----");
-		System.out.println("Organisationen:");
-		System.out.println(orgs.toString());
-		System.out.println("Personen:");
-		System.out.println(pers.toString());
+		log.info("Organisationen: " + orgs.toString());
+		log.info("Personen: " + pers.toString());
 
+	}
+	
+	public LinkedHashSet<String> getOrgs() {
+		return orgs;
+	}
+
+	public LinkedHashSet<String> getPers() {
+		return pers;
 	}
 
 }
