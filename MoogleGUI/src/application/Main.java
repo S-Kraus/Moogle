@@ -60,10 +60,10 @@ public class Main extends Application {
             // Load Result Overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/ResultLayout.fxml"));
-            AnchorPane searchLayout = (AnchorPane) loader.load();
+            AnchorPane resultLayout = (AnchorPane) loader.load();
 
             // Set ResultLayout into the center of RootLayout.
-            rootLayout.setCenter(searchLayout);
+            rootLayout.setCenter(resultLayout);
         } catch (IOException e) {
             e.printStackTrace();
         }
