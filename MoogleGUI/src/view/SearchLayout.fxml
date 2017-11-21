@@ -21,7 +21,7 @@
       <DatePicker layoutX="377.0" layoutY="167.0" prefHeight="25.0" prefWidth="130.0" promptText="Zeitraum bis ..." />
       <ImageView fitHeight="106.0" fitWidth="130.0" layoutX="48.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
-            <Image url="file:/C:/Users/Rene.Hirrich/workspace/Moodle/de/view/Bild1.jpg" />
+            <Image url="Bild1.jpg" />
          </image>
          <effect>
             <Glow />

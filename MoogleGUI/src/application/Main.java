@@ -21,7 +21,8 @@ public class Main extends Application {
 
         initRootLayout();
 
-        showSearchLayout();
+        //showSearchLayout();
+        showResultLayout();
 	}
 	
 	public void initRootLayout() {
@@ -48,6 +49,20 @@ public class Main extends Application {
             AnchorPane searchLayout = (AnchorPane) loader.load();
 
             // Set SearchLayout into the center of RootLayout.
+            rootLayout.setCenter(searchLayout);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public void showResultLayout() {
+        try {
+            // Load Result Overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/ResultLayout.fxml"));
+            AnchorPane searchLayout = (AnchorPane) loader.load();
+
+            // Set ResultLayout into the center of RootLayout.
             rootLayout.setCenter(searchLayout);
         } catch (IOException e) {
             e.printStackTrace();
