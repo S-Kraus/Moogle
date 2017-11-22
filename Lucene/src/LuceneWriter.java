@@ -14,7 +14,7 @@ import crawler.model.fourplayers.FeedMessage;
 
 public class LuceneWriter {
 
-	public void createDocIndex(FeedMessage doc) throws IOException {
+	public static void createDocIndex(FeedMessage doc) throws IOException {
 		Document document = new Document();
 		document.add(new TextField("title", doc.getTitle(), Field.Store.YES));
 		document.add(new TextField("content", doc.getExtracedText(), Field.Store.NO));
