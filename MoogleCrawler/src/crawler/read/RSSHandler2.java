@@ -131,6 +131,7 @@ public class RSSHandler2 extends DefaultHandler{
 				break;
 			case(ITEM_LINK_STATE):
 				feed.setLink(text);
+				feed.setExtracedText(useBoilerpipe(text));
 				break;
 			case(ITEM_DESCRIPTION_STATE):
 				feed.setDescription(text);

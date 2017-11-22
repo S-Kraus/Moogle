@@ -20,19 +20,19 @@ import crawler.write.RSSWriter;
 
 public class WriteTest {
 	
-	final String fourplayers = "http://feeds.4players.de/Allgemein/articles/-/rss.xml";
-	final String chip = "http://www.chip.de/rss/rss_spiele.xml";
-	final String gamepro = "http://www.gamepro.de/rss/gpnews.rss";
-	final String gamestar = "http://www.gamestar.de/news/rss/news.rss";
-	final String giga = "http://www.giga.de/games/feed/";
-	final String golem = "https://rss.golem.de/rss.php?tp=games&feed=RSS2.0";
-	final String ign = "http://de.ign.com/news.xml";
+	final static String fourplayers = "http://feeds.4players.de/Allgemein/articles/-/rss.xml";
+	final static String chip = "http://www.chip.de/rss/rss_spiele.xml";
+	final static String gamepro = "http://www.gamepro.de/rss/gpnews.rss";
+	final static String gamestar = "http://www.gamestar.de/news/rss/news.rss";
+	final static String giga = "http://www.giga.de/games/feed/";
+	final static String golem = "https://rss.golem.de/rss.php?tp=games&feed=RSS2.0";
+	final static String ign = "http://de.ign.com/news.xml";
 	
 	
 
 	public static void main(String[] args) throws JAXBException {
 		
-		RSSParser parser = new RSSParser("http://feeds.4players.de/Allgemein/articles/-/rss.xml","ChipXSD");
+		RSSParser parser = new RSSParser(fourplayers,"ChipXSD");
 		List<FeedMessage> list = parser.readFeed();
 		
 		RSSWriter writer = new RSSWriter();
