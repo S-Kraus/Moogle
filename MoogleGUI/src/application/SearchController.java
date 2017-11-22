@@ -3,9 +3,11 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 //import javafx.scene.control.DatePicker;
 //import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
  
 public class SearchController {
 	
@@ -14,8 +16,8 @@ public class SearchController {
 	@FXML
 	ChoiceBox<String> choiceBox;
 	
-//	@FXML
-//	TextField suchtextfeld;
+	@FXML
+	TextField suchtextfeld;
 //	
 //	@FXML
 //	DatePicker zeitraumvon;
@@ -30,11 +32,14 @@ public class SearchController {
 		choiceBox.getSelectionModel().select(0);
 	}
 		
+	@FXML
+	Button suchanfrage;
 
-//	@FXML
-//	protected void buttonPressed(){
-//		String text = textArea.getText();
-//		label.setText(text);
-//		textArea.clear();
-//	}
+	@FXML
+	protected void buttonPressed(){
+		String text = suchtextfeld.getText();
+		suchtextfeld.clear();
+		suchtextfeld.setText("Selber " + text);
+
+	}
 }
