@@ -48,7 +48,7 @@ public class RSSParser {
 			saxFactory.setSchema(schema);
 			SAXParser parser = saxFactory.newSAXParser();
 			InputStream in = read();
-			RSSHandler handler = new RSSHandler();
+			RSSHandler2 handler = new RSSHandler2();
 			parser.parse(in, handler);
 			list = handler.getItems();
 
