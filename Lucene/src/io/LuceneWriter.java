@@ -1,3 +1,4 @@
+package io;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -10,16 +11,14 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.NIOFSDirectory;
 
-import crawler.model.fourplayers.FeedMessage;
-
 public class LuceneWriter {
 
-	public static void createDocIndex(FeedMessage doc) throws IOException {
+	public static void createDocIndex(String title, String content, String date, String link) throws IOException {
 		Document document = new Document();
-		document.add(new TextField("title", doc.getTitle(), Field.Store.YES));
-		document.add(new TextField("content", doc.getExtracedText(), Field.Store.NO));
-		document.add(new TextField("date", doc.getPubDate(), Field.Store.YES));
-		document.add(new TextField("link", doc.getLink(), Field.Store.YES));
+		document.add(new TextField("title", title, Field.Store.YES));
+		document.add(new TextField("content", content, Field.Store.NO));
+		document.add(new TextField("date", date, Field.Store.YES));
+		document.add(new TextField("link", link, Field.Store.YES));
 
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("testIndexDir"));
 		Analyzer analyzer = new StandardAnalyzer();
