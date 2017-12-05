@@ -1,5 +1,6 @@
 package crawler.read;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,18 +24,21 @@ public class Boilerpipe {
 			final BoilerpipeSAXInput in = new BoilerpipeSAXInput(is);
 			final TextDocument doc = in.getTextDocument();
 			return ArticleExtractor.INSTANCE.getText(doc);
+		} catch(FileNotFoundException e){
+			// Error Handling noch machen
+			return "";
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		} catch (BoilerpipeProcessingException e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		} catch (SAXException e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		}
 		
 		

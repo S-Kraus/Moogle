@@ -26,7 +26,7 @@ public class ReadTest {
 		for (FeedMessage message : list) {
 			System.out.println(message);
 			NERDemo demo = new NERDemo();
-			demo.initSets(message.getExtracedText());
+			demo.fillSets(message.getExtracedText());
 			LuceneWriter.createDocIndex(message.getTitle(), message.getExtracedText(), message.getPubDate(),
 					message.getLink());
 		}
