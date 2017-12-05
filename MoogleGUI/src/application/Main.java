@@ -25,6 +25,25 @@ public class Main extends Application {
         //showResultLayout();
 	}
 	
+	public void startResult(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("Moogle - Das LeckSieCon");
+
+        initRootLayout();
+
+        showResultLayout();
+	}
+	
+	public void startSearch(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("Moogle - Das LeckSieCon");
+
+        initRootLayout();
+
+        showSearchLayout();
+        //showResultLayout();
+	}
+	
 	public void initRootLayout() {
         try {
             // Load root layout from fxml file.

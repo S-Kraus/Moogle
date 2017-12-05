@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 //import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class SearchController {
 
@@ -62,8 +63,9 @@ public class SearchController {
 		System.out.println(antwortListe.toString());
 		
 		Main neuesFenster = new Main();
-		neuesFenster.showResultLayout();
-
+		Stage neu = new Stage();
+		neuesFenster.startResult(neu);
+		
 
 		// Der Beleidiger
 		HashMap map = new HashMap();
