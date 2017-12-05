@@ -1,4 +1,5 @@
 package io;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -13,7 +14,7 @@ import org.apache.lucene.store.NIOFSDirectory;
 
 public class LuceneWriter {
 
-	public static void createDocIndex(String title, String content, String date, String link) throws IOException  {
+	public static void createDocIndex(String title, String content, String date, String link) throws IOException {
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
