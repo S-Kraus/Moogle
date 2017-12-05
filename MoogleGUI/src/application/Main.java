@@ -22,7 +22,7 @@ public class Main extends Application {
         initRootLayout();
 
         showSearchLayout();
-        //showResultLayout();
+//        showResultLayout();
 	}
 	
 	public void startResult(Stage primaryStage) {
