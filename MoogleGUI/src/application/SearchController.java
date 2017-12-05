@@ -51,7 +51,7 @@ public class SearchController {
 		map.put(new String("moogle"), new String("Ja. Und jetzt?"));
 		map.put(new String("suche"), new String("Na klar. Such dich selber Junge!"));
 		map.put(new String("rene"), new String("Wir lieben dich (deine drei kleinen Schweinchen!)"));
-		map.put(new String("simon"), new String("Hallo Simon! Willkommen in deiner Selbsthilfegruppe"));
+		map.put(new String("simon"), new String("Hallo Simon"));
 		map.put(new String("andreas"), new String("Schön das du da bist und nicht hier :-)"));
 		map.put(new String("stephan"), new String("Was soll mann dazu sagen? Du geiler Typ!"));
 
