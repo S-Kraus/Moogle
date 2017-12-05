@@ -21,8 +21,8 @@ public class Main extends Application {
 
         initRootLayout();
 
-        showSearchLayout();
-//        showResultLayout();
+//        showSearchLayout();
+        showResultLayout();
 	}
 	
 	public void startResult(Stage primaryStage) {
