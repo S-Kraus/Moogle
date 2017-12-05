@@ -1,6 +1,12 @@
 package application;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+
+import io.LuceneSearcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,7 +40,12 @@ public class SearchController {
 		choiceBox.getSelectionModel().select(0);
 		
 		suchtextfeld.setOnAction((event) -> {
-			buttonPressed();
+			try {
+				buttonPressed();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 	}
 
@@ -42,15 +53,22 @@ public class SearchController {
 	Button suchanfrage;
 
 	@FXML
-	protected void buttonPressed() {
+	protected void buttonPressed() throws IOException, ParseException {
 		String text = suchtextfeld.getText();
 		suchtextfeld.clear();
-		// suchtextfeld.setText("Selber " + text);
+		
+		List antwortListe = LuceneSearcher.getSearchResults(text);
+		//suchtextfeld.setText(antwortListe.toString());
+		System.out.println(antwortListe.toString());
+		
+		Main neuesFenster = new Main();
+		neuesFenster.showResultLayout();
+
 
 		// Der Beleidiger
 		HashMap map = new HashMap();
 
-		map.put(new String("arsch"), new String("Selber Arsch. Du riesen Schildkröte!"));
+		map.put(new String("arsch"), new String("Selber. Du riesen Schildkröte!"));
 		map.put(new String("penner"), new String("Dei Muadda, Buarsche!!!"));
 		map.put(new String("moogle"), new String("Ja. Und jetzt?"));
 		map.put(new String("suche"), new String("Na klar. Such dich selber Junge!"));
