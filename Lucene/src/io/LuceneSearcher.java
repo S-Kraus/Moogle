@@ -22,8 +22,8 @@ public class LuceneSearcher {
 	private final static Logger log = Logger.getLogger(LuceneSearcher.class.getName());
 	
 	
-	public static List<String> getSearchResults(String searchQuery) throws IOException, ParseException {
-		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("testIndexDir"));
+	public static List<String> getSearchResults(String searchQuery) throws IOException, ParseException  {
+		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);
 		IndexSearcher searcher = new IndexSearcher(dr);

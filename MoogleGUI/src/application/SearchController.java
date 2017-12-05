@@ -32,6 +32,10 @@ public class SearchController {
 		choiceBox.getItems().remove(choiceBox.getItems());
 		choiceBox.getItems().addAll(choiceboxList);
 		choiceBox.getSelectionModel().select(0);
+		
+		suchtextfeld.setOnAction((event) -> {
+			buttonPressed();
+		});
 	}
 
 	@FXML
