@@ -28,7 +28,7 @@ public class NERDemo {
 	 * @param file
 	 *            Dateiname inkl. Pfad
 	 */
-	public void initSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException {
+	public void fillSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException {
 
 		String serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
 
