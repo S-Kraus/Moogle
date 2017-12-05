@@ -14,9 +14,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import crawler.model.fourplayers.FeedMessage;
-import crawler.read.RSSParser;
-import crawler.write.RSSWriter;
+import crawler.model.Message;
+import crawler.read.RSSHandler4Players;
+import crawler.read.RSSParserNew;
+import crawler.write.RSSWriterNew;
+
 
 public class WriteTest {
 	
@@ -32,10 +34,10 @@ public class WriteTest {
 
 	public static void main(String[] args) throws JAXBException {
 		
-		RSSParser parser = new RSSParser(fourplayers,"ChipXSD");
-		List<FeedMessage> list = parser.readFeed();
+		RSSParserNew parser = new RSSParserNew(fourplayers,"ChipXSD",new RSSHandler4Players());
+		List<Message> list = parser.readFeed();
 		
-		RSSWriter writer = new RSSWriter();
+		RSSWriterNew writer = new RSSWriterNew();
 		
 		for(int i = 0; i < list.size(); i++) {
 			String hash = Integer.toString(Math.abs(list.get(i).getTitle().hashCode()));
