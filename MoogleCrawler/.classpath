@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/nekohtml-1.9.13.jar"/>
 	<classpathentry kind="lib" path="lib/xerces-2.9.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Lucene"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MyNer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

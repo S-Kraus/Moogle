@@ -1,3 +1,4 @@
+package ner;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ public class NERDemo {
 	 * 
 	 * @param file Dateiname inkl. Pfad
 	 */
-	public void initSets(String file) throws ClassCastException, ClassNotFoundException, IOException {
+	public void initSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException {
 
 		String serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
 
@@ -37,7 +38,7 @@ public class NERDemo {
 		 * file shows several ways to process the input, for teaching purposes.
 		 */
 		
-		String fileContents = IOUtils.slurpFile(file);
+		//String fileContents = IOUtils.slurpFile(file);
 		List<Triple<String, Integer, Integer>> list = classifier.classifyToCharacterOffsets(fileContents);
 		for (Triple<String, Integer, Integer> item : list) {
 			String identifier = item.first();
@@ -52,8 +53,8 @@ public class NERDemo {
 			}
 			log.info(item.first() + ": " + fileContents.substring(item.second(), item.third()));
 		}
-		log.info("Organisationen: " + orgs.toString());
-		log.info("Personen: " + pers.toString());
+		log.info("Organisationen: " + orgs.toString().replace("[", "").replace("]", ""));
+		log.info("Personen: " + pers.toString().replace("[", "").replace("]", ""));
 
 	}
 	
