@@ -60,7 +60,7 @@ public class SearchController {
 		String text = suchtextfeld.getText();
 		suchtextfeld.clear();
 		
-		List antwortListe = LuceneSearcher.getSearchResults(text);
+		List antwortListe = LuceneSearcher.getFullSearchResults(text);
 		//suchtextfeld.setText(antwortListe.toString());
 		System.out.println(antwortListe.toString());
 		

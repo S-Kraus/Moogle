@@ -6,15 +6,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import crawler.model.fourplayers.FeedMessage;
+import crawler.model.Message;
 
 public class XMLReader {
 	
-	public static FeedMessage readXML(File file) throws JAXBException {
+	public static Message readXML(File file) throws JAXBException {
 		
-		JAXBContext jaxbContext = JAXBContext.newInstance(FeedMessage.class);
+		JAXBContext jaxbContext = JAXBContext.newInstance(Message.class);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-		FeedMessage feed = (FeedMessage) unmarshaller.unmarshal(file);
+		Message feed = (Message) unmarshaller.unmarshal(file);
 		
 		return feed;
 	}

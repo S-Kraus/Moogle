@@ -1,31 +1,23 @@
 package crawler.write;
 
-/*
- * Schreibt für die übergeben FeedMesssage eine XML-Datei.
- * Enthält bislang aber nur die Daten der FeedMessage und
- * nicht die Daten vom Feed selbst.
- */
-
 import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import crawler.model.fourplayers.FeedMessage;
+import crawler.model.Message;
 
-
-public class RSSWriter {
-	
+public class RSSWriterNew {
 	final static String dir = "output/RSS";
 	final static String suffix = ".xml";
 	
 	JAXBContext jContext;
 	Marshaller marshaller;
 	
-	public RSSWriter() {
+	public RSSWriterNew() {
 		try {
-			jContext = JAXBContext.newInstance(FeedMessage.class);
+			jContext = JAXBContext.newInstance(Message.class);
 			marshaller = jContext.createMarshaller();
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -33,7 +25,7 @@ public class RSSWriter {
 		}
 	}
 	
-	public void write(FeedMessage message, String id) {
+	public void write(Message message, String id) {
 		String fileName = dir.concat(id).concat(suffix);
 		File file = new File(fileName);
 		

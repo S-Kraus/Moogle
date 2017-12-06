@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 
 import javax.xml.bind.JAXBException;
 
-import crawler.model.fourplayers.FeedMessage;
+import crawler.model.Message;
 import crawler.read.XMLReader;
 
 public class ReadXmlTest {
@@ -21,7 +21,7 @@ public class ReadXmlTest {
 			}
 		});
 		for(File f : fileArray) {
-			FeedMessage feed = XMLReader.readXML(f);
+			Message feed = XMLReader.readXML(f);
 			System.out.println(feed.getTitle());
 		}
 	}
