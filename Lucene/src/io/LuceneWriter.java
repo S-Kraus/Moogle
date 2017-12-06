@@ -14,12 +14,14 @@ import org.apache.lucene.store.NIOFSDirectory;
 
 public class LuceneWriter {
 
-	public static void createDocIndex(String title, String content, String date, String link) throws IOException {
+	public static void createDocIndex(String title, String content, String date, String link, String orgs, String people) throws IOException {
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
 		document.add(new TextField("date", date, Field.Store.YES));
 		document.add(new TextField("link", link, Field.Store.YES));
+		document.add(new TextField("orgs", orgs, Field.Store.YES));
+		document.add(new TextField("people", people, Field.Store.YES));
 
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();
