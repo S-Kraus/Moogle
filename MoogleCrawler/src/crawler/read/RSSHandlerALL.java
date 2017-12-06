@@ -5,10 +5,39 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import crawler.model.Message;
 
-public class RSSHandlerALL extends RSSBaseHandler{
+public class RSSHandlerALL extends DefaultHandler{
+	protected StringBuilder textContent = new StringBuilder();
+	protected List<Message> items;
+	protected Message message;
+	
+	protected String sHeadTitle;
+	protected String sHeadLink;
+	protected String sHeadDescription;
+
+	protected boolean boolHeadTitle = false;
+	protected boolean boolHeadLink = false;
+	protected boolean boolHeadDescription = false;
+	protected boolean boolHeadFinished = false;
+	
+	protected boolean boolItemTitle = false;
+	protected boolean boolItemDescription = false;
+	protected boolean boolItemPubDate = false;
+	protected boolean boolItemGuid = false;
+	protected boolean boolItemBegin = false;
+	
+	protected final String HEAD_TITLE = "title";
+	protected final String HEAD_LINK = "link";
+	protected final String HEAD_DESCRIPTION = "description";
+	protected final String ITEM_BEGIN = "item";
+	protected final String ITEM_TITLE = "title";
+	protected final String ITEM_DESCRIPTION = "description";
+	protected final String ITEM_PUBDATE = "pubdate";
+	protected final String ITEM_GUID = "guid";
+
 
 	public List<Message> getItems() {
 		if(items == null) {
@@ -33,8 +62,10 @@ public class RSSHandlerALL extends RSSBaseHandler{
 				boolHeadFinished = true;
 			}
 		} else{
-			if(qName.equalsIgnoreCase(ITEM_TITLE)) {
+			if(qName.equalsIgnoreCase(ITEM_BEGIN)) {
+				boolItemBegin = true;
 				message = new Message();
+			} else if(qName.equalsIgnoreCase(ITEM_TITLE)) {
 				boolItemTitle = true;
 			} else if(qName.equalsIgnoreCase(ITEM_DESCRIPTION)) {
 				boolItemDescription = true;
@@ -55,6 +86,7 @@ public class RSSHandlerALL extends RSSBaseHandler{
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		
 		String text = textContent.toString().replaceAll("\\s{2,}", " ").trim();
+
 		
 		if(!boolHeadFinished){
 			if(boolHeadTitle) {
@@ -67,7 +99,8 @@ public class RSSHandlerALL extends RSSBaseHandler{
 				sHeadDescription = text;
 				boolHeadDescription = false;
 			}
-		} else {
+		} else if(boolItemBegin){
+			
 			if(boolItemTitle) {
 				message.setTitle(text);
 				boolItemTitle = false;
@@ -80,15 +113,13 @@ public class RSSHandlerALL extends RSSBaseHandler{
 			} else if(boolItemGuid) {
 				message.setGuid(text);
 				boolItemGuid = false;
-			}
-			
-			if(qName.equalsIgnoreCase("item")) {
+			} else if(qName.equalsIgnoreCase(ITEM_BEGIN)) {
 				message.setHeadTitle(sHeadTitle);
 				message.setHeadLink(sHeadLink);
 				message.setHeadDescription(sHeadDescription);
 				getItems().add(message);
 				message = null;
-				boolItemFinished = false;
+				boolItemBegin = false;
 			}
 		}
 	}

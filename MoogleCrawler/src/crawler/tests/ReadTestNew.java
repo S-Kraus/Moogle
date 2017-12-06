@@ -39,13 +39,14 @@ public class ReadTestNew {
 		
 		long gesamt = 0;
 		long a = System.currentTimeMillis();
+		NERDemo ner = new NERDemo();
 		
 		RSSParserNew parser4Players = new RSSParserNew(fourplayers,"4PlayersXSD", new RSSHandler4Players());
 		List<Message> list4Players = parser4Players.readFeed();
 		for(Message message: list4Players) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
 			ner.fillSets(message.getExtractedText());
+			ner.clearSets();
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
 		
@@ -63,7 +64,7 @@ public class ReadTestNew {
 		List<Message> listChip = parserChip.readFeed();
 		for(Message message: listChip) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
@@ -81,7 +82,7 @@ public class ReadTestNew {
 		List<Message> listGamepro = parserGamepro.readFeed();
 		for(Message message: listGamepro) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
@@ -99,7 +100,7 @@ public class ReadTestNew {
 		List<Message> listGamestar = parserGamestar.readFeed();
 		for(Message message: listGamestar) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
@@ -117,7 +118,7 @@ public class ReadTestNew {
 		List<Message> listGiga = parserGiga.readFeed();
 		for(Message message: listGiga) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
@@ -135,7 +136,7 @@ public class ReadTestNew {
 		List<Message> listGolem = parserGolem.readFeed();
 		for(Message message: listGolem) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
@@ -153,7 +154,7 @@ public class ReadTestNew {
 		List<Message> listIgn = parserIgn.readFeed();
 		for(Message message: listIgn) {
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			NERDemo ner = new NERDemo();
+			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			message.setOrganisationen(ner.getOrgs().toString());
 			message.setPersonen(ner.getPers().toString());
