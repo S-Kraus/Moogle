@@ -18,7 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SearchController {
-
+	
+	
+	
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
 
@@ -64,7 +66,7 @@ public class SearchController {
 		
 		Main neuesFenster = new Main();
 		Stage neu = new Stage();
-		neuesFenster.startResult(neu);
+		neuesFenster.startResult(neu, text);
 		
 
 		// Der Beleidiger

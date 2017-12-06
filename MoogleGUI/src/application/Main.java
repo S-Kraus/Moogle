@@ -25,13 +25,13 @@ public class Main extends Application {
         //showResultLayout();
 	}
 	
-	public void startResult(Stage primaryStage) {
+	public void startResult(Stage primaryStage, String text) {
 		this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Moogle - Das LeckSieCon");
 
         initRootLayout();
 
-        showResultLayout();
+        showResultLayout(text);
 	}
 	
 	public void startSearch(Stage primaryStage) {
@@ -62,11 +62,12 @@ public class Main extends Application {
 	
 	public void showSearchLayout() {
         try {
-            // Load Search Overview.
+        	
+        	// Load Search Overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/SearchLayout.fxml"));
             AnchorPane searchLayout = (AnchorPane) loader.load();
-
+            
             // Set SearchLayout into the center of RootLayout.
             rootLayout.setCenter(searchLayout);
         } catch (IOException e) {
@@ -74,12 +75,14 @@ public class Main extends Application {
         }
     }
 	
-	public void showResultLayout() {
+	public void showResultLayout(String text) {
         try {
             // Load Result Overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/ResultLayout.fxml"));
             AnchorPane resultLayout = (AnchorPane) loader.load();
+            ResultController controller = loader.getController();
+            controller.setText(text);
 
             // Set ResultLayout into the center of RootLayout.
             rootLayout.setCenter(resultLayout);
