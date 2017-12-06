@@ -19,10 +19,19 @@ import edu.stanford.nlp.util.Triple;
 public class NERDemo {
 
 	private static final Logger log = Logger.getLogger(NERDemo.class.getName());
+	
+	String serializedClassifier;
+	AbstractSequenceClassifier<CoreLabel> classifier;
+	
 	private LinkedHashSet<String> orgs = new LinkedHashSet<String>();
 
 	private LinkedHashSet<String> pers = new LinkedHashSet<String>();
 
+	
+	public NERDemo() throws ClassCastException, ClassNotFoundException, IOException {
+		serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
+		classifier = CRFClassifier.getClassifier(serializedClassifier);
+	}
 	/**
 	 * 
 	 * @param file
@@ -30,9 +39,6 @@ public class NERDemo {
 	 */
 	public void fillSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException {
 
-		String serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
-
-		AbstractSequenceClassifier<CoreLabel> classifier = CRFClassifier.getClassifier(serializedClassifier);
 
 		/*
 		 * For either a file to annotate or for the hardcoded text example, this demo
@@ -58,6 +64,11 @@ public class NERDemo {
 		log.info("Organisationen: " + orgs.toString().replace("[", "").replace("]", ""));
 		log.info("Personen: " + pers.toString().replace("[", "").replace("]", ""));
 
+	}
+	
+	public void clearSets() {
+		orgs.clear();
+		pers.clear();
 	}
 
 	public LinkedHashSet<String> getOrgs() {
