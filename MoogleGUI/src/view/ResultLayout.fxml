@@ -26,7 +26,7 @@
 				<TextArea layoutX="80.0" layoutY="110.0" prefHeight="270.0" prefWidth="505.0" />
 			</children>
 		</AnchorPane>
-		<ImageView fitHeight="60.0" fitWidth="60.0" layoutX="15.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+		<ImageView fx:id="picture" fitHeight="60.0" fitWidth="60.0" layoutX="15.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../Bild1.jpg" />
 			</image>

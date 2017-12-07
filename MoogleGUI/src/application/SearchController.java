@@ -11,16 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-//import javafx.scene.control.DatePicker;
-//import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class SearchController {
-	
-	
-	
+
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
 
@@ -29,19 +25,19 @@ public class SearchController {
 
 	@FXML
 	TextField suchtextfeld;
-	//
-	// @FXML
-	// DatePicker zeitraumvon;
-	//
-	// @FXML
-	// DatePicker zeitraumbis;
+
+	@FXML
+	DatePicker zeitraumvon;
+
+	@FXML
+	DatePicker zeitraumbis;
 
 	@FXML
 	public void initialize() {
 		choiceBox.getItems().remove(choiceBox.getItems());
 		choiceBox.getItems().addAll(choiceboxList);
 		choiceBox.getSelectionModel().select(0);
-		
+
 		suchtextfeld.setOnAction((event) -> {
 			try {
 				buttonPressed();
@@ -59,18 +55,9 @@ public class SearchController {
 	protected void buttonPressed() throws IOException, ParseException {
 		String text = suchtextfeld.getText();
 		suchtextfeld.clear();
-		
-		List antwortListe = LuceneSearcher.getFullSearchResults(text);
-		//suchtextfeld.setText(antwortListe.toString());
-		System.out.println(antwortListe.toString());
-		
-		Main neuesFenster = new Main();
-		Stage neu = new Stage();
-		neuesFenster.startResult(neu, text);
-		
 
 		// Der Beleidiger
-		HashMap map = new HashMap();
+		HashMap<String, String> map = new HashMap<String, String>();
 
 		map.put(new String("arsch"), new String("Selber. Du riesen Schildkröte!"));
 		map.put(new String("penner"), new String("Dei Muadda, Buarsche!!!"));
@@ -81,19 +68,30 @@ public class SearchController {
 		map.put(new String("andreas"), new String("Schön das du da bist und nicht hier :-)"));
 		map.put(new String("stephan"), new String("Was soll mann dazu sagen? Du geiler Typ!"));
 
+		Main result = new Main();
+
 		// Variante mit Iterator
-//		Iterator it = map.entrySet().iterator();
-//		while (it.hasNext()) {
-//			Map.Entry entry = (Map.Entry) it.next();
-//			if (entry.getKey().equals(text.toLowerCase())) {
-//				suchtextfeld.setText((String) entry.getValue());
-//			}
-//
-//		}
-		
+		// Iterator it = map.entrySet().iterator();
+		// while (it.hasNext()) {
+		// Map.Entry entry = (Map.Entry) it.next();
+		// if (entry.getKey().equals(text.toLowerCase())) {
+		// suchtextfeld.setText((String) entry.getValue());
+		// }
+		//
+		// }
+
 		// Variante ohne Iterator
-		if (map.containsKey(text)){
-			suchtextfeld.setText((String) map.get(text));
+		if (map.containsKey(text)) {
+			result.setText((String) map.get(text));
+		} else {
+			result.setText(text);
 		}
+
+		// List antwortListe = LuceneSearcher.getFullSearchResults(text);
+		// //suchtextfeld.setText(antwortListe.toString());
+		// System.out.println(antwortListe.toString());
+
+		result.showResultLayout();
+
 	}
 }

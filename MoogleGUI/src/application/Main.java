@@ -1,99 +1,96 @@
 package application;
 
-import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	private Stage primaryStage;
-    private BorderPane rootLayout;
-    
+	private static Stage primaryStage;
+	private static Main instance;
+	private static String text;
+
+	public Main() {
+		instance = this;
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		primaryStage = Main.primaryStage;
+	}
+
+	public static Main getInstance() {
+		return instance;
+	}
+
+	public static String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		Main.text = text;
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Moogle - Das LeckSieCon");
+		try {
+			Main.primaryStage = primaryStage;
+			Main.primaryStage.setTitle("Moogle - Das LeckSieCon");
 
-        initRootLayout();
+			showSearchLayout();
+			primaryStage.show();
 
-        showSearchLayout();
-//        showResultLayout();
+		} catch (Exception ex) {
+			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
-	
-	public void startResult(Stage primaryStage, String text) {
-		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Moogle - Das LeckSieCon");
 
-        initRootLayout();
+	public Parent replaceSceneContent(String fxml) throws Exception {
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(Main.class.getResource(fxml));
+		Pane p = (Pane) fxmlLoader.load();
 
-        showResultLayout(text);
+		if (fxml == "../view/ResultLayout.fxml") {
+			ResultController controller = fxmlLoader.getController();
+			controller.setText(Main.getText());
+		}
+
+		Scene scene = primaryStage.getScene();
+		if (scene == null) {
+			scene = new Scene(p, 700, 450);
+			primaryStage.setScene(scene);
+		} else {
+			primaryStage.getScene().setRoot(p);
+		}
+		primaryStage.sizeToScene();
+		System.out.print(p);
+		return p;
 	}
-	
-	public void startSearch(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Moogle - Das LeckSieCon");
 
-        initRootLayout();
-
-        showSearchLayout();
-        //showResultLayout();
+	void showSearchLayout() {
+		try {
+			replaceSceneContent("../view/SearchLayout.fxml");
+		} catch (Exception ex) {
+			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
-	
-	public void initRootLayout() {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
 
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void showSearchLayout() {
-        try {
-        	
-        	// Load Search Overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/SearchLayout.fxml"));
-            AnchorPane searchLayout = (AnchorPane) loader.load();
-            
-            // Set SearchLayout into the center of RootLayout.
-            rootLayout.setCenter(searchLayout);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void showResultLayout(String text) {
-        try {
-            // Load Result Overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/ResultLayout.fxml"));
-            AnchorPane resultLayout = (AnchorPane) loader.load();
-            ResultController controller = loader.getController();
-            controller.setText(text);
-
-            // Set ResultLayout into the center of RootLayout.
-            rootLayout.setCenter(resultLayout);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public Stage getPrimaryStage() {
-        return primaryStage;
-    }
+	void showResultLayout() {
+		try {
+			replaceSceneContent("../view/ResultLayout.fxml");
+		} catch (Exception ex) {
+			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
 	public static void main(String[] args) {
 		launch(args);
