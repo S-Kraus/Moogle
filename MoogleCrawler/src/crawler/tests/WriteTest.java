@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBException;
 
 import crawler.model.Message;
 import crawler.read.RSSParserALL;
+import crawler.read.XMLReader;
 import crawler.write.RSSWriterNew;
 
 

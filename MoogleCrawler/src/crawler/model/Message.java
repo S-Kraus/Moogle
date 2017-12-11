@@ -1,6 +1,8 @@
 package crawler.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Message{
 	
 	private String headTitle;
@@ -123,6 +125,89 @@ public class Message{
 		Message clone = new Message(this.headTitle,this.headLink,this.headDescription,this.title,this.description,this.pubDate,this.guid,this.extractedText);
 		return clone;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pubDate == null) ? 0 : pubDate.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Message other = (Message) obj;
+		if (pubDate == null) {
+			if (other.pubDate != null)
+				return false;
+		} else if (!pubDate.equals(other.pubDate))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
 	
+	public String convertHash() {
+		int hash = this.hashCode();
+		String convertedHash = Integer.toString(hash);
+		if( hash < 0 ) {
+			convertedHash = convertedHash.replace('-', '0');
+		}
+		return convertedHash;
+	}
 	
+	public String createFilename() {
+		final String FOURPLAYERS = "4Players.de";
+		final String CHIP = "![CDATA[CHIP Online Spiele]]";
+		final String GAMEPRO = "GamePro";
+		final String GAMESTAR = "GameStar";
+		final String GIGA = "GIGA GAMES";
+		final String GOLEM = "Golem.de - Games";
+		final String IGN = "IGN Deutschland";
+		
+		final String dir = "output/";
+		final String suffix = ".xml";
+		
+		StringBuilder sbuilder = new StringBuilder();
+		sbuilder.append(dir);
+		switch(this.getHeadTitle()){
+			case(FOURPLAYERS):
+				sbuilder.append("4Players/");
+				break;
+			case(CHIP):
+				sbuilder.append("chip/");
+				break;
+			case(GAMEPRO):
+				sbuilder.append("gamepro/");
+				break;
+			case(GAMESTAR):
+				sbuilder.append("gamestar/");
+				break;
+			case(GIGA):
+				sbuilder.append("giga/");
+				break;
+			case(GOLEM):
+				sbuilder.append("golem/");
+				break;
+			case(IGN):
+				sbuilder.append("ign/");
+				break;
+			
+		}
+		sbuilder.append("RSS");
+		sbuilder.append(this.convertHash());
+		sbuilder.append(suffix);
+		
+		return sbuilder.toString();
+	}
 }

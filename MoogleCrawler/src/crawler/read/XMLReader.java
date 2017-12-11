@@ -10,10 +10,20 @@ import crawler.model.Message;
 
 public class XMLReader {
 	
-	public static Message readXML(File file) throws JAXBException {
+	public static Message readXML(String headTitle,String title, String pubDate) throws JAXBException {
 		
 		JAXBContext jaxbContext = JAXBContext.newInstance(Message.class);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+		
+		
+		Message message = new Message();
+		message.setTitle(title);
+		message.setHeadTitle(headTitle);
+		message.setPubDate(pubDate);
+		
+		String fileName = message.createFilename();
+
+		File file = new File(fileName);
 		Message feed = (Message) unmarshaller.unmarshal(file);
 		
 		return feed;
