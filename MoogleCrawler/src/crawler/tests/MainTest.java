@@ -24,7 +24,7 @@ public class MainTest {
 		RSSParserALL parser = new RSSParserALL(fourplayers,"4PlayersXSD");
 		List<Message> list = parser.readFeed();
 		RSSWriterNew writer = new RSSWriterNew();
-		NERDemo ner = new NERDemo();
+		NERDemo ner = NERDemo.getInstance();
 		for(Message message : list) {
 			File file = new File(message.createFilename());
 			if( !file.exists()) {

@@ -39,7 +39,7 @@ public class ReadTestNew {
 		
 		long gesamt = 0;
 		long a = System.currentTimeMillis();
-		NERDemo ner = new NERDemo();
+		NERDemo ner = NERDemo.getInstance();
 		
 		RSSParserNew parser4Players = new RSSParserNew(fourplayers,"4PlayersXSD", new RSSHandler4Players());
 		List<Message> list4Players = parser4Players.readFeed();

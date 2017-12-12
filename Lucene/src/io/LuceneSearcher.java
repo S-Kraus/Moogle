@@ -21,8 +21,21 @@ import org.apache.lucene.store.NIOFSDirectory;
 public class LuceneSearcher {
 
 	private final static Logger log = Logger.getLogger(LuceneSearcher.class.getName());
+	
+	private static LuceneSearcher lSearcher;
+	
+	public static LuceneSearcher getInstance() {
+		if (lSearcher == null) {
+			lSearcher = new LuceneSearcher();
+		}
+		return lSearcher;
+	}
+	
+	private LuceneSearcher() {
+		
+	}
 
-	public static List<LuceneDocument> getFullSearchResults(String searchQuery) throws IOException, ParseException {
+	public List<LuceneDocument> getFullSearchResults(String searchQuery) throws IOException, ParseException {
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);
@@ -46,7 +59,7 @@ public class LuceneSearcher {
 		return resultList;
 	}
 	
-	public static List<LuceneDocument> getOrgSearchResults(String searchQuery) throws IOException, ParseException {
+	public List<LuceneDocument> getOrgSearchResults(String searchQuery) throws IOException, ParseException {
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);
@@ -70,7 +83,7 @@ public class LuceneSearcher {
 		return resultList;
 	}
 	
-	public static List<LuceneDocument> getPeopleSearchResults(String searchQuery) throws IOException, ParseException {
+	public List<LuceneDocument> getPeopleSearchResults(String searchQuery) throws IOException, ParseException {
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);

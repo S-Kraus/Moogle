@@ -20,6 +20,8 @@ public class NERDemo {
 
 	private static final Logger log = Logger.getLogger(NERDemo.class.getName());
 	
+	private static NERDemo ner;
+	
 	String serializedClassifier;
 	AbstractSequenceClassifier<CoreLabel> classifier;
 	
@@ -27,8 +29,15 @@ public class NERDemo {
 
 	private LinkedHashSet<String> pers = new LinkedHashSet<String>();
 
+	public static NERDemo getInstance() throws ClassCastException, ClassNotFoundException, IOException {
+		if (ner == null) {
+			ner = new NERDemo();
+		}
+		return ner;
+	}
 	
-	public NERDemo() throws ClassCastException, ClassNotFoundException, IOException {
+	
+	private NERDemo() throws ClassCastException, ClassNotFoundException, IOException {
 		serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
 		classifier = CRFClassifier.getClassifier(serializedClassifier);
 	}

@@ -13,8 +13,21 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.NIOFSDirectory;
 
 public class LuceneWriter {
+	
+	private static LuceneWriter lWriter;
+	
+	public static LuceneWriter getInstance() {
+		if (lWriter == null) {
+			lWriter = new LuceneWriter();
+		}
+		return lWriter;
+	}
+	
+	private LuceneWriter() {
+		
+	}
 
-	public static void createDocIndex(String title, String content, String date, String link, String orgs, String people) throws IOException {
+	public void createDocIndex(String title, String content, String date, String link, String orgs, String people) throws IOException {
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
