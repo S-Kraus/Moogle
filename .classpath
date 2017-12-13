@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Lucene/src"/>
+	<classpathentry kind="src" path="Moogle/src"/>
+	<classpathentry kind="src" path="MoogleCrawler/src"/>
+	<classpathentry kind="src" path="MoogleGUI/src"/>
+	<classpathentry kind="src" path="MyNer/src"/>
+	<classpathentry kind="lib" path="Lucene/lib/lucene-core-7.1.0.jar"/>
+	<classpathentry kind="lib" path="Lucene/lib/lucene-queryparser-7.1.0.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/lucene/lucene-core-7.1.0.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/lucene/lucene-queryparser-7.1.0.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/ner/stanford-ner-3.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/ner/stanford-ner-3.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/ner/stanford-ner-3.8.0.jar"/>
+	<classpathentry kind="lib" path="MoogleCrawler/lib/boilerpipe-1.2.0.jar"/>
+	<classpathentry kind="lib" path="MoogleCrawler/lib/boilerpipe-javadoc-1.2.0.jar"/>
+	<classpathentry kind="lib" path="MoogleCrawler/lib/boilerpipe-sources-1.2.0.jar"/>
+	<classpathentry kind="lib" path="MoogleCrawler/lib/nekohtml-1.9.13.jar"/>
+	<classpathentry kind="lib" path="MoogleCrawler/lib/xerces-2.9.1.jar"/>
+	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,7 +22,6 @@
 				<RadioButton layoutX="379.0" layoutY="74.0" mnemonicParsing="false" text="GameStar" />
 				<RadioButton layoutX="462.0" layoutY="74.0" mnemonicParsing="false" text="IGN" />
 				<RadioButton layoutX="515.0" layoutY="74.0" mnemonicParsing="false" text="PCGames" />
-				<TextArea layoutX="80.0" layoutY="110.0" prefHeight="270.0" prefWidth="505.0" />
 			</children>
 		</AnchorPane>
 		<ImageView fx:id="picture" fitHeight="60.0" fitWidth="60.0" layoutX="15.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
@@ -31,5 +29,6 @@
 				<Image url="@../Bild1.jpg" />
 			</image>
 		</ImageView>
+      <VBox layoutX="15.0" layoutY="115.0" prefHeight="250.0" prefWidth="570.0" />
 	</children>
 </AnchorPane>
