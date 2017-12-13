@@ -10,6 +10,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -40,9 +41,10 @@ public class LuceneSearcher {
 		Analyzer analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);
 		IndexSearcher searcher = new IndexSearcher(dr);
-		QueryParser qp = new QueryParser("content", analyzer);
+		String[] fields = {"content", "title"};
+		MultiFieldQueryParser qp = new MultiFieldQueryParser(fields, analyzer);
 		Query query = qp.parse(searchQuery);
-		TopDocs td = searcher.search(query, 10);
+		TopDocs td = searcher.search(query, 100);
 		ScoreDoc[] sd = td.scoreDocs;
 		List<LuceneDocument> resultList = new ArrayList<LuceneDocument>();
 		for (int i = 0; i < sd.length; i++) {
