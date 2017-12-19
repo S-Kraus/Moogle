@@ -61,7 +61,7 @@ public class LuceneSearcher {
 					isFiltered = filterSites(doc, sites);
 				}
 				if (dates != null) {
-					isFiltered = filterDate(doc, dates);
+					isFiltered = isFiltered ? true : filterDate(doc, dates);
 				}
 				if (!isFiltered) {
 					log.info(doc.get("title"));
@@ -129,11 +129,12 @@ public class LuceneSearcher {
 //	}
 
 	private boolean filterDate(Document doc, String[] dates) {
-		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z", Locale.GERMANY);
+		DateFormat datesFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		DateFormat docFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 		try {
-			Date from = formatter.parse(dates[0]);
-			Date to = formatter.parse(dates[1]);
-			Date docDate = formatter.parse(doc.get("date"));
+			Date from = datesFormatter.parse(dates[0]);
+			Date to = datesFormatter.parse(dates[1]);
+			Date docDate = docFormatter.parse(doc.get("date"));
 			if (docDate.before(from) || docDate.after(to)) {
 				return true;
 			}

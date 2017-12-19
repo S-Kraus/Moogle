@@ -50,7 +50,6 @@ public class ResultController {
 		
 		LuceneSearcher searcher = LuceneSearcher.getInstance();
 		Sites[] sites = {Sites.GAMEPRO, Sites.GAMESTAR};
-		Date date = new Date();
 		String[] dates = {new Date().toString(), new Date().toString()};
 		List<LuceneDocument> antwortListe = searcher.getFullSearchResults(text, sites, dates);
 		// //suchtextfeld.setText(antwortListe.toString());
