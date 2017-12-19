@@ -62,6 +62,7 @@ public class Main extends Application {
 		if (fxml == "../view/ResultLayout.fxml") {
 			ResultController controller = fxmlLoader.getController();
 			controller.setText(Main.getText());
+			controller.buttonPressed();
 		}
 
 		Scene scene = primaryStage.getScene();
