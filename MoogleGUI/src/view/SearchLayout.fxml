@@ -3,6 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -15,8 +18,29 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SearchController">
    <children>
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="New Search" />
+                  <MenuItem mnemonicParsing="false" text="Exit Program" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Clear Search" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Help" />
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
       <TextField fx:id="suchtextfeld" layoutX="45.0" layoutY="108.0" prefHeight="29.0" prefWidth="405.0" promptText="Suchbegriff eingeben" />
-      <Button fx:id="suchanfrage" onAction="#buttonPressed" layoutX="450.0" layoutY="108.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="100.0" text="Suchen" />
+      <Button fx:id="suchanfrage" layoutX="450.0" layoutY="108.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" />
       <ChoiceBox fx:id="choiceBox" layoutX="333.0" layoutY="110.0" prefHeight="25.0" prefWidth="115.0" />
       <DatePicker layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." />
       <DatePicker layoutX="350.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." />
