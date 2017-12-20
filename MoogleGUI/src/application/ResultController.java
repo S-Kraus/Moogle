@@ -20,10 +20,12 @@ import javafx.scene.layout.VBox;
 
 public class ResultController {
 
-	public void setText(String text) {
-		this.suchtextfeld.setText(text);
+	//Methode für Main (Zugriff auf Suchtext)
+	public void setText(String suchtext) {
+		this.suchtextfeld.setText(suchtext);
 	}
 
+	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
 
@@ -45,16 +47,30 @@ public class ResultController {
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
 		
-		String text = suchtextfeld.getText();
-		//suchTextfeld.clear();
+		//vorherige Suchergebnisse löschen
+		resultvbox.getChildren().clear();
+
+		//Sucheinstellungen abfragen 
+		//Suchtext holen
+		String suchtext = suchtextfeld.getText();
+		//Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
+		String selectetSuchart = choiceBoxResult.getSelectionModel().getSelectedItem();
+		//Auswahl Radiobutton für Spieleseiten
 		
-		LuceneSearcher searcher = LuceneSearcher.getInstance();
+		//Auswahl des Suchzeitraums
+		
+		
+		//Suchabfrage für Lucene vorbereiten
 		Sites[] sites = {Sites.GAMEPRO, Sites.GAMESTAR};
-		Date date = new Date();
-		String[] dates = {new Date().toString(), new Date().toString()};
-		List<LuceneDocument> antwortListe = searcher.getFullSearchResults(text, sites, dates);
-		// //suchtextfeld.setText(antwortListe.toString());
+		Date datefrom = new Date();
+		Date dateto = new Date();
+		String[] dates = {datefrom.toString(), dateto.toString()};
 		
+		//Lucene abfragen
+		LuceneSearcher searcher = LuceneSearcher.getInstance();
+		List<LuceneDocument> antwortListe = searcher.getFullSearchResults(suchtext, sites, dates);
+		
+		//Lucene Antworten Zeilenweise ausgeben
 		for (int i = 0; i<antwortListe.size(); i++){
 			
 			System.out.println(antwortListe.get(i).toString());
@@ -62,6 +78,7 @@ public class ResultController {
 			String date2 = antwortListe.get(i).getDate();
 			String link = antwortListe.get(i).getLink();
 			
+			//Trefferausgabe pro Treffer
 			TrefferAusgabe neuerEintrag = new TrefferAusgabe(i+1, titel, date2, link);
 			resultvbox.getChildren().add(neuerEintrag);
 		};
@@ -69,14 +86,13 @@ public class ResultController {
 		
 	}
 
+	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 		
 		choiceBoxResult.getItems().remove(choiceBoxResult.getItems());
 		choiceBoxResult.getItems().addAll(choiceboxList);
 		choiceBoxResult.getSelectionModel().select(0);
-
-		System.out.println("test1");
 
 		picture.setOnMouseClicked((event) -> {
 			try {
@@ -87,6 +103,7 @@ public class ResultController {
 		});
 	}
 
+	//Link über Bild zurück zum SearchLayout
 	@FXML
 	private void MouseEvent() {
 		Main search = new Main();
