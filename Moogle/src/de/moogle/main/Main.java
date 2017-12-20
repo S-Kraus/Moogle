@@ -9,6 +9,7 @@ import de.moogle.crawler.Message;
 import de.moogle.crawler.RSSParser;
 import de.moogle.crawler.RSSWriter;
 import de.moogle.ner.NERDemo;
+import io.LuceneWriter;
 
 public class Main {
 
@@ -23,10 +24,41 @@ public class Main {
 	public static void main(String[] args) throws ClassCastException, ClassNotFoundException, IOException {
 		NERDemo ner = new NERDemo();
 		RSSWriter writer = new RSSWriter();
+		LuceneWriter luceneWriter = LuceneWriter.getInstance();
 		
 		
 		RSSParser parser = new RSSParser(fourplayers, "4PlayersXSD");
 		List<Message> list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(chip,"ChipXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(gamepro,"GameproXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(gamestar,"GamestarXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(giga,"GigaXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(golem,"GolemXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+		parser = new RSSParser(ign,"IgnXSD");
+		list = parser.readFeed();
+		buildArchive(ner, writer, list, luceneWriter);
+		
+	}
+
+	private static void buildArchive(NERDemo ner, RSSWriter writer, List<Message> list, LuceneWriter luceneWriter)
+			throws ClassNotFoundException, IOException {
 		for(Message message : list) {
 
 			File file = new File(message.createFilename());
@@ -34,89 +66,11 @@ public class Main {
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
 			  	ner.clearSets();
 			 	ner.fillSets(message.getExtractedText());
+			 	luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(), message.getGuid(), message.getOrganisationen(), message.getPersonen());
 			 	writer.write(message);
 			}
 			 	
 		}
-		
-		parser = new RSSParser(chip,"ChipXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
-		parser = new RSSParser(gamepro,"GameproXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
-		parser = new RSSParser(gamestar,"GamestarXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
-		parser = new RSSParser(giga,"GigaXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
-		parser = new RSSParser(golem,"GolemXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
-		parser = new RSSParser(ign,"IgnXSD");
-		list = parser.readFeed();
-		for(Message message : list) {
-			
-			File file = new File(message.createFilename());
-			if( !file.exists()) {
-				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
-			  	ner.clearSets();
-			 	ner.fillSets(message.getExtractedText());
-			 	writer.write(message);
-			}
-		}
-		
 	}
 
 }

@@ -24,31 +24,42 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.NIOFSDirectory;
 
+import tools.Site;
+
 public class LuceneSearcher {
 
 	private final static Logger log = Logger.getLogger(LuceneSearcher.class.getName());
 
+	public static final int TYPE_TEXT_SEARCH = 0;
+	public static final int TYPE_PERSON_SEARCH = 1;
+	public static final int TYPE_ORG_SEARCH = 2;
+
 	private static LuceneSearcher lSearcher;
 
-	public static LuceneSearcher getInstance() {
+	private Site[] siteFilters;
+	private Date fromDate;
+	private Date toDate;
+	private IndexSearcher searcher;
+	private Analyzer analyzer;
+
+	public static LuceneSearcher getInstance() throws IOException {
 		if (lSearcher == null) {
 			lSearcher = new LuceneSearcher();
 		}
 		return lSearcher;
 	}
 
-	private LuceneSearcher() {
-
+	private LuceneSearcher() throws IOException {
+		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
+		analyzer = new StandardAnalyzer();
+		DirectoryReader dr = DirectoryReader.open(indexDir);
+		searcher = new IndexSearcher(dr);
 	}
 
-	public List<LuceneDocument> getFullSearchResults(String searchQuery, Sites[] sites, String[] dates)
+	public List<LuceneDocument> getSearchResults(int searchType, String searchQuery)
 			throws IOException, ParseException {
 		if (!searchQuery.isEmpty()) {
-			NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
-			Analyzer analyzer = new StandardAnalyzer();
-			DirectoryReader dr = DirectoryReader.open(indexDir);
-			IndexSearcher searcher = new IndexSearcher(dr);
-			String[] fields = { "content", "title" };
+			String[] fields = getFields(searchType);
 			MultiFieldQueryParser qp = new MultiFieldQueryParser(fields, analyzer);
 			Query query = qp.parse(searchQuery);
 			TopDocs td = searcher.search(query, Integer.MAX_VALUE);
@@ -57,12 +68,9 @@ public class LuceneSearcher {
 			for (int i = 0; i < sd.length; i++) {
 				Document doc = searcher.doc(sd[i].doc);
 				boolean isFiltered = false;
-				if (sites != null) {
-					isFiltered = filterSites(doc, sites);
-				}
-				if (dates != null) {
-					isFiltered = isFiltered ? true : filterDate(doc, dates);
-				}
+				isFiltered = filterSites(doc);
+				isFiltered = isFiltered ? true : filterDate(doc, true);
+				isFiltered = isFiltered ? true : filterDate(doc, false);
 				if (!isFiltered) {
 					log.info(doc.get("title"));
 					String title = doc.get("title");
@@ -80,63 +88,59 @@ public class LuceneSearcher {
 		}
 	}
 
-//	public List<LuceneDocument> getOrgSearchResults(String searchQuery) throws IOException, ParseException {
-//		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
-//		Analyzer analyzer = new StandardAnalyzer();
-//		DirectoryReader dr = DirectoryReader.open(indexDir);
-//		IndexSearcher searcher = new IndexSearcher(dr);
-//		QueryParser qp = new QueryParser("orgs", analyzer);
-//		Query query = qp.parse(searchQuery);
-//		TopDocs td = searcher.search(query, 10);
-//		ScoreDoc[] sd = td.scoreDocs;
-//		List<LuceneDocument> resultList = new ArrayList<LuceneDocument>();
-//		for (int i = 0; i < sd.length; i++) {
-//			Document doc = searcher.doc(sd[i].doc);
-//			log.info(doc.get("title"));
-//			String title = doc.get("title");
-//			String date = doc.get("date");
-//			String link = doc.get("link");
-//			String orgs = doc.get("orgs");
-//			String people = doc.get("people");
-//			LuceneDocument ldoc = new LuceneDocument(title, date, link, orgs, people);
-//			resultList.add(ldoc);
-//		}
-//		return resultList;
-//	}
-//
-//	public List<LuceneDocument> getPeopleSearchResults(String searchQuery) throws IOException, ParseException {
-//		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
-//		Analyzer analyzer = new StandardAnalyzer();
-//		DirectoryReader dr = DirectoryReader.open(indexDir);
-//		IndexSearcher searcher = new IndexSearcher(dr);
-//		QueryParser qp = new QueryParser("people", analyzer);
-//		Query query = qp.parse(searchQuery);
-//		TopDocs td = searcher.search(query, 10);
-//		ScoreDoc[] sd = td.scoreDocs;
-//		List<LuceneDocument> resultList = new ArrayList<LuceneDocument>();
-//		for (int i = 0; i < sd.length; i++) {
-//			Document doc = searcher.doc(sd[i].doc);
-//			log.info(doc.get("title"));
-//			String title = doc.get("title");
-//			String date = doc.get("date");
-//			String link = doc.get("link");
-//			String orgs = doc.get("orgs");
-//			String people = doc.get("people");
-//			LuceneDocument ldoc = new LuceneDocument(title, date, link, orgs, people);
-//			resultList.add(ldoc);
-//		}
-//		return resultList;
-//	}
+	private String[] getFields(int searchType) {
+		String[] fields;
+		switch (searchType) {
+		case TYPE_TEXT_SEARCH:
+			fields = new String[4];
+			fields[0] = "content";
+			fields[1] = "title";
+			fields[2] = "orgs";
+			fields[3] = "people";
+			return fields;
+		case TYPE_PERSON_SEARCH:
+			fields = new String[1];
+			fields[0] = "people";
+			return fields;
+		case TYPE_ORG_SEARCH:
+			fields = new String[1];
+			fields[0] = "orgs";
+			return fields;
+		}
+		return null;
+	}
 
-	private boolean filterDate(Document doc, String[] dates) {
-		DateFormat datesFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+	public LuceneSearcher setSiteFilters(Site[] filters) {
+		this.siteFilters = filters;
+		return this;
+	}
+
+	public LuceneSearcher setFromDate(Date date) {
+		this.fromDate = date;
+		return this;
+	}
+
+	public LuceneSearcher setToDate(Date date) {
+		this.toDate = date;
+		return this;
+	}
+
+	private boolean filterDate(Document doc, boolean isFromDate) {
 		DateFormat docFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 		try {
-			Date from = datesFormatter.parse(dates[0]);
-			Date to = datesFormatter.parse(dates[1]);
 			Date docDate = docFormatter.parse(doc.get("date"));
-			if (docDate.before(from) || docDate.after(to)) {
-				return true;
+			if (isFromDate) {
+				if (fromDate != null) {
+					if (docDate.before(fromDate)) {
+						return true;
+					}
+				}
+			} else {
+				if (toDate != null) {
+					if (docDate.after(toDate)) {
+						return true;
+					}
+				}
 			}
 		} catch (java.text.ParseException pe) {
 			log.log(Level.SEVERE, "Parsen auf Datum in Lucene nicht erfolgreich", pe);
@@ -144,34 +148,18 @@ public class LuceneSearcher {
 		return false;
 	}
 
-	private boolean filterSites(Document doc, Sites[] sites) {
-		boolean isFiltered = true;
-		String url = doc.get("link");
-		for (Sites filterSite : sites) {
-			if (url.startsWith(filterSite.getSite())) {
-				isFiltered = false;
+	private boolean filterSites(Document doc) {
+		if (siteFilters != null) {
+			boolean isFiltered = true;
+			String url = doc.get("link");
+			for (Site filterSite : siteFilters) {
+				if (url.startsWith(filterSite.getSite())) {
+					isFiltered = false;
+				}
 			}
-		}
-		return isFiltered;
-	}
-
-	public enum Sites {
-		GAMESTAR("http://www.gamestar.de"),
-		GAMEPRO("http://www.gamepro.de"),
-		FOURPLAYERS("http://feeds.4players.de"),
-		CHIP("http://www.chip.de"),
-		GIGA("http://www.giga.de"),
-		GOLEM("https://rss.golem.de"),
-		IGN("http://de.ign.com");
-		
-		private final String site;
-		
-		Sites(String site) {
-			this.site = site;
-		}
-		
-		public String getSite() {
-			return this.site;
+			return isFiltered;
+		} else {
+			return false;
 		}
 	}
 

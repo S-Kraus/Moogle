@@ -13,28 +13,33 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.NIOFSDirectory;
 
 public class LuceneWriter {
-	
+
 	private static LuceneWriter lWriter;
-	
+
 	public static LuceneWriter getInstance() {
 		if (lWriter == null) {
 			lWriter = new LuceneWriter();
 		}
 		return lWriter;
 	}
-	
+
 	private LuceneWriter() {
-		
+
 	}
 
-	public void createDocIndex(String title, String content, String date, String link, String orgs, String people) throws IOException {
+	public void createDocIndex(String title, String content, String date, String link, String orgs, String people)
+			throws IOException {
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
 		document.add(new TextField("date", date, Field.Store.YES));
 		document.add(new TextField("link", link, Field.Store.YES));
-		document.add(new TextField("orgs", orgs, Field.Store.YES));
-		document.add(new TextField("people", people, Field.Store.YES));
+		if (orgs != null && !orgs.isEmpty()) {
+			document.add(new TextField("orgs", orgs, Field.Store.YES));
+		}
+		if (people != null && !people.isEmpty()) {
+			document.add(new TextField("people", people, Field.Store.YES));
+		}
 
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
 		Analyzer analyzer = new StandardAnalyzer();

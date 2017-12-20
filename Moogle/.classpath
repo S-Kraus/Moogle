@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="libs/crawler/boilerpipe-1.2.0.jar"/>
 	<classpathentry kind="lib" path="libs/crawler/nekohtml-1.9.13.jar"/>
 	<classpathentry kind="lib" path="libs/crawler/xerces-2.9.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Lucene"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
