@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 
 public class SearchController {
 
+	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
 
@@ -32,6 +33,7 @@ public class SearchController {
 	@FXML
 	DatePicker zeitraumbis;
 
+	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 		choiceBox.getItems().remove(choiceBox.getItems());
@@ -49,10 +51,12 @@ public class SearchController {
 	}
 
 	@FXML
-	Button suchanfrage;
+	Button searchbutton;
 
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
+		
+		//Abfrage des Suchtextes
 		String text = suchtextfeld.getText();
 		suchtextfeld.clear();
 
@@ -68,29 +72,17 @@ public class SearchController {
 		map.put(new String("andreas"), new String("Schön das du da bist und nicht hier :-)"));
 		map.put(new String("stephan"), new String("Was soll mann dazu sagen? Du geiler Typ!"));
 
+		//Initialisierung der Main
 		Main result = new Main();
 
-		// Variante mit Iterator
-		// Iterator it = map.entrySet().iterator();
-		// while (it.hasNext()) {
-		// Map.Entry entry = (Map.Entry) it.next();
-		// if (entry.getKey().equals(text.toLowerCase())) {
-		// suchtextfeld.setText((String) entry.getValue());
-		// }
-		//
-		// }
-
-		// Variante ohne Iterator
+		// Textübergabe an Main
 		if (map.containsKey(text)) {
 			result.setText((String) map.get(text));
 		} else {
 			result.setText(text);
 		}
 
-		// List antwortListe = LuceneSearcher.getFullSearchResults(text);
-		// //suchtextfeld.setText(antwortListe.toString());
-		// System.out.println(antwortListe.toString());
-
+		//Wechsel zum Resultlayout
 		result.showResultLayout();
 
 	}

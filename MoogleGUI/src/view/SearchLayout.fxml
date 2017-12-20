@@ -22,29 +22,29 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New Search" />
-                  <MenuItem mnemonicParsing="false" text="Exit Program" />
+              <MenuItem fx:id="mbnew" mnemonicParsing="false" text="New Search" />
+                  <MenuItem fx:id="mbexit" mnemonicParsing="false" text="Exit Program" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Clear Search" />
+              <MenuItem fx:id="mbclear" mnemonicParsing="false" text="Clear Search" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Help" />
-              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="mbhelp" mnemonicParsing="false" text="Help" />
+              <MenuItem fx:id="mbabout" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TextField fx:id="suchtextfeld" layoutX="45.0" layoutY="108.0" prefHeight="29.0" prefWidth="405.0" promptText="Suchbegriff eingeben" />
-      <Button fx:id="suchanfrage" layoutX="450.0" layoutY="108.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" />
-      <ChoiceBox fx:id="choiceBox" layoutX="333.0" layoutY="110.0" prefHeight="25.0" prefWidth="115.0" />
-      <DatePicker layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." />
-      <DatePicker layoutX="350.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." />
-      <ImageView fitHeight="115.0" fitWidth="115.0" layoutX="45.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+      <TextField fx:id="suchtextfeld" layoutX="45.0" layoutY="108.0" prefHeight="29.0" prefWidth="405.0" promptText="Suchbegriff eingeben" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="108.0" />
+      <Button fx:id="searchbutton" layoutX="450.0" layoutY="108.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="108.0" />
+      <ChoiceBox fx:id="choiceBox" layoutX="333.0" layoutY="110.0" prefHeight="25.0" prefWidth="115.0" AnchorPane.leftAnchor="333.0" AnchorPane.topAnchor="110.0" />
+      <DatePicker fx:id="datefrom" layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="170.0" />
+      <DatePicker fx:id="dateto" layoutX="350.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="170.0" />
+      <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" layoutX="45.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="170.0">
          <image>
             <Image url="@../Bild1.jpg" />
          </image>
@@ -52,19 +52,23 @@
             <Glow />
          </effect>
       </ImageView>
-      <Text fontSmoothingType="LCD" layoutX="239.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spielenews">
+      <Text fontSmoothingType="LCD" layoutX="239.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spielenews" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text layoutX="198.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moogle - Das LeckSieCon">
+      <Text layoutX="198.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moogle - Das LeckSieCon" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <RadioButton layoutX="198.0" layoutY="222.0" mnemonicParsing="false" text="Gamestar" />
-      <RadioButton layoutX="198.0" layoutY="249.0" mnemonicParsing="false" text="PC Games" />
-      <RadioButton layoutX="198.0" layoutY="279.0" mnemonicParsing="false" text="IGN" />
+      <RadioButton fx:id="rbfourplayers" layoutX="198.0" layoutY="222.0" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="225.0" />
+      <RadioButton fx:id="rbgamestar" layoutX="296.0" layoutY="222.0" mnemonicParsing="false" text="Gamestar" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="225.0" />
+      <RadioButton fx:id="rbchip" layoutX="198.0" layoutY="249.0" mnemonicParsing="false" text="Chip" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="250.0" />
+      <RadioButton fx:id="rbgamepro" layoutX="198.0" layoutY="279.0" mnemonicParsing="false" text="GamePro" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="275.0" />
+      <RadioButton fx:id="rbgiga" layoutX="294.0" layoutY="249.0" mnemonicParsing="false" text="Giga" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="250.0" />
+      <RadioButton fx:id="rbgolem" layoutX="306.0" layoutY="279.0" mnemonicParsing="false" text="Golem" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="275.0" />
+      <RadioButton fx:id="rbign" layoutX="391.0" layoutY="222.0" mnemonicParsing="false" text="IGN" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="225.0" />
    </children>
    <effect>
       <ColorAdjust />
