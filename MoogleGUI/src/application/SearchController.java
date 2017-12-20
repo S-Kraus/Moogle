@@ -13,26 +13,71 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class SearchController {
 
 	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
+	
+	@FXML
+	MenuItem mbnew;
+	
+	@FXML
+	MenuItem mbexit;
+	
+	@FXML
+	MenuItem mbclear;
+	
+	@FXML
+	MenuItem mbhelp;
+	
+	@FXML
+	MenuItem mbabout;
+	
+	@FXML
+	TextField suchtextfeld;
+	
+	@FXML
+	Button searchbutton;
 
 	@FXML
 	ChoiceBox<String> choiceBox;
 
 	@FXML
-	TextField suchtextfeld;
+	DatePicker datefrom;
+	
+	@FXML
+	DatePicker dateto;
 
 	@FXML
-	DatePicker zeitraumvon;
-
+	ImageView image;
+	
 	@FXML
-	DatePicker zeitraumbis;
-
+	RadioButton rb4players;
+	
+	@FXML
+	RadioButton rbgamestar;
+	
+	@FXML
+	RadioButton rbchip;
+	
+	@FXML
+	RadioButton rbgamepro;
+	
+	@FXML
+	RadioButton rbgiga;
+	
+	@FXML
+	RadioButton rbgolem;
+	
+	@FXML
+	RadioButton rbign;
+	
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
@@ -50,8 +95,7 @@ public class SearchController {
 		});
 	}
 
-	@FXML
-	Button searchbutton;
+	
 
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {

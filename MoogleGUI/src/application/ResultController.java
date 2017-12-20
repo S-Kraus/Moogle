@@ -13,6 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -30,19 +33,61 @@ public class ResultController {
 			"Organisationssuche");
 
 	@FXML
-	VBox resultvbox;
+	MenuItem mbnew;
+	
+	@FXML
+	MenuItem mbexit;
+	
+	@FXML
+	MenuItem mbclear;
+	
+	@FXML
+	MenuItem mbhelp;
+	
+	@FXML
+	MenuItem mbabout;
 	
 	@FXML
 	TextField suchtextfeld;
-
+	
 	@FXML
-	ImageView image;
+	Button searchbutton;
 
 	@FXML
 	ChoiceBox<String> choiceBox;
+
+	@FXML
+	DatePicker datefrom;
 	
 	@FXML
-	Button suchanfrage;
+	DatePicker dateto;
+
+	@FXML
+	ImageView image;
+	
+	@FXML
+	RadioButton rb4players;
+	
+	@FXML
+	RadioButton rbgamestar;
+	
+	@FXML
+	RadioButton rbchip;
+	
+	@FXML
+	RadioButton rbgamepro;
+	
+	@FXML
+	RadioButton rbgiga;
+	
+	@FXML
+	RadioButton rbgolem;
+	
+	@FXML
+	RadioButton rbign;
+	
+	@FXML
+	VBox resultvbox;
 	
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
