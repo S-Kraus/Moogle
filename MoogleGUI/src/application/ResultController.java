@@ -8,7 +8,6 @@ import org.apache.lucene.queryparser.classic.ParseException;
 
 import io.LuceneDocument;
 import io.LuceneSearcher;
-import io.LuceneSearcher.Sites;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import tools.Site;
 
 public class ResultController {
 
@@ -36,10 +36,10 @@ public class ResultController {
 	TextField suchtextfeld;
 
 	@FXML
-	ImageView picture;
+	ImageView image;
 
 	@FXML
-	ChoiceBox<String> choiceBoxResult;
+	ChoiceBox<String> choiceBox;
 	
 	@FXML
 	Button suchanfrage;
@@ -54,21 +54,24 @@ public class ResultController {
 		//Suchtext holen
 		String suchtext = suchtextfeld.getText();
 		//Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
-		String selectetSuchart = choiceBoxResult.getSelectionModel().getSelectedItem();
+		String selectetSuchart = choiceBox.getSelectionModel().getSelectedItem();
 		//Auswahl Radiobutton für Spieleseiten
 		
 		//Auswahl des Suchzeitraums
-		
-		
-		//Suchabfrage für Lucene vorbereiten
-		Sites[] sites = {Sites.GAMEPRO, Sites.GAMESTAR};
 		Date datefrom = new Date();
 		Date dateto = new Date();
-		String[] dates = {datefrom.toString(), dateto.toString()};
+		datefrom = null;
+		dateto = null;
+		
+		//
+		Site[] sites = {Site.GAMESTAR, Site.GAMEPRO, Site.FOURPLAYERS};
+		
+		//Suchabfrage für Lucene vorbereiten
 		
 		//Lucene abfragen
 		LuceneSearcher searcher = LuceneSearcher.getInstance();
-		//List<LuceneDocument> antwortListe = searcher.getFullSearchResults(suchtext, sites, dates);
+		List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites).setFromDate(datefrom).setToDate(dateto).getSearchResults(searcher.TYPE_TEXT_SEARCH, suchtext);
+		System.out.println(antwortListe.toString());
 		
 		//Lucene Antworten Zeilenweise ausgeben
 		for (int i = 0; i<antwortListe.size(); i++){
@@ -90,11 +93,11 @@ public class ResultController {
 	@FXML
 	public void initialize() {
 		
-		choiceBoxResult.getItems().remove(choiceBoxResult.getItems());
-		choiceBoxResult.getItems().addAll(choiceboxList);
-		choiceBoxResult.getSelectionModel().select(0);
+		choiceBox.getItems().remove(choiceBox.getItems());
+		choiceBox.getItems().addAll(choiceboxList);
+		choiceBox.getSelectionModel().select(0);
 
-		picture.setOnMouseClicked((event) -> {
+		image.setOnMouseClicked((event) -> {
 			try {
 				MouseEvent();
 			} catch (Exception e) {
