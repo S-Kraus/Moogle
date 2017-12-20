@@ -11,13 +11,11 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -40,7 +38,6 @@ public class LuceneSearcher {
 	private Date fromDate;
 	private Date toDate;
 	private IndexSearcher searcher;
-	private Analyzer analyzer;
 
 	public static LuceneSearcher getInstance() throws IOException {
 		if (lSearcher == null) {
@@ -51,7 +48,6 @@ public class LuceneSearcher {
 
 	private LuceneSearcher() throws IOException {
 		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
-		analyzer = new StandardAnalyzer();
 		DirectoryReader dr = DirectoryReader.open(indexDir);
 		searcher = new IndexSearcher(dr);
 	}
@@ -60,7 +56,7 @@ public class LuceneSearcher {
 			throws IOException, ParseException {
 		if (!searchQuery.isEmpty()) {
 			String[] fields = getFields(searchType);
-			MultiFieldQueryParser qp = new MultiFieldQueryParser(fields, analyzer);
+			MultiFieldQueryParser qp = new MultiFieldQueryParser(fields, new StandardAnalyzer());
 			Query query = qp.parse(searchQuery);
 			TopDocs td = searcher.search(query, Integer.MAX_VALUE);
 			ScoreDoc[] sd = td.scoreDocs;
@@ -82,10 +78,11 @@ public class LuceneSearcher {
 					resultList.add(ldoc);
 				}
 			}
+			clearFilters();
 			return resultList;
-		} else {
-			return new ArrayList<>();
 		}
+		clearFilters();
+		return new ArrayList<>();
 	}
 
 	private String[] getFields(int searchType) {
@@ -106,8 +103,14 @@ public class LuceneSearcher {
 			fields = new String[1];
 			fields[0] = "orgs";
 			return fields;
+		default:
+			fields = new String[4];
+			fields[0] = "content";
+			fields[1] = "title";
+			fields[2] = "orgs";
+			fields[3] = "people";
+			return fields;
 		}
-		return null;
 	}
 
 	public LuceneSearcher setSiteFilters(Site[] filters) {
@@ -161,6 +164,12 @@ public class LuceneSearcher {
 		} else {
 			return false;
 		}
+	}
+
+	private void clearFilters() {
+		setFromDate(null);
+		setToDate(null);
+		setSiteFilters(null);
 	}
 
 }

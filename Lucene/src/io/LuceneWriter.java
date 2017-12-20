@@ -16,19 +16,25 @@ public class LuceneWriter {
 
 	private static LuceneWriter lWriter;
 
-	public static LuceneWriter getInstance() {
+	private IndexWriter writer;
+
+	public static LuceneWriter getInstance() throws IOException {
 		if (lWriter == null) {
 			lWriter = new LuceneWriter();
 		}
 		return lWriter;
 	}
 
-	private LuceneWriter() {
-
+	private LuceneWriter() throws IOException {
+		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
+		Analyzer analyzer = new StandardAnalyzer();
+		writer = new IndexWriter(indexDir, new IndexWriterConfig(analyzer));
 	}
 
+	
+	// TODO: Bei Umzug auf Moogle Projekt -> FeedMessage als Parameter
 	public void createDocIndex(String title, String content, String date, String link, String orgs, String people)
-			throws IOException {
+			throws IOException{
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
@@ -41,9 +47,6 @@ public class LuceneWriter {
 			document.add(new TextField("people", people, Field.Store.YES));
 		}
 
-		NIOFSDirectory indexDir = new NIOFSDirectory(Paths.get("C:\\testDir"));
-		Analyzer analyzer = new StandardAnalyzer();
-		IndexWriter writer = new IndexWriter(indexDir, new IndexWriterConfig(analyzer));
 		writer.addDocument(document);
 		writer.close();
 	}
