@@ -8,51 +8,59 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ResultController">
-	<children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SearchController">
+   <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New Search" />
-                  <MenuItem mnemonicParsing="false" text="Exit Program" />
+              <MenuItem fx:id="mbnew" mnemonicParsing="false" text="New Search" />
+                  <MenuItem fx:id="mbexit" mnemonicParsing="false" text="Exit Program" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Clear Search" />
+              <MenuItem fx:id="mbclear" mnemonicParsing="false" text="Clear Search" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Help" />
-              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="mbhelp" mnemonicParsing="false" text="Help" />
+              <MenuItem fx:id="mbabout" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-			<children>
-				<TextField fx:id="suchtextfeld" layoutX="80.0" layoutY="33.0" prefHeight="29.0" prefWidth="405.0" />
-				<Button fx:id="suchanfrage" layoutX="485.0" layoutY="33.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" />
-				<ChoiceBox fx:id="choiceBoxResult" layoutX="368.0" layoutY="35.0" prefHeight="25.0" prefWidth="115.0" />
-				<DatePicker layoutX="80.0" layoutY="70.0" prefHeight="25.0" prefWidth="140.0" promptText="von" />
-				<DatePicker layoutX="230.0" layoutY="70.0" prefHeight="25.0" prefWidth="140.0" promptText="bis" />
-				<RadioButton layoutX="379.0" layoutY="74.0" mnemonicParsing="false" text="GameStar" />
-				<RadioButton layoutX="462.0" layoutY="74.0" mnemonicParsing="false" text="IGN" />
-				<RadioButton layoutX="515.0" layoutY="74.0" mnemonicParsing="false" text="PCGames" />
-			</children>
-		</AnchorPane>
-		<ImageView fx:id="picture" fitHeight="60.0" fitWidth="60.0" layoutX="15.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
-			<image>
-				<Image url="@../Bild1.jpg" />
-			</image>
-		</ImageView>
-      <VBox fx:id="resultvbox" layoutX="15.0" layoutY="115.0" prefHeight="250.0" prefWidth="570.0" />
-	</children>
+      <TextField fx:id="suchtextfeld" layoutX="134.0" layoutY="31.0" prefHeight="29.0" prefWidth="355.0" promptText="Suchbegriff eingeben" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="38.0" />
+      <Button fx:id="searchbutton" layoutX="550.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" AnchorPane.leftAnchor="485.0" AnchorPane.topAnchor="38.0" />
+      <ChoiceBox fx:id="choiceBox" layoutX="421.0" layoutY="33.0" prefHeight="25.0" prefWidth="115.0" AnchorPane.leftAnchor="368.0" AnchorPane.topAnchor="40.0" />
+      <DatePicker fx:id="datefrom" layoutX="134.0" layoutY="75.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="75.0" />
+      <DatePicker fx:id="dateto" layoutX="286.0" layoutY="75.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="75.0" />
+      <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" layoutX="14.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="38.0">
+         <image>
+            <Image url="@../Bild1.jpg" />
+         </image>
+         <effect>
+            <Glow />
+         </effect>
+      </ImageView>
+      <RadioButton fx:id="rbfourplayers" layoutX="134.0" layoutY="111.0" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="110.0" />
+      <RadioButton fx:id="rbgamestar" layoutX="210.0" layoutY="120.0" mnemonicParsing="false" text="Gamestar" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="110.0" />
+      <RadioButton fx:id="rbchip" layoutX="344.0" layoutY="120.0" mnemonicParsing="false" text="Chip" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="110.0" />
+      <RadioButton fx:id="rbgamepro" layoutX="211.0" layoutY="149.0" mnemonicParsing="false" text="GamePro" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="135.0" />
+      <RadioButton fx:id="rbgiga" layoutX="134.0" layoutY="137.0" mnemonicParsing="false" text="Giga" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="135.0" />
+      <RadioButton fx:id="rbgolem" layoutX="300.0" layoutY="158.0" mnemonicParsing="false" text="Golem" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="135.0" />
+      <RadioButton fx:id="rbign" layoutX="286.0" layoutY="120.0" mnemonicParsing="false" text="IGN" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="110.0" />
+      <VBox fx:id="resultvbox" layoutX="18.0" layoutY="163.0" prefHeight="200.0" prefWidth="575.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="158.0" />
+   </children>
+   <effect>
+      <ColorAdjust />
+   </effect>
 </AnchorPane>

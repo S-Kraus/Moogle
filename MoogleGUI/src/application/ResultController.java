@@ -68,7 +68,7 @@ public class ResultController {
 		
 		//Lucene abfragen
 		LuceneSearcher searcher = LuceneSearcher.getInstance();
-		List<LuceneDocument> antwortListe = searcher.getFullSearchResults(suchtext, sites, dates);
+		//List<LuceneDocument> antwortListe = searcher.getFullSearchResults(suchtext, sites, dates);
 		
 		//Lucene Antworten Zeilenweise ausgeben
 		for (int i = 0; i<antwortListe.size(); i++){

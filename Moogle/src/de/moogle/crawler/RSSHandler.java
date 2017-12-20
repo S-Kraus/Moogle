@@ -1,8 +1,12 @@
 package de.moogle.crawler;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -10,33 +14,35 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 public class RSSHandler extends DefaultHandler{
-	protected StringBuilder textContent = new StringBuilder();
-	protected List<Message> items;
-	protected Message message;
+	private StringBuilder textContent = new StringBuilder();
+	private List<Message> items;
+	private Message message;
 	
-	protected String sHeadTitle;
-	protected String sHeadLink;
-	protected String sHeadDescription;
+	private String sHeadTitle;
+	private String sHeadLink;
+	private String sHeadDescription;
 
-	protected boolean boolHeadTitle = false;
-	protected boolean boolHeadLink = false;
-	protected boolean boolHeadDescription = false;
-	protected boolean boolHeadFinished = false;
+	private boolean boolHeadTitle = false;
+	private boolean boolHeadLink = false;
+	private boolean boolHeadDescription = false;
+	private boolean boolHeadFinished = false;
 	
-	protected boolean boolItemTitle = false;
-	protected boolean boolItemDescription = false;
-	protected boolean boolItemPubDate = false;
-	protected boolean boolItemGuid = false;
-	protected boolean boolItemBegin = false;
+	private boolean boolItemTitle = false;
+	private boolean boolItemDescription = false;
+	private boolean boolItemPubDate = false;
+	private boolean boolItemGuid = false;
+	private boolean boolItemBegin = false;
 	
-	protected final String HEAD_TITLE = "title";
-	protected final String HEAD_LINK = "link";
-	protected final String HEAD_DESCRIPTION = "description";
-	protected final String ITEM_BEGIN = "item";
-	protected final String ITEM_TITLE = "title";
-	protected final String ITEM_DESCRIPTION = "description";
-	protected final String ITEM_PUBDATE = "pubdate";
-	protected final String ITEM_GUID = "guid";
+	private final String HEAD_TITLE = "title";
+	private final String HEAD_LINK = "link";
+	private final String HEAD_DESCRIPTION = "description";
+	private final String ITEM_BEGIN = "item";
+	private final String ITEM_TITLE = "title";
+	private final String ITEM_DESCRIPTION = "description";
+	private final String ITEM_PUBDATE = "pubdate";
+	private final String ITEM_GUID = "guid";
+	
+	private DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z",Locale.US);
 
 
 	public List<Message> getItems() {
@@ -108,7 +114,11 @@ public class RSSHandler extends DefaultHandler{
 				message.setDescription(text);
 				boolItemDescription = false;
 			} else if(boolItemPubDate) {
-				message.setPubDate(text);
+				try {
+					message.setPubDate(formatter.parse(text).toString());
+				} catch (ParseException e) {
+					message.setPubDate(text);
+				}
 				boolItemPubDate = false;
 			} else if(boolItemGuid) {
 				message.setGuid(text);
