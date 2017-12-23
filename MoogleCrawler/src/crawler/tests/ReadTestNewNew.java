@@ -1,9 +1,13 @@
 package crawler.tests;
 
+import java.io.IOException;
 import java.util.List;
 
 import crawler.model.Message;
+import crawler.read.Boilerpipe;
 import crawler.read.RSSParserALL;
+import io.LuceneWriter;
+import ner.NERDemo;
 
 public class ReadTestNewNew {
 	
@@ -15,49 +19,52 @@ public class ReadTestNewNew {
 	final static String golem = "https://rss.golem.de/rss.php?tp=games&feed=RSS2.0";
 	final static String ign = "http://de.ign.com/news.xml";
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ClassCastException, ClassNotFoundException {
 		
-		RSSParserALL parser4Players = new RSSParserALL(fourplayers,"4PlayersXSD");
-		List<Message> list4Players = parser4Players.readFeed();
-		for(Message message: list4Players) {
-			System.out.println(message);
-		}
+		NERDemo ner = NERDemo.getInstance();
+		LuceneWriter luceneWriter = LuceneWriter.getInstance();
 		
-		RSSParserALL parserChip = new RSSParserALL(chip,"ChipXSD");
-		List<Message> listChip = parserChip.readFeed();
-		for(Message message: listChip) {
-			System.out.println(message);
-		}
 		
-		RSSParserALL parserGamepro = new RSSParserALL(gamepro,"GameproXSD");
-		List<Message> listGamepro = parserGamepro.readFeed();
-		for(Message message: listGamepro) {
-			System.out.println(message);
-		}
+		RSSParserALL parser = new RSSParserALL(fourplayers, "4PlayersXSD");
+		List<Message> list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
 		
-		RSSParserALL parserGamestar = new RSSParserALL(gamestar,"GamestarXSD");
-		List<Message> listGamestar = parserGamestar.readFeed();
-		for(Message message: listGamestar) {
-			System.out.println(message);
-		}
-		RSSParserALL parserGiga = new RSSParserALL(giga,"GigaXSD");
-		List<Message> listGiga = parserGiga.readFeed();
-		for(Message message: listGiga) {
-			System.out.println(message);
-		}
+		parser = new RSSParserALL(chip,"ChipXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
 		
-		RSSParserALL parserGolem = new RSSParserALL(golem,"GolemXSD");
-		List<Message> listGolem = parserGolem.readFeed();
-		for(Message message: listGolem) {
-			System.out.println(message);
-		}
-		RSSParserALL parserIgn = new RSSParserALL(ign,"IgnXSD");
-		List<Message> listIgn = parserIgn.readFeed();
-		for(Message message: listIgn) {
-			System.out.println(message);
-		}
+		parser = new RSSParserALL(gamepro,"GameproXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
 		
-		System.out.println("Hallo");
+		parser = new RSSParserALL(gamestar,"GamestarXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
+		
+		parser = new RSSParserALL(giga,"GigaXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
+		
+		parser = new RSSParserALL(golem,"GolemXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
+		
+		parser = new RSSParserALL(ign,"IgnXSD");
+		list = parser.readFeed();
+		buildArchive(ner, list, luceneWriter);
 	}
+	
+	private static void buildArchive(NERDemo ner, List<Message> list, LuceneWriter luceneWriter)
+			throws ClassNotFoundException, IOException {
+		for(Message message : list) {
 
+
+			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
+			ner.clearSets();
+			ner.fillSets(message.getExtractedText());
+			luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(), message.getGuid(), message.getOrganisationen(), message.getPersonen());
+
+			 	
+		}
+	}
 }

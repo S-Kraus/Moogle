@@ -1,7 +1,11 @@
 package crawler.read;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -37,6 +41,8 @@ public class RSSHandlerALL extends DefaultHandler{
 	protected final String ITEM_DESCRIPTION = "description";
 	protected final String ITEM_PUBDATE = "pubdate";
 	protected final String ITEM_GUID = "guid";
+	
+	private DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z",Locale.US);
 
 
 	public List<Message> getItems() {
@@ -108,7 +114,11 @@ public class RSSHandlerALL extends DefaultHandler{
 				message.setDescription(text);
 				boolItemDescription = false;
 			} else if(boolItemPubDate) {
-				message.setPubDate(text);
+				try {
+					message.setPubDate(formatter.parse(text).toString());
+				} catch (ParseException e) {
+					message.setPubDate(text);
+				}
 				boolItemPubDate = false;
 			} else if(boolItemGuid) {
 				message.setGuid(text);
