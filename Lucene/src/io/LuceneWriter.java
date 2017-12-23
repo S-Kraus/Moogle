@@ -48,6 +48,5 @@ public class LuceneWriter {
 		}
 
 		writer.addDocument(document);
-		writer.close();
 	}
 }
