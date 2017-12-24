@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -23,7 +24,7 @@ import tools.Site;
 
 public class ResultController {
 
-	//Methode für Main (Zugriff auf Suchtext)
+	// Methode für Main (Zugriff auf Suchtext)
 	public void setText(String suchtext) {
 		this.suchtextfeld.setText(suchtext);
 	}
@@ -34,22 +35,22 @@ public class ResultController {
 
 	@FXML
 	MenuItem mbnew;
-	
+
 	@FXML
 	MenuItem mbexit;
-	
+
 	@FXML
 	MenuItem mbclear;
-	
+
 	@FXML
 	MenuItem mbhelp;
-	
+
 	@FXML
 	MenuItem mbabout;
-	
+
 	@FXML
 	TextField suchtextfeld;
-	
+
 	@FXML
 	Button searchbutton;
 
@@ -58,87 +59,45 @@ public class ResultController {
 
 	@FXML
 	DatePicker datefrom;
-	
+
 	@FXML
 	DatePicker dateto;
 
 	@FXML
 	ImageView image;
-	
+
 	@FXML
 	RadioButton rb4players;
-	
+
 	@FXML
 	RadioButton rbgamestar;
-	
+
 	@FXML
 	RadioButton rbchip;
-	
+
 	@FXML
 	RadioButton rbgamepro;
-	
+
 	@FXML
 	RadioButton rbgiga;
-	
+
 	@FXML
 	RadioButton rbgolem;
-	
+
 	@FXML
 	RadioButton rbign;
-	
+
 	@FXML
 	VBox resultvbox;
-	
-	@FXML
-	protected void buttonPressed() throws IOException, ParseException {
-		
-		//vorherige Suchergebnisse löschen
-		resultvbox.getChildren().clear();
 
-		//Sucheinstellungen abfragen 
-		//Suchtext holen
-		String suchtext = suchtextfeld.getText();
-		//Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
-		String selectetSuchart = choiceBox.getSelectionModel().getSelectedItem();
-		//Auswahl Radiobutton für Spieleseiten
-		
-		//Auswahl des Suchzeitraums
-		Date datefrom = new Date();
-		Date dateto = new Date();
-		datefrom = null;
-		dateto = null;
-		
-		//
-		Site[] sites = {Site.GAMESTAR, Site.GAMEPRO, Site.FOURPLAYERS};
-		
-		//Suchabfrage für Lucene vorbereiten
-		
-		//Lucene abfragen
-		LuceneSearcher searcher = LuceneSearcher.getInstance();
-		List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites).setFromDate(datefrom).setToDate(dateto).getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
-		System.out.println(antwortListe.toString());
-		
-		//Lucene Antworten Zeilenweise ausgeben
-		for (int i = 0; i<antwortListe.size(); i++){
-			
-			System.out.println(antwortListe.get(i).toString());
-			String titel = antwortListe.get(i).getTitle();
-			String date2 = antwortListe.get(i).getDate();
-			String link = antwortListe.get(i).getLink();
-			
-			//Trefferausgabe pro Treffer
-			TrefferAusgabe neuerEintrag = new TrefferAusgabe(i+1, titel, date2, link);
-			resultvbox.getChildren().add(neuerEintrag);
-		};
-		
-		
-	}
+	@FXML
+	ScrollPane scrollpane;
 
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
-		
-		choiceBox.getItems().remove(choiceBox.getItems());
+
+		choiceBox.getItems().clear();
 		choiceBox.getItems().addAll(choiceboxList);
 		choiceBox.getSelectionModel().select(0);
 
@@ -149,9 +108,66 @@ public class ResultController {
 				e.printStackTrace();
 			}
 		});
+
+		suchtextfeld.setOnAction((event) -> {
+			try {
+				buttonPressed();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
-	//Link über Bild zurück zum SearchLayout
+	@FXML
+	protected void buttonPressed() throws IOException, ParseException {
+
+		// vorherige Suchergebnisse löschen
+		resultvbox.getChildren().clear();
+		
+		// Größe der Scrollpane und VBox festlegen
+		
+
+		// Sucheinstellungen abfragen
+		// Suchtext holen
+		String suchtext = suchtextfeld.getText();
+		// Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
+		String selectedSuchart = choiceBox.getSelectionModel().getSelectedItem();
+		// Auswahl Radiobutton für Spieleseiten
+
+		// Auswahl des Suchzeitraums
+		Date datefrom = new Date();
+		Date dateto = new Date();
+		datefrom = null;
+		dateto = null;
+
+		//
+		Site[] sites = { Site.GAMESTAR, Site.GAMEPRO, Site.FOURPLAYERS };
+
+		// Suchabfrage für Lucene vorbereiten
+
+		// Lucene abfragen
+		LuceneSearcher searcher = LuceneSearcher.getInstance();
+		List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites).setFromDate(datefrom).setToDate(dateto)
+				.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
+		System.out.println(antwortListe.toString());
+
+		// Lucene Antworten Zeilenweise ausgeben
+		for (int i = 0; i < antwortListe.size(); i++) {
+
+			System.out.println(antwortListe.get(i).toString());
+			String titel = antwortListe.get(i).getTitle();
+			String date2 = antwortListe.get(i).getDate();
+			String link = antwortListe.get(i).getLink();
+
+			// Trefferausgabe pro Treffer
+			TrefferAusgabe neuerEintrag = new TrefferAusgabe(i + 1, titel, date2, link);
+			resultvbox.getChildren().add(neuerEintrag);
+		}
+		;
+	}
+
+	// Link über Bild zurück zum SearchLayout
 	@FXML
 	private void MouseEvent() {
 		Main search = new Main();

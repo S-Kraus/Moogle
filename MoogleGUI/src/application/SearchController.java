@@ -2,11 +2,8 @@ package application;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-
 import org.apache.lucene.queryparser.classic.ParseException;
 
-import io.LuceneSearcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

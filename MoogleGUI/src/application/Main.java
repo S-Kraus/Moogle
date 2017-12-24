@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -70,7 +71,7 @@ public class Main extends Application {
 
 		Scene scene = primaryStage.getScene();
 		if (scene == null) {
-			scene = new Scene(p, 700, 450);
+			scene = new Scene(p, (Screen.getPrimary().getVisualBounds().getWidth() - 0.0), (Screen.getPrimary().getVisualBounds().getHeight() - 25.0));
 			primaryStage.setScene(scene);
 		} else {
 			primaryStage.getScene().setRoot(p);

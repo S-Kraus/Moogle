@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.Glow?>
@@ -58,7 +59,11 @@
       <RadioButton fx:id="rbgiga" layoutX="134.0" layoutY="137.0" mnemonicParsing="false" text="Giga" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="135.0" />
       <RadioButton fx:id="rbgolem" layoutX="300.0" layoutY="158.0" mnemonicParsing="false" text="Golem" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="135.0" />
       <RadioButton fx:id="rbign" layoutX="286.0" layoutY="120.0" mnemonicParsing="false" text="IGN" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="110.0" />
-      <VBox fx:id="resultvbox" layoutX="18.0" layoutY="163.0" prefHeight="200.0" prefWidth="575.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="158.0" />
+      <ScrollPane fx:id="scrollpane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="165.0">
+         <content>
+            <VBox fx:id="resultvbox" />
+         </content>
+      </ScrollPane>
    </children>
    <effect>
       <ColorAdjust />
