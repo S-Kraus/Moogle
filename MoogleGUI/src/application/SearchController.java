@@ -81,7 +81,8 @@ public class SearchController {
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
-		choiceBox.getItems().remove(choiceBox.getItems());
+		// choiceBox.getItems().remove(choiceBox.getItems());
+		choiceBox.getItems().clear();
 		choiceBox.getItems().addAll(choiceboxList);
 		choiceBox.getSelectionModel().select(0);
 

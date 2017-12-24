@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_144"/>
 	<classpathentry kind="src" path="Lucene/src"/>
 	<classpathentry kind="src" path="Moogle/src"/>
 	<classpathentry kind="src" path="MoogleCrawler/src"/>
 	<classpathentry kind="src" path="MoogleGUI/src"/>
 	<classpathentry kind="src" path="MyNer/src"/>
+	<classpathentry kind="src" path="Moogle/resources"/>
 	<classpathentry kind="lib" path="Lucene/lib/lucene-core-7.1.0.jar"/>
 	<classpathentry kind="lib" path="Lucene/lib/lucene-queryparser-7.1.0.jar"/>
 	<classpathentry kind="lib" path="Moogle/libs/lucene/lucene-core-7.1.0.jar"/>
@@ -21,5 +22,6 @@
 	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rene.Hirrich/git/Moogle/Moogle/libs/ner/stanford-german-corenlp-2017-06-09-models.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -115,7 +115,7 @@ public class ResultController {
 		
 		//Lucene abfragen
 		LuceneSearcher searcher = LuceneSearcher.getInstance();
-		List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites).setFromDate(datefrom).setToDate(dateto).getSearchResults(searcher.TYPE_TEXT_SEARCH, suchtext);
+		List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites).setFromDate(datefrom).setToDate(dateto).getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
 		System.out.println(antwortListe.toString());
 		
 		//Lucene Antworten Zeilenweise ausgeben

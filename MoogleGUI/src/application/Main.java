@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	
+	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
+	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
 
 	private static Stage primaryStage;
 	private static Main instance;
@@ -59,7 +62,7 @@ public class Main extends Application {
 		fxmlLoader.setLocation(Main.class.getResource(fxml));
 		Pane p = (Pane) fxmlLoader.load();
 
-		if (fxml == "../view/ResultLayout.fxml") {
+		if (RESULT_LAYOUT_VIEW.equals(fxml)) {
 			ResultController controller = fxmlLoader.getController();
 			controller.setText(Main.getText());
 			controller.buttonPressed();
@@ -79,7 +82,7 @@ public class Main extends Application {
 
 	void showSearchLayout() {
 		try {
-			replaceSceneContent("../view/SearchLayout.fxml");
+			replaceSceneContent(SEARCH_LAYOUT_VIEW);
 		} catch (Exception ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -87,7 +90,7 @@ public class Main extends Application {
 
 	void showResultLayout() {
 		try {
-			replaceSceneContent("../view/ResultLayout.fxml");
+			replaceSceneContent(RESULT_LAYOUT_VIEW);
 		} catch (Exception ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}

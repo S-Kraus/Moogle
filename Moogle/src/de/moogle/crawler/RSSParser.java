@@ -17,32 +17,28 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-
-
-
-
 public class RSSParser {
-	
-	final URL url;
-	final Source xsdSource;
-	final String suffix = ".xml";
-	
+
+	private static final String XML_SUFFIX = ".xml";
+	private final URL url;
+	private final Source xsdSource;
+
 	public RSSParser(String feedUrl, String xsdFileName) {
-		try{
-			
+		try {
+
 			this.url = new URL(feedUrl);
 			ClassLoader cloader = Thread.currentThread().getContextClassLoader();
-			this.xsdSource = new StreamSource(cloader.getResourceAsStream(xsdFileName.concat(suffix)));
-		} catch( MalformedURLException e){
+			this.xsdSource = new StreamSource(cloader.getResourceAsStream(xsdFileName.concat(XML_SUFFIX)));
+		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public List<Message> readFeed() {
 		List<Message> list = null;
 		try {
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			
+
 			Schema schema = schemaFactory.newSchema(this.xsdSource);
 			SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 			saxFactory.setSchema(schema);
@@ -52,7 +48,6 @@ public class RSSParser {
 			parser.parse(in, handler);
 			list = handler.getItems();
 			in.close();
-			
 
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -64,13 +59,12 @@ public class RSSParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return list;
 	}
-	
+
 	private InputStream read() {
-		
+
 		try {
 			return url.openStream();
 		} catch (IOException e) {

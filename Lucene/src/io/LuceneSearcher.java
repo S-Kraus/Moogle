@@ -51,6 +51,12 @@ public class LuceneSearcher {
 		DirectoryReader dr = DirectoryReader.open(indexDir);
 		searcher = new IndexSearcher(dr);
 	}
+	
+	public static void main(String[] args) throws IOException, ParseException {
+		LuceneSearcher ls = LuceneSearcher.getInstance();
+		List<LuceneDocument> results = ls.getSearchResults(TYPE_TEXT_SEARCH, "Fantasy");
+		System.out.println(results.size());
+	}
 
 	public List<LuceneDocument> getSearchResults(int searchType, String searchQuery)
 			throws IOException, ParseException {
@@ -129,7 +135,8 @@ public class LuceneSearcher {
 	}
 
 	private boolean filterDate(Document doc, boolean isFromDate) {
-		DateFormat docFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+		// DateFormat docFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+		DateFormat docFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
 		try {
 			Date docDate = docFormatter.parse(doc.get("date"));
 			if (isFromDate) {
