@@ -51,12 +51,6 @@ public class LuceneSearcher {
 		DirectoryReader dr = DirectoryReader.open(indexDir);
 		searcher = new IndexSearcher(dr);
 	}
-	
-	public static void main(String[] args) throws IOException, ParseException {
-		LuceneSearcher ls = LuceneSearcher.getInstance();
-		List<LuceneDocument> results = ls.getSearchResults(TYPE_TEXT_SEARCH, "Fantasy");
-		System.out.println(results.size());
-	}
 
 	public List<LuceneDocument> getSearchResults(int searchType, String searchQuery)
 			throws IOException, ParseException {

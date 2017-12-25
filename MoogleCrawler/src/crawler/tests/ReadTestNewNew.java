@@ -54,7 +54,6 @@ public class ReadTestNewNew {
 		list = parser.readFeed();
 		crawler.buildArchive(ner, list, luceneWriter);
 
-		luceneWriter.closeIndexWriter();
 	}
 
 	private void buildArchive(NERDemo ner, List<Message> list, LuceneWriter luceneWriter)

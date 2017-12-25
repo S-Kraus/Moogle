@@ -32,16 +32,6 @@ public class LuceneWriter {
 		config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
 		writer = new IndexWriter(indexDir, config);
 	}
-
-	public void closeIndexWriter() {
-		if (writer != null) {
-			try {
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	
 	// TODO: Bei Umzug auf Moogle Projekt -> FeedMessage als Parameter
 	public void createDocIndex(String title, String content, String date, String link, String orgs, String people)
