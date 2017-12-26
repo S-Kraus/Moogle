@@ -102,6 +102,22 @@ public class Main extends Application {
 		return cbign;
 	}
 
+	public static void setDatefrom(LocalDate datefrom) {
+		Main.datefrom = datefrom;
+	}
+
+	public static LocalDate getDatefrom() {
+		return datefrom;
+	}
+
+	public static void setDateto(LocalDate dateto) {
+		Main.dateto = dateto;
+	}
+
+	public static LocalDate getDateto() {
+		return dateto;
+	}
+
 	public void setPrimaryStage(Stage primaryStage) {
 		primaryStage = Main.primaryStage;
 	}
@@ -153,6 +169,12 @@ public class Main extends Application {
 			if (getCbign() == true) {
 				controller.cbign.setSelected(true);
 			}
+			if (datefrom != null) {
+				controller.datefrom.setValue(datefrom);
+			}
+			if (dateto != null) {
+				controller.dateto.setValue(dateto);
+			}
 			controller.buttonPressed();
 		}
 
@@ -168,7 +190,7 @@ public class Main extends Application {
 		return p;
 	}
 
-	void showSearchLayout() {
+	static void showSearchLayout() {
 		try {
 			replaceSceneContent(SEARCH_LAYOUT_VIEW);
 		} catch (Exception ex) {

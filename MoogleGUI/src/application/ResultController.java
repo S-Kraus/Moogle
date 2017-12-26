@@ -16,6 +16,8 @@ import io.LuceneSearcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -118,11 +120,56 @@ public class ResultController {
 		});
 	}
 
+	@FXML
+	private void handleNew() {
+		Main.showSearchLayout();
+	}
+
+	@FXML
+	private void handleExit() {
+		System.exit(0);
+	}
+
+	@FXML
+	private void handleClear() {
+		suchtextfeld.clear();
+		datefrom.setValue(null);
+		dateto.setValue(null);
+		choiceBox.getSelectionModel().select(0);
+		cbfourplayers.setSelected(true);
+		cbchip.setSelected(true);
+		cbgamepro.setSelected(true);
+		cbgamestar.setSelected(true);
+		cbgiga.setSelected(true);
+		cbgolem.setSelected(true);
+		cbign.setSelected(true);
+		resultvbox.getChildren().clear();
+	}
+
+	@FXML
+	private void handleAbout() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Moogle - Das LeckSieCon");
+		alert.setHeaderText("About");
+		alert.setContentText("Authoren: René und seine 3 kleinen Schweinchen");
+
+		alert.showAndWait();
+	}
+
+	@FXML
+	private void handleHelp() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Moogle - Das LeckSieCon");
+		alert.setHeaderText("Help");
+		alert.setContentText("www.giyf.de");
+
+		alert.showAndWait();
+	}
+
 	// Link über Bild zurück zum SearchLayout
 	@FXML
 	private void MouseEvent() {
-		Main search = new Main();
-		search.showSearchLayout();
+		Main.showSearchLayout();
 	}
 
 	@FXML

@@ -65,19 +65,19 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem fx:id="mbnew" mnemonicParsing="false" text="New Search" />
-                        <MenuItem fx:id="mbexit" mnemonicParsing="false" text="Exit Program" />
+                    <MenuItem fx:id="mbnew" mnemonicParsing="false" onAction="#handleNew" text="New Search" />
+                        <MenuItem fx:id="mbexit" mnemonicParsing="false" onAction="#handleExit" text="Exit Program" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem fx:id="mbclear" mnemonicParsing="false" text="Clear Search" />
+                    <MenuItem fx:id="mbclear" mnemonicParsing="false" onAction="#handleClear" text="Clear Search" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                        <MenuItem fx:id="mbhelp" mnemonicParsing="false" text="Help" />
-                    <MenuItem fx:id="mbabout" mnemonicParsing="false" text="About" />
+                        <MenuItem fx:id="mbhelp" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                    <MenuItem fx:id="mbabout" mnemonicParsing="false" onAction="#handleAbout" text="About" />
                   </items>
                 </Menu>
               </menus>
