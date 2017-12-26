@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -14,58 +14,75 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ResultController">
-   <children>
-      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem fx:id="mbnew" mnemonicParsing="false" text="New Search" />
-                  <MenuItem fx:id="mbexit" mnemonicParsing="false" text="Exit Program" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem fx:id="mbclear" mnemonicParsing="false" text="Clear Search" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-                  <MenuItem fx:id="mbhelp" mnemonicParsing="false" text="Help" />
-              <MenuItem fx:id="mbabout" mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TextField fx:id="suchtextfeld" layoutX="134.0" layoutY="31.0" prefHeight="29.0" prefWidth="355.0" promptText="Suchbegriff eingeben" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="38.0" />
-      <Button fx:id="searchbutton" layoutX="550.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" AnchorPane.leftAnchor="485.0" AnchorPane.topAnchor="38.0" />
-      <ChoiceBox fx:id="choiceBox" layoutX="421.0" layoutY="33.0" prefHeight="25.0" prefWidth="115.0" AnchorPane.leftAnchor="368.0" AnchorPane.topAnchor="40.0" />
-      <DatePicker fx:id="datefrom" layoutX="134.0" layoutY="75.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="75.0" />
-      <DatePicker fx:id="dateto" layoutX="286.0" layoutY="75.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="75.0" />
-      <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" layoutX="14.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="38.0">
-         <image>
-            <Image url="@../Bild1.jpg" />
-         </image>
-         <effect>
-            <Glow />
-         </effect>
-      </ImageView>
-      <RadioButton fx:id="rbfourplayers" layoutX="134.0" layoutY="111.0" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="110.0" />
-      <RadioButton fx:id="rbgamestar" layoutX="210.0" layoutY="120.0" mnemonicParsing="false" text="Gamestar" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="110.0" />
-      <RadioButton fx:id="rbchip" layoutX="344.0" layoutY="120.0" mnemonicParsing="false" text="Chip" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="110.0" />
-      <RadioButton fx:id="rbgamepro" layoutX="211.0" layoutY="149.0" mnemonicParsing="false" text="GamePro" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="135.0" />
-      <RadioButton fx:id="rbgiga" layoutX="134.0" layoutY="137.0" mnemonicParsing="false" text="Giga" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="135.0" />
-      <RadioButton fx:id="rbgolem" layoutX="300.0" layoutY="158.0" mnemonicParsing="false" text="Golem" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="135.0" />
-      <RadioButton fx:id="rbign" layoutX="286.0" layoutY="120.0" mnemonicParsing="false" text="IGN" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="110.0" />
-      <ScrollPane fx:id="scrollpane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="165.0">
-         <content>
-            <VBox fx:id="resultvbox" />
-         </content>
-      </ScrollPane>
-   </children>
-   <effect>
-      <ColorAdjust />
-   </effect>
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ResultController">
+   <center>
+      <BorderPane>
+         <top>
+            <AnchorPane>
+               <children>
+                  <TextField fx:id="suchtextfeld" prefHeight="29.0" promptText="Suchbegriff eingeben" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="searchbutton" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="29.0" prefWidth="100.0" text="Suchen" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="115.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="12.0" />
+                  <DatePicker fx:id="datefrom" promptText="Zeitraum von ..." AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="50.0" />
+                  <DatePicker fx:id="dateto" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="50.0" />
+                  <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                     <image>
+                        <Image url="@../Bild1.jpg" />
+                     </image>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </ImageView>
+                  <CheckBox fx:id="cbfourplayers" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="90.0" />
+                  <CheckBox fx:id="cbgamestar" mnemonicParsing="false" text="Gamestar" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="90.0" />
+                  <CheckBox fx:id="cbchip" mnemonicParsing="false" text="Chip" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="90.0" />
+                  <CheckBox fx:id="cbgamepro" layoutX="211.0" layoutY="149.0" mnemonicParsing="false" text="GamePro" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="115.0" />
+                  <CheckBox fx:id="cbgiga" mnemonicParsing="false" text="Giga" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="115.0" />
+                  <CheckBox fx:id="cbgolem" mnemonicParsing="false" text="Golem" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="115.0" />
+                  <CheckBox fx:id="cbign" mnemonicParsing="false" text="IGN" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="90.0" />
+               </children>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+            </AnchorPane>
+         </top>
+         <center>
+            <ScrollPane fx:id="scrollpane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" BorderPane.alignment="TOP_CENTER">
+               <content>
+                  <VBox fx:id="resultvbox" />
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="mbnew" mnemonicParsing="false" text="New Search" />
+                        <MenuItem fx:id="mbexit" mnemonicParsing="false" text="Exit Program" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem fx:id="mbclear" mnemonicParsing="false" text="Clear Search" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                        <MenuItem fx:id="mbhelp" mnemonicParsing="false" text="Help" />
+                    <MenuItem fx:id="mbabout" mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
