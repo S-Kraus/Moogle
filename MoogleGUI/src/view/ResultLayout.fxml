@@ -29,12 +29,12 @@
                   <DatePicker fx:id="datefrom" promptText="Zeitraum von ..." AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="50.0" />
                   <DatePicker fx:id="dateto" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="50.0" />
                   <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
-                     <image>
-                        <Image url="@../Bild1.jpg" />
-                     </image>
                      <effect>
                         <Glow />
                      </effect>
+                     <image>
+                        <Image url="@../Bild1.jpg" />
+                     </image>
                   </ImageView>
                   <CheckBox fx:id="cbfourplayers" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="90.0" />
                   <CheckBox fx:id="cbgamestar" mnemonicParsing="false" text="Gamestar" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="90.0" />

@@ -28,12 +28,12 @@
             <DatePicker fx:id="datefrom" layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum von ..." AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="170.0" />
             <DatePicker fx:id="dateto" layoutX="350.0" layoutY="170.0" prefHeight="25.0" prefWidth="140.0" promptText="Zeitraum bis ..." AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="170.0" />
             <ImageView fx:id="image" fitHeight="115.0" fitWidth="115.0" layoutX="45.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="170.0">
-               <image>
-                  <Image url="@../Bild1.jpg" />
-               </image>
                <effect>
                   <Glow />
                </effect>
+               <image>
+                  <Image url="@../Bild1.jpg" />
+               </image>
             </ImageView>
             <Text fontSmoothingType="LCD" layoutX="239.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spielenews" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="25.0">
                <font>
