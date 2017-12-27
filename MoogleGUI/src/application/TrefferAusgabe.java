@@ -13,15 +13,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class TrefferAusgabe extends VBox {
-	private static final DateTimeFormatter GERMAN_DATE = DateTimeFormatter.ofPattern("EEE, dd. MMM yyyy HH:mm:ss 'Uhr'", Locale.GERMAN);
-	private static final DateTimeFormatter RSS_DATE = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+	private static final DateTimeFormatter GERMAN_DATE = DateTimeFormatter.ofPattern("EEE, dd. MMM yyyy HH:mm:ss 'Uhr'",
+			Locale.GERMAN);
+	private static final DateTimeFormatter RSS_DATE = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy",
+			Locale.US);
 	private Text textTitel;
 	private Text textDatum;
 	private Text rangZiffer;
 	private Hyperlink textHyperlink;
 	private Button localButton;
 	private TextArea textArea;
-//	private Text abstand;
+	// private Text abstand;
 
 	public TrefferAusgabe(int rang, String title, String date, String link) {
 		super();
@@ -34,19 +36,25 @@ public class TrefferAusgabe extends VBox {
 
 		textTitel = new Text();
 		textTitel.setText(title);
-//		textTitel.autosize();
 		AnchorPane.setTopAnchor(textTitel, 10.0);
 		AnchorPane.setLeftAnchor(textTitel, 25.0);
 		AnchorPane.setRightAnchor(textTitel, 120.0);
 
 		textDatum = new Text();
 		textDatum.setText(convertToGermanDate(date));
-//		textDatum.autosize();
 		AnchorPane.setTopAnchor(textDatum, 10.0);
 		AnchorPane.setRightAnchor(textDatum, 10.0);
 
-		textHyperlink = new Hyperlink();
-		textHyperlink.setText(link);
+		textHyperlink = new Hyperlink(link);
+		textHyperlink.getText();
+		textHyperlink.setOnAction((event) -> {
+			try {
+				Main browser = new Main();
+				browser.showHyperlink(textHyperlink);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		AnchorPane.setTopAnchor(textHyperlink, 25.0);
 		AnchorPane.setLeftAnchor(textHyperlink, 10.0);
 		AnchorPane.setRightAnchor(textHyperlink, 100.0);
@@ -77,12 +85,12 @@ public class TrefferAusgabe extends VBox {
 		ap.getChildren().addAll(rangZiffer, textTitel, textDatum, textHyperlink, localButton, textArea);
 		this.getChildren().add(ap);
 	}
-	
+
 	private static String convertToGermanDate(String date) {
 		if (date == null || "".equals(date.trim())) {
 			return date;
 		}
-		
+
 		try {
 			LocalDateTime ldt = LocalDateTime.parse(date, RSS_DATE);
 			String germanDate = ldt.format(GERMAN_DATE);
@@ -91,5 +99,5 @@ public class TrefferAusgabe extends VBox {
 			return date;
 		}
 	}
-	
+
 }

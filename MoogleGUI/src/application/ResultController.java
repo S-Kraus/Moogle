@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -34,6 +35,9 @@ public class ResultController {
 	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche");
+
+	// ArrayList for Hyperlinks
+	List<Hyperlink> links = new ArrayList<>();
 
 	@FXML
 	MenuItem mbnew;
@@ -184,7 +188,7 @@ public class ResultController {
 		// Motivator Strings
 		HashMap<String, String> map = new HashMap<String, String>();
 
-		map.put(new String("arsch"), new String("Selber. Du riesen Schildkröte!"));
+		map.put(new String("arsch"), new String("Selber. Du Riesen Schildkröte!"));
 		map.put(new String("penner"), new String("Dei Muadda, Buarsche!!!"));
 		map.put(new String("moogle"), new String("Ja. Und jetzt?"));
 		map.put(new String("suche"), new String("Na klar. Such dich selber Junge!"));
@@ -198,7 +202,9 @@ public class ResultController {
 		if (map.containsKey(suchtext)) {
 			suchtextfeld.setText((String) map.get(suchtext));
 		} else {
+			// Suchabfrage für Lucene vorbereiten
 			// Sucheinstellungen abfragen
+
 			// Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
 			String selectedSuchart = choiceBox.getSelectionModel().getSelectedItem();
 
@@ -252,28 +258,35 @@ public class ResultController {
 				instantTo = Instant.from(ldTo.atStartOfDay(ZoneId.systemDefault()));
 			}
 
-			// Suchabfrage für Lucene vorbereiten
 			// Lucene abfragen
 			LuceneSearcher searcher = LuceneSearcher.getInstance();
 			List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites)
 					.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 					.setToDate(instantTo != null ? Date.from(instantTo) : null)
 					.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
-			System.out.println(antwortListe.toString());
+			// System.out.println(antwortListe.toString());
+
+			// Suchergebniscounter
+			int j = 1;
 
 			// Lucene Antworten Zeilenweise ausgeben
 			for (int i = 0; i < antwortListe.size(); i++) {
 
-				System.out.println(antwortListe.get(i).toString());
+				// System.out.println(antwortListe.get(i).toString());
 				String titel = antwortListe.get(i).getTitle();
 				String date2 = antwortListe.get(i).getDate();
 				String link = antwortListe.get(i).getLink();
 
-				// Trefferausgabe pro Treffer
-				TrefferAusgabe neuerEintrag = new TrefferAusgabe(i + 1, titel, date2, link);
-				resultvbox.getChildren().add(neuerEintrag);
+				// Trefferausgabe pro Treffer und Mehrfacheinträge filtern
+				if (i == 0) {
+					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link);
+					resultvbox.getChildren().add(neuerEintrag);
+				} else if (!antwortListe.get(i).getLink().equals(antwortListe.get(i - 1).getLink())) {
+					j++;
+					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link);
+					resultvbox.getChildren().add(neuerEintrag);
+				}
 			}
-			;
 		}
 	}
 }

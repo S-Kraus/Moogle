@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -204,6 +205,10 @@ public class Main extends Application {
 		} catch (Exception ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}
+
+	public void showHyperlink(Hyperlink url) {
+		getHostServices().showDocument(url.getText());
 	}
 
 	public static void main(String[] args) {
