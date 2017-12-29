@@ -66,7 +66,7 @@ public class Main {
 				ner.clearSets();
 				ner.fillSets(message.getExtractedText());
 				luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
-						message.getGuid(), message.getOrganisationen(), message.getPersonen());
+						message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 				writer.write(message);
 			}
 

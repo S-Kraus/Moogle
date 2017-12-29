@@ -6,6 +6,7 @@ import java.util.List;
 import crawler.model.Message;
 import crawler.read.Boilerpipe;
 import crawler.read.RSSParserALL;
+import crawler.write.RSSWriterNew;
 import io.LuceneWriter;
 import ner.NERDemo;
 
@@ -59,12 +60,16 @@ public class ReadTestNewNew {
 	private void buildArchive(NERDemo ner, List<Message> list, LuceneWriter luceneWriter)
 			throws ClassNotFoundException, IOException {
 
+		RSSWriterNew writer = new RSSWriterNew();
 		for (Message message : list) {
+			String path = writer.write(message);
+			message.setPath(path);
+			System.out.println(path);
 			message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
 			ner.clearSets();
 			ner.fillSets(message.getExtractedText());
 			luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
-					message.getGuid(), message.getOrganisationen(), message.getPersonen());
+					message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 		}
 	}
 

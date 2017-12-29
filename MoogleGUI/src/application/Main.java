@@ -1,5 +1,8 @@
 package application;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -213,5 +216,14 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public void showLocalFile(String path) {
+		try {
+			File file = new File(path);
+			Desktop.getDesktop().open(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

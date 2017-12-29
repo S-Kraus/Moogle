@@ -1,9 +1,14 @@
 package application;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import java.util.StringJoiner;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -25,7 +30,7 @@ public class TrefferAusgabe extends VBox {
 	private TextArea textArea;
 	// private Text abstand;
 
-	public TrefferAusgabe(int rang, String title, String date, String link) {
+	public TrefferAusgabe(int rang, String title, String date, String link, String path) {
 		super();
 		AnchorPane ap = new AnchorPane();
 
@@ -62,11 +67,28 @@ public class TrefferAusgabe extends VBox {
 		localButton = new Button();
 		localButton.setText("Lokal anzeigen");
 		localButton.prefWidth(80.0);
+		localButton.setOnAction((event) -> {
+			try {
+				Main texteditor = new Main();
+				texteditor.showLocalFile(path);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		AnchorPane.setTopAnchor(localButton, 25.0);
 		AnchorPane.setRightAnchor(localButton, 10.0);
 
 		textArea = new TextArea();
-		textArea.setText("Test");
+		textArea.setText("");
+		if (path != null && new File(path).exists()) {
+			System.out.println(path);
+			try {
+				StringJoiner sj = new StringJoiner("\n");
+				Files.lines(Paths.get(path)).skip(2).limit(3).forEach(line -> sj.add(line));
+				textArea.setText(sj.toString());
+			} catch (IOException e) {
+			}
+		}
 		AnchorPane.setTopAnchor(textArea, 50.0);
 		AnchorPane.setLeftAnchor(textArea, 10.0);
 		AnchorPane.setRightAnchor(textArea, 10.0);

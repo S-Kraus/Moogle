@@ -34,13 +34,16 @@ public class LuceneWriter {
 	}
 	
 	// TODO: Bei Umzug auf Moogle Projekt -> FeedMessage als Parameter
-	public void createDocIndex(String title, String content, String date, String link, String orgs, String people)
+	public void createDocIndex(String title, String content, String date, String link, String path, String orgs, String people)
 			throws IOException{
 		Document document = new Document();
 		document.add(new TextField("title", title, Field.Store.YES));
 		document.add(new TextField("content", content, Field.Store.NO));
 		document.add(new TextField("date", date, Field.Store.YES));
 		document.add(new TextField("link", link, Field.Store.YES));
+		if (path != null) {
+			document.add(new TextField("path", path, Field.Store.YES));
+		}
 		if (orgs != null && !orgs.isEmpty()) {
 			document.add(new TextField("orgs", orgs, Field.Store.YES));
 		}

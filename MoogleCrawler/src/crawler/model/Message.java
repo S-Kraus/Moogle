@@ -12,6 +12,7 @@ public class Message{
 	private String description;
 	private String pubDate;
 	private String guid;
+	private String path;
 	private String extractedText;
 	private String Organisationen;
 	private String Personen;
@@ -20,7 +21,8 @@ public class Message{
 		
 	}
 
-	public Message(String headTitle, String headLink, String headDescription, String title, String description, String pubDate, String guid, String extractedText) {
+	public Message(String headTitle, String headLink, String headDescription, String title, String description, String pubDate, 
+			String guid, String path, String extractedText) {
 		this.headTitle = headTitle;
 		this.headLink = headLink;
 		this.headDescription = headDescription;
@@ -28,6 +30,7 @@ public class Message{
 		this.description = description;
 		this.pubDate = pubDate;
 		this.guid = guid;
+		this.path = path;
 		this.extractedText = extractedText;
 	}
 
@@ -69,6 +72,14 @@ public class Message{
 
 	public void setGuid(String guid) {
 		this.guid = guid;
+	}
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public String getHeadTitle() {
@@ -122,7 +133,8 @@ public class Message{
 	}
 
 	public Object clone() {
-		Message clone = new Message(this.headTitle,this.headLink,this.headDescription,this.title,this.description,this.pubDate,this.guid,this.extractedText);
+		Message clone = new Message(this.headTitle, this.headLink, this.headDescription, this.title, this.description,
+				this.pubDate, this.guid, this.path, this.extractedText);
 		return clone;
 	}
 
@@ -210,4 +222,5 @@ public class Message{
 		
 		return sbuilder.toString();
 	}
+
 }

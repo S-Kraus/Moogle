@@ -17,13 +17,13 @@ public class RSSWriterNew {
 		try {
 			jContext = JAXBContext.newInstance(Message.class);
 			marshaller = jContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void write(Message message) {
+	public String write(Message message) {
 
 		String fileName = message.createFilename();
 		File file = new File(fileName);
@@ -31,9 +31,10 @@ public class RSSWriterNew {
 		
 		try {
 			marshaller.marshal(message, file);
+			return file.getAbsolutePath();
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "";
 		}
 	}
 }

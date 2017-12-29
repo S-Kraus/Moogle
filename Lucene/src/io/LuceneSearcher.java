@@ -72,9 +72,10 @@ public class LuceneSearcher {
 					String title = doc.get("title");
 					String date = doc.get("date");
 					String link = doc.get("link");
+					String path = doc.get("path");
 					String orgs = doc.get("orgs");
 					String people = doc.get("people");
-					LuceneDocument ldoc = new LuceneDocument(title, date, link, orgs, people);
+					LuceneDocument ldoc = new LuceneDocument(title, date, link, path, orgs, people);
 					resultList.add(ldoc);
 				}
 			}

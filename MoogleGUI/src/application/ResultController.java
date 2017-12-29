@@ -260,7 +260,7 @@ public class ResultController {
 
 			// Lucene abfragen
 			LuceneSearcher searcher = LuceneSearcher.getInstance();
-			List<LuceneDocument> antwortListe = searcher.setSiteFilters(sites)
+			List<LuceneDocument> documents = searcher.setSiteFilters(sites)
 					.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 					.setToDate(instantTo != null ? Date.from(instantTo) : null)
 					.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
@@ -270,20 +270,21 @@ public class ResultController {
 			int j = 1;
 
 			// Lucene Antworten Zeilenweise ausgeben
-			for (int i = 0; i < antwortListe.size(); i++) {
+			for (int i = 0; i < documents.size(); i++) {
 
 				// System.out.println(antwortListe.get(i).toString());
-				String titel = antwortListe.get(i).getTitle();
-				String date2 = antwortListe.get(i).getDate();
-				String link = antwortListe.get(i).getLink();
+				String titel = documents.get(i).getTitle();
+				String date2 = documents.get(i).getDate();
+				String link = documents.get(i).getLink();
+				String path = documents.get(i).getPath();
 
 				// Trefferausgabe pro Treffer und Mehrfacheinträge filtern
 				if (i == 0) {
-					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link);
+					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
 					resultvbox.getChildren().add(neuerEintrag);
-				} else if (!antwortListe.get(i).getLink().equals(antwortListe.get(i - 1).getLink())) {
+				} else if (!documents.get(i).getLink().equals(documents.get(i - 1).getLink())) {
 					j++;
-					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link);
+					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
 					resultvbox.getChildren().add(neuerEintrag);
 				}
 			}
