@@ -23,6 +23,6 @@
 	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="MyNer/lib/stanford-ner-3.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Rene.Hirrich/git/Moogle/Moogle/libs/ner/stanford-german-corenlp-2017-06-09-models.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rene.Hirrich/git/Moogle/Moogle/libs/jdom2/jdom-2.0.6.jar"/>
+	<classpathentry kind="lib" path="Moogle/libs/jdom2/jdom-2.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
