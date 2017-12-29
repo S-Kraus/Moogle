@@ -1,14 +1,12 @@
 package application;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
-import java.util.StringJoiner;
+
+import org.jdom2.JDOMException;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -79,16 +77,22 @@ public class TrefferAusgabe extends VBox {
 		AnchorPane.setRightAnchor(localButton, 10.0);
 
 		textArea = new TextArea();
-		textArea.setText("");
-		if (path != null && new File(path).exists()) {
-			System.out.println(path);
-			try {
-				StringJoiner sj = new StringJoiner("\n");
-				Files.lines(Paths.get(path)).skip(2).limit(3).forEach(line -> sj.add(line));
-				textArea.setText(sj.toString());
-			} catch (IOException e) {
-			}
+		try {
+			textArea.setText(ReadXMLFile.showXmlContent(path));
+		} catch (JDOMException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+//		if (path != null && new File(path).exists()) {
+//			System.out.println(path);
+//			try {
+//				StringJoiner sj = new StringJoiner("\n");
+//				Files.lines(Paths.get(path)).skip(2).limit(3).forEach(line -> sj.add(line));
+//				textArea.setText(sj.toString());
+//			} catch (IOException e) {
+//			}
+//		}
 		AnchorPane.setTopAnchor(textArea, 50.0);
 		AnchorPane.setLeftAnchor(textArea, 10.0);
 		AnchorPane.setRightAnchor(textArea, 10.0);
