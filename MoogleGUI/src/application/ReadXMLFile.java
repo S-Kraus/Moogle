@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -27,15 +29,18 @@ public class ReadXMLFile {
 
 	public static String showXmlContent(String path) throws JDOMException, IOException {
 
-		try {
 			SAXBuilder jdomBuilder = new SAXBuilder();
 			Document jdomDocument = jdomBuilder.build(path);
 			Element rss = jdomDocument.getRootElement();
+			Pattern pattern = Pattern.compile("(<).*(>)");
 			descr = rss.getChildText("description");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return descr.toString();
+			Matcher matcher = pattern.matcher(descr);
+			if (matcher.find())
+			{
+			    descr = descr.replaceAll(matcher.group(0), "");
+			    descr = descr.replaceAll("&quot;", "\"");
+			    descr = descr.replaceAll("&amp;", "&");
+			}
+		return descr;
 	}
 }

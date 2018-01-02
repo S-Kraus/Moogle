@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -279,13 +280,15 @@ public class ResultController {
 				String path = documents.get(i).getPath();
 
 				// Trefferausgabe pro Treffer und Mehrfacheinträge filtern
-				if (i == 0) {
-					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
-					resultvbox.getChildren().add(neuerEintrag);
-				} else if (!documents.get(i).getLink().equals(documents.get(i - 1).getLink())) {
-					j++;
-					TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
-					resultvbox.getChildren().add(neuerEintrag);
+				if (new File(documents.get(i).getPath()).exists()) {
+					if (i == 0) {
+						TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
+						resultvbox.getChildren().add(neuerEintrag);
+					} else if (!documents.get(i).getLink().equals(documents.get(i - 1).getLink())) {
+						j++;
+						TrefferAusgabe neuerEintrag = new TrefferAusgabe(j, titel, date2, link, path);
+						resultvbox.getChildren().add(neuerEintrag);
+					}
 				}
 			}
 		}
