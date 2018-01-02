@@ -22,7 +22,6 @@ public class TrefferAusgabe extends VBox {
 			Locale.US);
 	private Text textTitel;
 	private Text textDatum;
-	private Text rangZiffer;
 	private Hyperlink textHyperlink;
 	private Button localButton;
 	private TextArea textArea;
@@ -32,15 +31,11 @@ public class TrefferAusgabe extends VBox {
 		super();
 		AnchorPane ap = new AnchorPane();
 
-		rangZiffer = new Text();
-		rangZiffer.setText(Integer.toString(rang) + ". ");
-		AnchorPane.setTopAnchor(rangZiffer, 10.0);
-		AnchorPane.setLeftAnchor(rangZiffer, 10.0);
-
 		textTitel = new Text();
 		textTitel.setText(title);
+		textTitel.setText(Integer.toString(rang) + ". " + title);
 		AnchorPane.setTopAnchor(textTitel, 10.0);
-		AnchorPane.setLeftAnchor(textTitel, 25.0);
+		AnchorPane.setLeftAnchor(textTitel, 10.0);
 		AnchorPane.setRightAnchor(textTitel, 120.0);
 
 		textDatum = new Text();
@@ -100,17 +95,7 @@ public class TrefferAusgabe extends VBox {
 		AnchorPane.setRightAnchor(textArea, 10.0);
 		AnchorPane.setBottomAnchor(textArea, 10.0);
 
-		// HBox oben = new HBox();
-		// oben.resize(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
-		// oben.getChildren().addAll(rangZiffer, textTitel, textDatum);
-		//
-		// HBox unten = new HBox();
-		// unten.resize(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
-		// unten.getChildren().addAll(textHyperlink, lokalerButton);
-
-		// this.getChildren().addAll(oben, unten, textFeld, abstand);
-
-		ap.getChildren().addAll(rangZiffer, textTitel, textDatum, textHyperlink, localButton, textArea);
+		ap.getChildren().addAll(textTitel, textDatum, textHyperlink, localButton, textArea);
 		this.getChildren().add(ap);
 	}
 

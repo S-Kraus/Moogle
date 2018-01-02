@@ -31,6 +31,7 @@ public class LuceneSearcher {
 	public static final int TYPE_TEXT_SEARCH = 0;
 	public static final int TYPE_PERSON_SEARCH = 1;
 	public static final int TYPE_ORG_SEARCH = 2;
+	public static final int TYPE_PERSON_ORG_SEARCH = 3;
 
 	private static LuceneSearcher lSearcher;
 
@@ -104,6 +105,11 @@ public class LuceneSearcher {
 			fields = new String[1];
 			fields[0] = "orgs";
 			return fields;
+		case TYPE_PERSON_ORG_SEARCH:
+			fields = new String[2];
+			fields[0] = "people";
+			fields[1] = "orgs";
+			return fields;
 		default:
 			fields = new String[4];
 			fields[0] = "content";
@@ -128,7 +134,7 @@ public class LuceneSearcher {
 		this.toDate = date;
 		return this;
 	}
-
+	
 	private boolean filterDate(Document doc, boolean isFromDate) {
 		// DateFormat docFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 		DateFormat docFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);

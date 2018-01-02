@@ -20,7 +20,7 @@ public class SearchController {
 
 	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche");
+			"Organisationssuche", "Personen- und Organisationssuche");
 
 	@FXML
 	MenuItem mbnew;
@@ -144,7 +144,9 @@ public class SearchController {
 
 		// Speichern des Suchtextes in Mainvariable
 		Main.setText(suchtextfeld.getText());
-		suchtextfeld.clear();
+
+		// Abfrage der Suchart
+		Main.setChoiceBox(choiceBox.getValue());
 
 		// Abfrage der ChoiceBoxen
 		if (cbfourplayers.isSelected() == false) {
@@ -176,6 +178,9 @@ public class SearchController {
 		if (dateto.getValue() != null) {
 			Main.setDateto(dateto.getValue());
 		}
+
+		// Clearing der Suchfelder
+		handleClear();
 
 		// Wechsel zum Resultlayout
 		Main.showResultLayout();

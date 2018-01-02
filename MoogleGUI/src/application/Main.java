@@ -33,6 +33,7 @@ public class Main extends Application {
 	private static Boolean cbign = true;
 	private static LocalDate datefrom = null;
 	private static LocalDate dateto = null;
+	private static String choiceBox = null;
 
 	public Main() {
 		instance = this;
@@ -121,6 +122,14 @@ public class Main extends Application {
 	public static LocalDate getDateto() {
 		return dateto;
 	}
+	
+	public static void setChoiceBox(String choiceBox) {
+		Main.choiceBox = choiceBox;
+	}
+	
+	public static String getChoiceBox() {
+		return choiceBox;
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		primaryStage = Main.primaryStage;
@@ -152,6 +161,7 @@ public class Main extends Application {
 		if (RESULT_LAYOUT_VIEW.equals(fxml)) {
 			ResultController controller = fxmlLoader.getController();
 			controller.suchtextfeld.setText(text);
+			controller.choiceBox.setValue(choiceBox);
 			if (getCbfourplayers() == true) {
 				controller.cbfourplayers.setSelected(true);
 			}

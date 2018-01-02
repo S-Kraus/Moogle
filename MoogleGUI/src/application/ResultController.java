@@ -35,7 +35,7 @@ public class ResultController {
 
 	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche");
+			"Organisationssuche", "Personen- und Organisationssuche");
 
 	// ArrayList for Hyperlinks
 	List<Hyperlink> links = new ArrayList<>();
@@ -207,7 +207,7 @@ public class ResultController {
 			// Sucheinstellungen abfragen
 
 			// Auswahl Suchart: Volltextsuche, Personensuche, Orgsuche abfragen
-			String selectedSuchart = choiceBox.getSelectionModel().getSelectedItem();
+			String selectedSearch = choiceBox.getSelectionModel().getSelectedItem();
 
 			// Auswahl Checkboxes für Spieleseiten
 			List<String> sitelist = new ArrayList<>();
@@ -261,11 +261,33 @@ public class ResultController {
 
 			// Lucene abfragen
 			LuceneSearcher searcher = LuceneSearcher.getInstance();
-			List<LuceneDocument> documents = searcher.setSiteFilters(sites)
-					.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
-					.setToDate(instantTo != null ? Date.from(instantTo) : null)
-					.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
-			// System.out.println(antwortListe.toString());
+			List<LuceneDocument> documents;
+			switch (selectedSearch) {
+			case "Personen- und Organisationssuche":
+				documents = searcher.setSiteFilters(sites)
+						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
+						.setToDate(instantTo != null ? Date.from(instantTo) : null)
+						.getSearchResults(LuceneSearcher.TYPE_PERSON_ORG_SEARCH, suchtext);
+				break;
+			case "Personensuche":
+				documents = searcher.setSiteFilters(sites)
+						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
+						.setToDate(instantTo != null ? Date.from(instantTo) : null)
+						.getSearchResults(LuceneSearcher.TYPE_PERSON_SEARCH, suchtext);
+				break;
+			case "Organisationssuche":
+				documents = searcher.setSiteFilters(sites)
+						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
+						.setToDate(instantTo != null ? Date.from(instantTo) : null)
+						.getSearchResults(LuceneSearcher.TYPE_ORG_SEARCH, suchtext);
+				break;
+			default:
+				documents = searcher.setSiteFilters(sites)
+						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
+						.setToDate(instantTo != null ? Date.from(instantTo) : null)
+						.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
+				break;
+			}
 
 			// Suchergebniscounter
 			int j = 1;
