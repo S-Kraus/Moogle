@@ -168,35 +168,17 @@ public class SearchController {
 		Main.setChoiceBox(choiceBox.getValue());
 
 		// Abfrage der ChoiceBoxen
-		if (cbfourplayers.isSelected() == false) {
-			Main.setCbfourplayers(false);
-		}
-		if (cbchip.selectedProperty().getValue() == false) {
-			Main.setCbchip(false);
-		}
-		if (cbgamepro.selectedProperty().getValue() == false) {
-			Main.setCbgamepro(false);
-		}
-		if (cbgamestar.selectedProperty().getValue() == false) {
-			Main.setCbgamestar(false);
-		}
-		if (cbgiga.selectedProperty().getValue() == false) {
-			Main.setCbgiga(false);
-		}
-		if (cbgolem.selectedProperty().getValue() == false) {
-			Main.setCbgolem(false);
-		}
-		if (cbign.selectedProperty().getValue() == false) {
-			Main.setCbign(false);
-		}
+		Main.setCbfourplayers(cbfourplayers.isSelected());
+		Main.setCbchip(cbchip.isSelected());
+		Main.setCbgamepro(cbgamepro.isSelected());
+		Main.setCbgamestar(cbgamestar.isSelected());
+		Main.setCbgiga(cbgiga.isSelected());
+		Main.setCbgolem(cbgolem.isSelected());
+		Main.setCbign(cbign.isSelected());
 
 		// Abfrage des Suchzeitraums
-		if (datefrom.getValue() != null) {
-			Main.setDatefrom(datefrom.getValue());
-		}
-		if (dateto.getValue() != null) {
-			Main.setDateto(dateto.getValue());
-		}
+		Main.setDatefrom(datefrom.getValue());
+		Main.setDateto(dateto.getValue());
 
 		// Clearing der Suchfelder
 		handleClear();

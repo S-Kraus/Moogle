@@ -22,28 +22,29 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private static Main instance;
+
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
-	final ReadTestNewNew rss = new ReadTestNewNew();
+	private static final ReadTestNewNew rss = new ReadTestNewNew();
 
 	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
 	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
 
-	private static Main instance;
 	private static Stage primaryStage;
-	private static int cFlag = 0;
-	private static SearchController controller1 = null;
-	private static ResultController controller2 = null;
-	private static String text = "null";
-	private static Boolean cbfourplayers = true;
-	private static Boolean cbchip = true;
-	private static Boolean cbgamepro = true;
-	private static Boolean cbgamestar = true;
-	private static Boolean cbgiga = true;
-	private static Boolean cbgolem = true;
-	private static Boolean cbign = true;
-	private static LocalDate datefrom = null;
-	private static LocalDate dateto = null;
-	private static String choiceBox = null;
+	private static int cFlag;
+	private static SearchController controller1;
+	private static ResultController controller2;
+	private static String text;
+	private static Boolean cbfourplayers;
+	private static Boolean cbchip;
+	private static Boolean cbgamepro;
+	private static Boolean cbgamestar;
+	private static Boolean cbgiga;
+	private static Boolean cbgolem;
+	private static Boolean cbign;
+	private static LocalDate datefrom;
+	private static LocalDate dateto;
+	private static String choiceBox;
 
 	public Main() {
 		instance = this;
@@ -51,6 +52,14 @@ public class Main extends Application {
 
 	public static Main getInstance() {
 		return instance;
+	}
+
+	public static Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public static void setPrimaryStage(Stage primaryStage) {
+		Main.primaryStage = primaryStage;
 	}
 
 	public static int getcFlag() {
@@ -77,109 +86,117 @@ public class Main extends Application {
 		Main.controller2 = controller2;
 	}
 
-	public static void setText(String text) {
-		Main.text = text;
-	}
-
 	public static String getText() {
 		return text;
 	}
 
-	public static void setCbfourplayers(Boolean cbfourplayers) {
-		Main.cbfourplayers = cbfourplayers;
+	public static void setText(String text) {
+		Main.text = text;
 	}
 
 	public static Boolean getCbfourplayers() {
 		return cbfourplayers;
 	}
 
-	public static void setCbchip(Boolean cbchip) {
-		Main.cbchip = cbchip;
+	public static void setCbfourplayers(Boolean cbfourplayers) {
+		Main.cbfourplayers = cbfourplayers;
 	}
 
 	public static Boolean getCbchip() {
 		return cbchip;
 	}
 
-	public static void setCbgamepro(Boolean cbgamepro) {
-		Main.cbgamepro = cbgamepro;
+	public static void setCbchip(Boolean cbchip) {
+		Main.cbchip = cbchip;
 	}
 
 	public static Boolean getCbgamepro() {
 		return cbgamepro;
 	}
 
-	public static void setCbgamestar(Boolean cbgamestar) {
-		Main.cbgamestar = cbgamestar;
+	public static void setCbgamepro(Boolean cbgamepro) {
+		Main.cbgamepro = cbgamepro;
 	}
 
 	public static Boolean getCbgamestar() {
 		return cbgamestar;
 	}
 
-	public static void setCbgiga(Boolean cbgiga) {
-		Main.cbgiga = cbgiga;
+	public static void setCbgamestar(Boolean cbgamestar) {
+		Main.cbgamestar = cbgamestar;
 	}
 
 	public static Boolean getCbgiga() {
 		return cbgiga;
 	}
 
-	public static void setCbgolem(Boolean cbgolem) {
-		Main.cbgolem = cbgolem;
+	public static void setCbgiga(Boolean cbgiga) {
+		Main.cbgiga = cbgiga;
 	}
 
 	public static Boolean getCbgolem() {
 		return cbgolem;
 	}
 
-	public static void setCbign(Boolean cbign) {
-		Main.cbign = cbign;
+	public static void setCbgolem(Boolean cbgolem) {
+		Main.cbgolem = cbgolem;
 	}
 
 	public static Boolean getCbign() {
 		return cbign;
 	}
 
-	public static void setDatefrom(LocalDate datefrom) {
-		Main.datefrom = datefrom;
+	public static void setCbign(Boolean cbign) {
+		Main.cbign = cbign;
 	}
 
 	public static LocalDate getDatefrom() {
 		return datefrom;
 	}
 
-	public static void setDateto(LocalDate dateto) {
-		Main.dateto = dateto;
+	public static void setDatefrom(LocalDate datefrom) {
+		Main.datefrom = datefrom;
 	}
 
 	public static LocalDate getDateto() {
 		return dateto;
 	}
 
-	public static void setChoiceBox(String choiceBox) {
-		Main.choiceBox = choiceBox;
+	public static void setDateto(LocalDate dateto) {
+		Main.dateto = dateto;
 	}
 
 	public static String getChoiceBox() {
 		return choiceBox;
 	}
 
-	public void setPrimaryStage(Stage primaryStage) {
-		primaryStage = Main.primaryStage;
+	public static void setChoiceBox(String choiceBox) {
+		Main.choiceBox = choiceBox;
 	}
 
-	public Stage getPrimaryStage() {
-		return primaryStage;
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public ReadTestNewNew getRss() {
+		return rss;
+	}
+
+	public static String getResultLayoutView() {
+		return RESULT_LAYOUT_VIEW;
+	}
+
+	public static String getSearchLayoutView() {
+		return SEARCH_LAYOUT_VIEW;
 	}
 
 	public void initServices() {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws Exception {
-				rss.start();
+				getRss().start();
 				while (true) {
-					if (rss.getState().toString() == "RUNNABLE") {
+					if (getRss().getState().toString() == "RUNNABLE") {
 						Platform.runLater(() -> {
 							if (getcFlag() == 1) {
 								getController1().threadStatus.setText("RSS Crawler is running ... ");
@@ -209,9 +226,9 @@ public class Main extends Application {
 		th.setDaemon(true);
 		th.start();
 
-		primaryStage.setOnCloseRequest(event -> {
-			logger.info("Stopping Services ...");
-			rss.interrupt();
+		getPrimaryStage().setOnCloseRequest(event -> {
+			getLogger().info("Stopping Services ...");
+			getRss().interrupt();
 			th.interrupt();
 		});
 	}
@@ -219,15 +236,15 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Main.primaryStage = primaryStage;
-			Main.primaryStage.setTitle("Moogle - Das LeckSieCon");
+			setPrimaryStage(primaryStage);
+			getPrimaryStage().setTitle("Moogle - Das LeckSieCon");
 
 			showSearchLayout();
-			primaryStage.show();
+			getPrimaryStage().show();
 			initServices();
 
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, null, ex);
+			getLogger().log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -241,47 +258,33 @@ public class Main extends Application {
 		} else {
 			setController2(fxmlLoader.getController());
 			setcFlag(2);
-			getController2().suchtextfeld.setText(text);
-			getController2().choiceBox.setValue(choiceBox);
-			if (getCbfourplayers() == true) {
-				getController2().cbfourplayers.setSelected(true);
-			}
-			if (getCbchip() == true) {
-				getController2().cbchip.setSelected(true);
-			}
-			if (getCbgamepro() == true) {
-				getController2().cbgamepro.setSelected(true);
-			}
-			if (getCbgamestar() == true) {
-				getController2().cbgamestar.setSelected(true);
-			}
-			if (getCbgiga() == true) {
-				getController2().cbgiga.setSelected(true);
-			}
-			if (getCbgolem() == true) {
-				getController2().cbgolem.setSelected(true);
-			}
-			if (getCbign() == true) {
-				getController2().cbign.setSelected(true);
-			}
+			getController2().suchtextfeld.setText(getText());
+			getController2().choiceBox.setValue(getChoiceBox());
+			getController2().cbfourplayers.setSelected(getCbfourplayers());
+			getController2().cbchip.setSelected(getCbchip());
+			getController2().cbgamepro.setSelected(getCbgamepro());
+			getController2().cbgamestar.setSelected(getCbgamestar());
+			getController2().cbgiga.setSelected(getCbgiga());
+			getController2().cbgolem.setSelected(getCbgolem());
+			getController2().cbign.setSelected(getCbign());
 			if (datefrom != null) {
-				getController2().datefrom.setValue(datefrom);
+				getController2().datefrom.setValue(getDatefrom());
 			}
 			if (dateto != null) {
-				getController2().dateto.setValue(dateto);
+				getController2().dateto.setValue(getDateto());
 			}
 			getController2().buttonPressed();
 		}
 
-		Scene scene = primaryStage.getScene();
+		Scene scene = getPrimaryStage().getScene();
 		if (scene == null) {
 			scene = new Scene(p, (Screen.getPrimary().getVisualBounds().getWidth() - 0.0),
 					(Screen.getPrimary().getVisualBounds().getHeight() - 25.0));
-			primaryStage.setScene(scene);
+			getPrimaryStage().setScene(scene);
 		} else {
-			primaryStage.getScene().setRoot(p);
+			getPrimaryStage().getScene().setRoot(p);
 		}
-		primaryStage.sizeToScene();
+		getPrimaryStage().sizeToScene();
 		return p;
 	}
 
@@ -290,7 +293,7 @@ public class Main extends Application {
 			replaceSceneContent(SEARCH_LAYOUT_VIEW);
 			// fxml = "SEARCH_LAYOUT_VIEW";
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, null, ex);
+			getLogger().log(Level.SEVERE, null, ex);
 		}
 		// return fxml;
 	}
@@ -300,7 +303,7 @@ public class Main extends Application {
 			replaceSceneContent(RESULT_LAYOUT_VIEW);
 			// fxml = "RESULT_LAYOUT_VIEW";
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, null, ex);
+			getLogger().log(Level.SEVERE, null, ex);
 		}
 		// return fxml;
 	}
