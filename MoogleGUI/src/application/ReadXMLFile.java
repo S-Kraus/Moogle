@@ -32,15 +32,20 @@ public class ReadXMLFile {
 			SAXBuilder jdomBuilder = new SAXBuilder();
 			Document jdomDocument = jdomBuilder.build(path);
 			Element rss = jdomDocument.getRootElement();
-			Pattern pattern = Pattern.compile("(<).*(>)");
 			descr = rss.getChildText("description");
+			
+			Pattern pattern = Pattern.compile("(<).*?(>)");
 			Matcher matcher = pattern.matcher(descr);
-			if (matcher.find())
-			{
-			    descr = descr.replaceAll(matcher.group(0), "");
-			    descr = descr.replaceAll("&quot;", "\"");
-			    descr = descr.replaceAll("&amp;", "&");
-			}
-		return descr;
+			descr = matcher.replaceAll("");
+			
+			Pattern pattern2 = Pattern.compile("&amp;");
+			Matcher matcher2 = pattern2.matcher(descr);
+			descr = matcher2.replaceAll("&");
+			
+			Pattern pattern3 = Pattern.compile("&quot;");
+			Matcher matcher3 = pattern3.matcher(descr);
+			descr = matcher3.replaceAll("\"");
+			
+			return descr;
 	}
 }

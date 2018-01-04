@@ -74,22 +74,24 @@ public class TrefferAusgabe extends VBox {
 		textArea = new TextArea();
 		try {
 			textArea.setText(ReadXMLFile.showXmlContent(path));
+			textArea.setWrapText(true);
 		} catch (JDOMException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// if (path != null && new File(path).exists()) {
-		// System.out.println(path);
-		// try {
-		// StringJoiner sj = new StringJoiner("\n");
-		// Files.lines(Paths.get(path)).skip(2).limit(3).forEach(line -> sj.add(line));
-		// textArea.setText(sj.toString());
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// }
+//		if (path != null && new File(path).exists()) {
+//			System.out.println(path);
+//			try {
+//				StringJoiner sj = new StringJoiner("\n");
+//				Files.lines(Paths.get(path)).skip(2).limit(3).forEach(line -> sj.add(line));
+//				textArea.setText(sj.toString());
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+
 		AnchorPane.setTopAnchor(textArea, 50.0);
 		AnchorPane.setLeftAnchor(textArea, 10.0);
 		AnchorPane.setRightAnchor(textArea, 10.0);

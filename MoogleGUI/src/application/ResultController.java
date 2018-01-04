@@ -28,7 +28,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import tools.Site;
 
 public class ResultController {
@@ -36,9 +39,6 @@ public class ResultController {
 	// Befüllung der Auswahlliste für die Suchart
 	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
 			"Organisationssuche", "Personen- und Organisationssuche");
-
-	// ArrayList for Hyperlinks
-	List<Hyperlink> links = new ArrayList<>();
 
 	@FXML
 	MenuItem mbnew;
@@ -93,6 +93,12 @@ public class ResultController {
 
 	@FXML
 	CheckBox cbign;
+
+	@FXML
+	Text threadStatus;
+
+	@FXML
+	Circle threadStatusCircle;
 
 	@FXML
 	VBox resultvbox;
@@ -166,7 +172,17 @@ public class ResultController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Moogle - Das LeckSieCon");
 		alert.setHeaderText("Help");
-		alert.setContentText("www.giyf.de");
+
+		FlowPane fp = new FlowPane();
+		Hyperlink link = new Hyperlink("www.gidf.de");
+		fp.getChildren().addAll(link);
+		alert.getDialogPane().contentProperty().set(fp);
+
+		link.setOnAction((event) -> {
+			alert.close();
+			Main browser = new Main();
+			browser.showHyperlink(link);
+		});
 
 		alert.showAndWait();
 	}
@@ -268,25 +284,25 @@ public class ResultController {
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_PERSON_ORG_SEARCH, suchtext);
-				break;
+				// break;
 			case "Personensuche":
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_PERSON_SEARCH, suchtext);
-				break;
+				// break;
 			case "Organisationssuche":
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_ORG_SEARCH, suchtext);
-				break;
+				// break;
 			default:
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
-				break;
+				// break;
 			}
 
 			// Suchergebniscounter

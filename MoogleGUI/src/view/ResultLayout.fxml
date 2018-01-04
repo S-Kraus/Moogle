@@ -15,7 +15,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ResultController">
    <center>
@@ -85,4 +88,12 @@
          </children>
       </VBox>
    </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Text fx:id="threadStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Circle fx:id="threadStatusCircle" fill="#20ff1f" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

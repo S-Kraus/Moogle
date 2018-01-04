@@ -7,22 +7,32 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import crawler.tests.ReadTestNewNew;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private static final Logger logger = Logger.getLogger(Main.class.getName());
+	final ReadTestNewNew rss = new ReadTestNewNew();
+
 	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
 	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
 
-	private static Stage primaryStage;
 	private static Main instance;
+	private static Stage primaryStage;
+	private static int cFlag = 0;
+	private static SearchController controller1 = null;
+	private static ResultController controller2 = null;
 	private static String text = "null";
 	private static Boolean cbfourplayers = true;
 	private static Boolean cbchip = true;
@@ -41,6 +51,30 @@ public class Main extends Application {
 
 	public static Main getInstance() {
 		return instance;
+	}
+
+	public static int getcFlag() {
+		return cFlag;
+	}
+
+	public static void setcFlag(int cFlag) {
+		Main.cFlag = cFlag;
+	}
+
+	public static SearchController getController1() {
+		return controller1;
+	}
+
+	public static void setController1(SearchController controller1) {
+		Main.controller1 = controller1;
+	}
+
+	public static ResultController getController2() {
+		return controller2;
+	}
+
+	public static void setController2(ResultController controller2) {
+		Main.controller2 = controller2;
 	}
 
 	public static void setText(String text) {
@@ -122,11 +156,11 @@ public class Main extends Application {
 	public static LocalDate getDateto() {
 		return dateto;
 	}
-	
+
 	public static void setChoiceBox(String choiceBox) {
 		Main.choiceBox = choiceBox;
 	}
-	
+
 	public static String getChoiceBox() {
 		return choiceBox;
 	}
@@ -139,6 +173,49 @@ public class Main extends Application {
 		return primaryStage;
 	}
 
+	public void initServices() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() throws Exception {
+				rss.start();
+				while (true) {
+					if (rss.getState().toString() == "RUNNABLE") {
+						Platform.runLater(() -> {
+							if (getcFlag() == 1) {
+								getController1().threadStatus.setText("RSS Crawler is running ... ");
+								getController1().threadStatusCircle.setFill(Color.GREEN);
+							} else {
+								getController2().threadStatus.setText("RSS Crawler is running ... ");
+								getController2().threadStatusCircle.setFill(Color.GREEN);
+							}
+						});
+						Thread.sleep(3000);
+					} else {
+						Platform.runLater(() -> {
+							if (getcFlag() == 1) {
+								getController1().threadStatus.setText("RSS Crawler is not running ");
+								getController1().threadStatusCircle.setFill(Color.RED);
+							} else {
+								getController2().threadStatus.setText("RSS Crawler is not running ");
+								getController2().threadStatusCircle.setFill(Color.RED);
+							}
+						});
+						Thread.sleep(3000);
+					}
+				}
+			}
+		};
+		Thread th = new Thread(task);
+		th.setDaemon(true);
+		th.start();
+
+		primaryStage.setOnCloseRequest(event -> {
+			logger.info("Stopping Services ...");
+			rss.interrupt();
+			th.interrupt();
+		});
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -147,9 +224,10 @@ public class Main extends Application {
 
 			showSearchLayout();
 			primaryStage.show();
+			initServices();
 
 		} catch (Exception ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			logger.log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -157,39 +235,42 @@ public class Main extends Application {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(Main.class.getResource(fxml));
 		Pane p = (Pane) fxmlLoader.load();
-
-		if (RESULT_LAYOUT_VIEW.equals(fxml)) {
-			ResultController controller = fxmlLoader.getController();
-			controller.suchtextfeld.setText(text);
-			controller.choiceBox.setValue(choiceBox);
+		if (SEARCH_LAYOUT_VIEW.equals(fxml)) {
+			setController1(fxmlLoader.getController());
+			setcFlag(1);
+		} else {
+			setController2(fxmlLoader.getController());
+			setcFlag(2);
+			getController2().suchtextfeld.setText(text);
+			getController2().choiceBox.setValue(choiceBox);
 			if (getCbfourplayers() == true) {
-				controller.cbfourplayers.setSelected(true);
+				getController2().cbfourplayers.setSelected(true);
 			}
 			if (getCbchip() == true) {
-				controller.cbchip.setSelected(true);
+				getController2().cbchip.setSelected(true);
 			}
 			if (getCbgamepro() == true) {
-				controller.cbgamepro.setSelected(true);
+				getController2().cbgamepro.setSelected(true);
 			}
 			if (getCbgamestar() == true) {
-				controller.cbgamestar.setSelected(true);
+				getController2().cbgamestar.setSelected(true);
 			}
 			if (getCbgiga() == true) {
-				controller.cbgiga.setSelected(true);
+				getController2().cbgiga.setSelected(true);
 			}
 			if (getCbgolem() == true) {
-				controller.cbgolem.setSelected(true);
+				getController2().cbgolem.setSelected(true);
 			}
 			if (getCbign() == true) {
-				controller.cbign.setSelected(true);
+				getController2().cbign.setSelected(true);
 			}
 			if (datefrom != null) {
-				controller.datefrom.setValue(datefrom);
+				getController2().datefrom.setValue(datefrom);
 			}
 			if (dateto != null) {
-				controller.dateto.setValue(dateto);
+				getController2().dateto.setValue(dateto);
 			}
-			controller.buttonPressed();
+			getController2().buttonPressed();
 		}
 
 		Scene scene = primaryStage.getScene();
@@ -207,25 +288,25 @@ public class Main extends Application {
 	static void showSearchLayout() {
 		try {
 			replaceSceneContent(SEARCH_LAYOUT_VIEW);
+			// fxml = "SEARCH_LAYOUT_VIEW";
 		} catch (Exception ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			logger.log(Level.SEVERE, null, ex);
 		}
+		// return fxml;
 	}
 
 	static void showResultLayout() {
 		try {
 			replaceSceneContent(RESULT_LAYOUT_VIEW);
+			// fxml = "RESULT_LAYOUT_VIEW";
 		} catch (Exception ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			logger.log(Level.SEVERE, null, ex);
 		}
+		// return fxml;
 	}
 
 	public void showHyperlink(Hyperlink url) {
 		getHostServices().showDocument(url.getText());
-	}
-
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 	public void showLocalFile(String path) {
@@ -235,5 +316,9 @@ public class Main extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		launch(args);
 	}
 }

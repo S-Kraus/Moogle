@@ -98,17 +98,23 @@ public class LuceneSearcher {
 			fields[3] = "people";
 			return fields;
 		case TYPE_PERSON_SEARCH:
-			fields = new String[1];
-			fields[0] = "people";
+			fields = new String[3];
+			fields[0] = "content";
+			fields[1] = "title";
+			fields[2] = "people";
 			return fields;
 		case TYPE_ORG_SEARCH:
-			fields = new String[1];
-			fields[0] = "orgs";
+			fields = new String[3];
+			fields[0] = "content";
+			fields[1] = "title";
+			fields[2] = "orgs";
 			return fields;
 		case TYPE_PERSON_ORG_SEARCH:
-			fields = new String[2];
-			fields[0] = "people";
-			fields[1] = "orgs";
+			fields = new String[4];
+			fields[0] = "content";
+			fields[1] = "title";
+			fields[2] = "people";
+			fields[3] = "orgs";
 			return fields;
 		default:
 			fields = new String[4];

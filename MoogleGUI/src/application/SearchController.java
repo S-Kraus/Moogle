@@ -10,11 +10,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class SearchController {
 
@@ -76,6 +80,12 @@ public class SearchController {
 	@FXML
 	CheckBox cbign;
 
+	@FXML
+	Text threadStatus;
+
+	@FXML
+	Circle threadStatusCircle;
+
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
@@ -88,7 +98,6 @@ public class SearchController {
 			try {
 				buttonPressed();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
@@ -134,7 +143,17 @@ public class SearchController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Moogle - Das LeckSieCon");
 		alert.setHeaderText("Help");
-		alert.setContentText("www.giyf.de");
+
+		FlowPane fp = new FlowPane();
+		Hyperlink link = new Hyperlink("www.gidf.de");
+		fp.getChildren().addAll(link);
+		alert.getDialogPane().contentProperty().set(fp);
+
+		link.setOnAction((event) -> {
+			alert.close();
+			Main browser = new Main();
+			browser.showHyperlink(link);
+		});
 
 		alert.showAndWait();
 	}
@@ -183,6 +202,7 @@ public class SearchController {
 		handleClear();
 
 		// Wechsel zum Resultlayout
+
 		Main.showResultLayout();
 	}
 }
