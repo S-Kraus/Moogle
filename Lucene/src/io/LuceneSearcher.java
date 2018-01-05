@@ -64,6 +64,7 @@ public class LuceneSearcher {
 			List<LuceneDocument> resultList = new ArrayList<LuceneDocument>();
 			for (int i = 0; i < sd.length; i++) {
 				Document doc = searcher.doc(sd[i].doc);
+				System.out.println(doc);
 				boolean isFiltered = false;
 				isFiltered = filterSites(doc);
 				isFiltered = isFiltered ? true : filterDate(doc, true);
@@ -98,23 +99,17 @@ public class LuceneSearcher {
 			fields[3] = "people";
 			return fields;
 		case TYPE_PERSON_SEARCH:
-			fields = new String[3];
-			fields[0] = "content";
-			fields[1] = "title";
-			fields[2] = "people";
+			fields = new String[1];
+			fields[0] = "people";
 			return fields;
 		case TYPE_ORG_SEARCH:
-			fields = new String[3];
-			fields[0] = "content";
-			fields[1] = "title";
-			fields[2] = "orgs";
+			fields = new String[1];
+			fields[0] = "orgs";
 			return fields;
 		case TYPE_PERSON_ORG_SEARCH:
-			fields = new String[4];
-			fields[0] = "content";
-			fields[1] = "title";
-			fields[2] = "people";
-			fields[3] = "orgs";
+			fields = new String[2];
+			fields[0] = "people";
+			fields[1] = "orgs";
 			return fields;
 		default:
 			fields = new String[4];

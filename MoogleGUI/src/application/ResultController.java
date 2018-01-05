@@ -284,25 +284,25 @@ public class ResultController {
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_PERSON_ORG_SEARCH, suchtext);
-				// break;
+				break;
 			case "Personensuche":
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_PERSON_SEARCH, suchtext);
-				// break;
+				break;
 			case "Organisationssuche":
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_ORG_SEARCH, suchtext);
-				// break;
+				break;
 			default:
 				documents = searcher.setSiteFilters(sites)
 						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
 						.setToDate(instantTo != null ? Date.from(instantTo) : null)
 						.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
-				// break;
+				break;
 			}
 
 			// Suchergebniscounter
