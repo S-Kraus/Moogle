@@ -13,7 +13,7 @@ import crawler.read.RSSHandlerGiga;
 import crawler.read.RSSHandlerGolem;
 import crawler.read.RSSHandlerIgn;
 import crawler.read.RSSParserNew;
-import ner.NERDemo;
+import de.moogle.ner.NERDemo;
 /**
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 			Achtung!

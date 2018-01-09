@@ -8,8 +8,8 @@ import de.moogle.crawler.Boilerpipe;
 import de.moogle.crawler.Message;
 import de.moogle.crawler.RSSParser;
 import de.moogle.crawler.RSSWriter;
+import de.moogle.lucene.io.LuceneWriter;
 import de.moogle.ner.NERDemo;
-import io.LuceneWriter;
 
 public class Main {
 

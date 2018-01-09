@@ -8,7 +8,7 @@ import crawler.model.Message;
 import crawler.read.Boilerpipe;
 import crawler.read.RSSParserALL;
 import crawler.write.RSSWriterNew;
-import ner.NERDemo;
+import de.moogle.ner.NERDemo;
 
 
 public class MainTest {

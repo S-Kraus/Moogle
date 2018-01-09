@@ -7,8 +7,8 @@ import crawler.model.Message;
 import crawler.read.Boilerpipe;
 import crawler.read.RSSParserALL;
 import crawler.write.RSSWriterNew;
+import de.moogle.ner.NERDemo;
 import io.LuceneWriter;
-import ner.NERDemo;
 
 public class ReadTestNewNew extends Thread {
 	// public class ReadTestNewNew {
