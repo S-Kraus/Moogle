@@ -234,6 +234,15 @@ public class Main extends Application {
 			th.interrupt();
 		});
 	}
+	
+	
+
+	@Override
+	public void stop() throws Exception {
+		getRss().terminate();
+		System.exit(0);
+		super.stop();
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
