@@ -88,12 +88,7 @@ public class CrawlerService extends Thread {
 		for (Message message : list) {
 
 			File file = new File(message.createFilename());
-<<<<<<< HEAD
 			if (!file.exists()) {
-=======
-			System.out.println(file.getAbsolutePath());
-//			if (!file.exists()) {
->>>>>>> branch 'master' of https://github.com/S-Kraus/Moogle
 				String path = file.getAbsolutePath();
 				message.setPath(path);
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
@@ -102,7 +97,7 @@ public class CrawlerService extends Thread {
 				luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
 						message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 				writer.write(message);
-//			}
+			}
 
 		}
 	}
