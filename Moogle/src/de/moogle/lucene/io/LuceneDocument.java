@@ -19,12 +19,6 @@ public class LuceneDocument {
 		this.people = people;
 	}
 
-	@Override
-	public String toString() {
-		return "LuceneDocument [title=" + title + ", date=" + date + ", link=" + link + ", path=" + path + ", orgs="
-				+ orgs + ", people=" + people + "]";
-	}
-
 	public String getTitle() {
 		return title;
 	}

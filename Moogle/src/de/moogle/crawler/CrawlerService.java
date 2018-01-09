@@ -77,6 +77,8 @@ public class CrawlerService extends Thread {
 
 			File file = new File(message.createFilename());
 			if (!file.exists()) {
+				String path = file.getAbsolutePath();
+				message.setPath(path);
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
 				ner.clearSets();
 				ner.fillSets(message.getExtractedText());
