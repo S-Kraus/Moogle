@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.util.RuntimeInterruptedException;
 import edu.stanford.nlp.util.Triple;
 
 /**
@@ -46,7 +47,7 @@ public class NERDemo {
 	 * @param file
 	 *            Dateiname inkl. Pfad
 	 */
-	public void fillSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException {
+	public void fillSets(String fileContents) throws ClassCastException, ClassNotFoundException, IOException, RuntimeInterruptedException {
 
 
 		/*
