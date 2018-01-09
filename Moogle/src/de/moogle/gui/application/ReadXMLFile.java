@@ -1,4 +1,4 @@
-package application;
+package de.moogle.gui.application;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

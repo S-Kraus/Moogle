@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_151"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="libs/lucene/lucene-7.1.0.zip"/>
 	<classpathentry kind="lib" path="libs/lucene/lucene-core-7.1.0.jar"/>
 	<classpathentry kind="lib" path="libs/lucene/lucene-queryparser-7.1.0.jar"/>
-	<classpathentry kind="lib" path="libs/ner/stanford-german-corenlp-2017-06-09-models.jar"/>
 	<classpathentry kind="lib" path="libs/ner/stanford-ner-3.8.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/ner/stanford-ner-3.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="libs/ner/stanford-ner-3.8.0.jar"/>
 	<classpathentry kind="lib" path="libs/crawler/boilerpipe-1.2.0.jar"/>
 	<classpathentry kind="lib" path="libs/crawler/nekohtml-1.9.13.jar"/>
 	<classpathentry kind="lib" path="libs/crawler/xerces-2.9.1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Lucene"/>
+	<classpathentry kind="lib" path="libs/ner/stanford-german-corenlp-2017-06-09-models.jar"/>
+	<classpathentry kind="lib" path="libs/jdom2/jdom-2.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

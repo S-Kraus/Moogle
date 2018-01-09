@@ -1,4 +1,4 @@
-package application;
+package de.moogle.gui.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,11 @@ import java.util.List;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 
-import io.LuceneDocument;
-import io.LuceneSearcher;
+import de.moogle.gui.application.Main;
+import de.moogle.gui.application.TrefferAusgabe;
+import de.moogle.lucene.io.LuceneDocument;
+import de.moogle.lucene.io.LuceneSearcher;
+import de.moogle.lucene.tools.Site;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,7 +35,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import tools.Site;
+
 
 public class ResultController {
 
@@ -56,48 +59,61 @@ public class ResultController {
 	MenuItem mbabout;
 
 	@FXML
+	public
 	TextField suchtextfeld;
 
 	@FXML
 	Button searchbutton;
 
 	@FXML
+	public
 	ChoiceBox<String> choiceBox;
 
 	@FXML
+	public
 	DatePicker datefrom;
 
 	@FXML
+	public
 	DatePicker dateto;
 
 	@FXML
 	ImageView image;
 
 	@FXML
+	public
 	CheckBox cbfourplayers;
 
 	@FXML
+	public
 	CheckBox cbgamestar;
 
 	@FXML
+	public
 	CheckBox cbchip;
 
 	@FXML
+	public
 	CheckBox cbgamepro;
 
 	@FXML
+	public
 	CheckBox cbgiga;
 
 	@FXML
+	public
 	CheckBox cbgolem;
 
 	@FXML
+	public
 	CheckBox cbign;
 
 	@FXML
+	public
 	Text threadStatus;
 
 	@FXML
+	public
 	Circle threadStatusCircle;
 
 	@FXML
@@ -194,7 +210,7 @@ public class ResultController {
 	}
 
 	@FXML
-	protected void buttonPressed() throws IOException, ParseException {
+	public void buttonPressed() throws IOException, ParseException {
 
 		// vorherige Suchergebnisse löschen
 		resultvbox.getChildren().clear();

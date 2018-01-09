@@ -1,8 +1,9 @@
-package application;
+package de.moogle.gui.controller;
 
 import java.io.IOException;
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import de.moogle.gui.application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -81,9 +82,11 @@ public class SearchController {
 	CheckBox cbign;
 
 	@FXML
+	public
 	Text threadStatus;
 
 	@FXML
+	public
 	Circle threadStatusCircle;
 
 	// JavaFX Elemente initialisieren

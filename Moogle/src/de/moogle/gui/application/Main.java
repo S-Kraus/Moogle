@@ -1,4 +1,4 @@
-package application;
+package de.moogle.gui.application;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import crawler.tests.ReadTestNewNew;
+import de.moogle.crawler.CrawlerService;
+import de.moogle.gui.controller.ResultController;
+import de.moogle.gui.controller.SearchController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -25,7 +27,7 @@ public class Main extends Application {
 	private static Main instance;
 
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
-	private static final ReadTestNewNew rss = new ReadTestNewNew();
+	private static final CrawlerService rss = new CrawlerService();
 
 	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
 	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
@@ -178,7 +180,7 @@ public class Main extends Application {
 		return logger;
 	}
 
-	public ReadTestNewNew getRss() {
+	public CrawlerService getRss() {
 		return rss;
 	}
 
@@ -288,7 +290,7 @@ public class Main extends Application {
 		return p;
 	}
 
-	static void showSearchLayout() {
+	public static void showSearchLayout() {
 		try {
 			replaceSceneContent(SEARCH_LAYOUT_VIEW);
 			// fxml = "SEARCH_LAYOUT_VIEW";
@@ -298,7 +300,7 @@ public class Main extends Application {
 		// return fxml;
 	}
 
-	static void showResultLayout() {
+	public static void showResultLayout() {
 		try {
 			replaceSceneContent(RESULT_LAYOUT_VIEW);
 			// fxml = "RESULT_LAYOUT_VIEW";
