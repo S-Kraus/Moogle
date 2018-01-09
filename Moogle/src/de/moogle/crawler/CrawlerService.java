@@ -76,14 +76,17 @@ public class CrawlerService extends Thread {
 		for (Message message : list) {
 
 			File file = new File(message.createFilename());
-			if (!file.exists()) {
+			System.out.println(file.getAbsolutePath());
+//			if (!file.exists()) {
+				String path = file.getAbsolutePath();
+				message.setPath(path);
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
 				ner.clearSets();
 				ner.fillSets(message.getExtractedText());
 				luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
 						message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 				writer.write(message);
-			}
+//			}
 
 		}
 	}
