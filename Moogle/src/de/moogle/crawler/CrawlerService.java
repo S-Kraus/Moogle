@@ -3,9 +3,13 @@ package de.moogle.crawler;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import de.moogle.gui.application.Main;
 import de.moogle.lucene.io.LuceneWriter;
 import de.moogle.ner.NERDemo;
+import edu.stanford.nlp.util.RuntimeInterruptedException;
 
 public class CrawlerService extends Thread {
 
@@ -17,6 +21,12 @@ public class CrawlerService extends Thread {
 	private final static String golem = "https://rss.golem.de/rss.php?tp=games&feed=RSS2.0";
 	private final static String ign = "http://de.ign.com/news.xml";
 
+	private static final Logger logger = Logger.getLogger(Main.class.getName());
+	
+	public static Logger getLogger() {
+		return logger;
+	}
+	
 	public void run() {
 		// public static void main(String[] args) throws IOException,
 		// ClassCastException, ClassNotFoundException {
@@ -56,17 +66,19 @@ public class CrawlerService extends Thread {
 				list = parser.readFeed();
 				buildArchive(ner, writer, list, luceneWriter);
 
-			} catch (ClassCastException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (ClassCastException ex) {
+				getLogger().log(Level.SEVERE, null, ex);
+			} catch (ClassNotFoundException ex) {
+				getLogger().log(Level.SEVERE, null, ex);
+			} catch (IOException ex) {
+				getLogger().log(Level.SEVERE, null, ex);
+			} catch (RuntimeInterruptedException ex) {
+				getLogger().log(Level.SEVERE, null, ex);
 			}
 			try {
 				Thread.sleep(60000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (InterruptedException ex) {
+				getLogger().log(Level.SEVERE, null, ex);
 			}
 		}
 	}
@@ -76,7 +88,12 @@ public class CrawlerService extends Thread {
 		for (Message message : list) {
 
 			File file = new File(message.createFilename());
+<<<<<<< HEAD
 			if (!file.exists()) {
+=======
+			System.out.println(file.getAbsolutePath());
+//			if (!file.exists()) {
+>>>>>>> branch 'master' of https://github.com/S-Kraus/Moogle
 				String path = file.getAbsolutePath();
 				message.setPath(path);
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
@@ -85,7 +102,7 @@ public class CrawlerService extends Thread {
 				luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
 						message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 				writer.write(message);
-			}
+//			}
 
 		}
 	}
