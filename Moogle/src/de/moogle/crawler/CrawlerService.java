@@ -94,6 +94,8 @@ public class CrawlerService extends Thread {
 				message.setExtractedText(Boilerpipe.useBoilerpipe(message.getGuid()));
 				ner.clearSets();
 				ner.fillSets(message.getExtractedText());
+				message.setOrganisationen(ner.getOrgs());
+				message.setPersonen(ner.getPers());
 				luceneWriter.createDocIndex(message.getTitle(), message.getExtractedText(), message.getPubDate(),
 						message.getGuid(), message.getPath(), message.getOrganisationen(), message.getPersonen());
 				writer.write(message);

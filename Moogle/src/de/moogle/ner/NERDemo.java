@@ -81,12 +81,14 @@ public class NERDemo {
 		pers.clear();
 	}
 
-	public LinkedHashSet<String> getOrgs() {
-		return orgs;
+	public String getOrgs() {
+		String orgsString = orgs.toString().replace("[", "").replace("]", "");
+		return orgsString;
 	}
 
-	public LinkedHashSet<String> getPers() {
-		return pers;
+	public String getPers() {
+		String persString = pers.toString().replace("[", "").replace("]", "");
+		return persString;
 	}
 
 }
