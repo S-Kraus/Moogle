@@ -149,7 +149,8 @@ public class ResultController {
 
 	@FXML
 	private void handleNew() {
-		Main.showSearchLayout();
+		Main instance = Main.getInstance();
+		instance.showSearchLayout();
 	}
 
 	@FXML
@@ -206,7 +207,8 @@ public class ResultController {
 	// Link über Bild zurück zum SearchLayout
 	@FXML
 	private void MouseEvent() {
-		Main.showSearchLayout();
+		Main instance = Main.getInstance();
+		instance.showSearchLayout();
 	}
 
 	@FXML

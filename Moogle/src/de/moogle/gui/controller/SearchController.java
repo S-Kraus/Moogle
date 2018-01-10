@@ -108,7 +108,8 @@ public class SearchController {
 
 	@FXML
 	private void handleNew() {
-		Main.showSearchLayout();
+		Main instance = Main.getInstance();
+		instance.showSearchLayout();
 	}
 
 	@FXML
@@ -163,31 +164,34 @@ public class SearchController {
 
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
+		
+		// Main Instanz
+		Main instance = Main.getInstance();
 
 		// Speichern des Suchtextes in Mainvariable
-		Main.setText(suchtextfeld.getText());
+		instance.setText(suchtextfeld.getText());
 
 		// Abfrage der Suchart
-		Main.setChoiceBox(choiceBox.getValue());
+		instance.setChoiceBox(choiceBox.getValue());
 
 		// Abfrage der ChoiceBoxen
-		Main.setCbfourplayers(cbfourplayers.isSelected());
-		Main.setCbchip(cbchip.isSelected());
-		Main.setCbgamepro(cbgamepro.isSelected());
-		Main.setCbgamestar(cbgamestar.isSelected());
-		Main.setCbgiga(cbgiga.isSelected());
-		Main.setCbgolem(cbgolem.isSelected());
-		Main.setCbign(cbign.isSelected());
+		instance.setCbfourplayers(cbfourplayers.isSelected());
+		instance.setCbchip(cbchip.isSelected());
+		instance.setCbgamepro(cbgamepro.isSelected());
+		instance.setCbgamestar(cbgamestar.isSelected());
+		instance.setCbgiga(cbgiga.isSelected());
+		instance.setCbgolem(cbgolem.isSelected());
+		instance.setCbign(cbign.isSelected());
 
 		// Abfrage des Suchzeitraums
-		Main.setDatefrom(datefrom.getValue());
-		Main.setDateto(dateto.getValue());
+		instance.setDatefrom(datefrom.getValue());
+		instance.setDateto(dateto.getValue());
 
 		// Clearing der Suchfelder
 		handleClear();
 
 		// Wechsel zum Resultlayout
 
-		Main.showResultLayout();
+		instance.showResultLayout();
 	}
 }
