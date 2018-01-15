@@ -17,6 +17,8 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
+import com.sun.media.sound.FFT;
+
 public class RSSParser {
 
 	private static final String XML_SUFFIX = ".xml";
@@ -44,10 +46,13 @@ public class RSSParser {
 			saxFactory.setSchema(schema);
 			SAXParser parser = saxFactory.newSAXParser();
 			InputStream in = read();
-			RSSHandler handler = new RSSHandler();
-			parser.parse(in, handler);
-			list = handler.getItems();
-			in.close();
+			if(in != null) {
+				RSSHandler handler = new RSSHandler();
+				parser.parse(in, handler);
+				list = handler.getItems();
+				in.close();
+			}
+
 
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -68,7 +73,8 @@ public class RSSParser {
 		try {
 			return url.openStream();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			System.out.println("Seite "+ url + " nicht erreichbar");
+			return null;
 		}
 	}
 
