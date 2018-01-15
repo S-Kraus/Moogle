@@ -19,4 +19,6 @@ public enum Site {
 	public String getSite() {
 		return this.site;
 	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package de.moogle.gui.controller;
+package de.moogle.gui.application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

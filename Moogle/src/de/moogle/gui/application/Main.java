@@ -3,15 +3,12 @@ package de.moogle.gui.application;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.moogle.crawler.CrawlerService;
 import de.moogle.gui.controller.ResultController;
 import de.moogle.gui.controller.SearchController;
-import de.moogle.lucene.tools.Site;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -41,22 +38,8 @@ public class Main extends Application {
 
 	Thread rssThread;
 
-	public Main() {
-	}
-
-	public static Main getInstance() {
-		if (instance == null) {
-			instance = new Main();
-		}
-		return instance;
-	}
-
 	public Stage getPrimaryStage() {
 		return primaryStage;
-	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		getInstance().primaryStage = primaryStage;
 	}
 
 	public int getcFlag() {
@@ -64,7 +47,7 @@ public class Main extends Application {
 	}
 
 	public void setcFlag(int cFlag) {
-		getInstance().cFlag = cFlag;
+		this.cFlag = cFlag;
 	}
 
 	public SearchController getSearchController() {
@@ -72,7 +55,7 @@ public class Main extends Application {
 	}
 
 	public void setSearchController(SearchController searchController) {
-		getInstance().searchController = searchController;
+		this.searchController = searchController;
 	}
 
 	public ResultController getResultController() {
@@ -80,7 +63,7 @@ public class Main extends Application {
 	}
 
 	public void setResultController(ResultController resultController) {
-		getInstance().resultController = resultController;
+		this.resultController = resultController;
 	}
 
 	public static Logger getLogger() {
@@ -150,8 +133,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			setPrimaryStage(primaryStage);
-			getPrimaryStage().setTitle("Moogle - Das LeckSieCon");
+			this.primaryStage = primaryStage;
+			primaryStage.setTitle("Moogle - Das LeckSieCon");
 
 			showSearchLayout();
 			getPrimaryStage().show();
@@ -168,25 +151,13 @@ public class Main extends Application {
 		Pane p = (Pane) fxmlLoader.load();
 		if (SEARCH_LAYOUT_VIEW.equals(fxml)) {
 			setSearchController(fxmlLoader.getController());
+			getSearchController().setMain(this);
 			setcFlag(1);
 		} else {
 			setResultController(fxmlLoader.getController());
+			getResultController().setMain(this);
 			setcFlag(2);
-			getController2().suchtextfeld.setText(getText());
-			getController2().choiceBox.setValue(getChoiceBox());
-			getController2().cbfourplayers.setSelected(getCbfourplayers());
-			getController2().cbchip.setSelected(getCbchip());
-			getController2().cbgamepro.setSelected(getCbgamepro());
-			getController2().cbgamestar.setSelected(getCbgamestar());
-			getController2().cbgiga.setSelected(getCbgiga());
-			getController2().cbgolem.setSelected(getCbgolem());
-			getController2().cbign.setSelected(getCbign());
-			if (datefrom != null) {
-				getController2().datefrom.setValue(getDatefrom());
-			}
-			if (dateto != null) {
-				getController2().dateto.setValue(getDateto());
-			}
+			getResultController().initValues();
 			getResultController().buttonPressed();
 		}
 
@@ -212,7 +183,7 @@ public class Main extends Application {
 		// return fxml;
 	}
 
-	public void showResultLayout(String text, String choice, List<Site> sites, LocalDate[] dates) {
+	public void showResultLayout() {
 		try {
 			replaceSceneContent(RESULT_LAYOUT_VIEW);
 			// fxml = "RESULT_LAYOUT_VIEW";

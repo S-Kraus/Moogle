@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import de.moogle.gui.application.Main;
+import de.moogle.gui.application.SearchResults;
+import de.moogle.gui.application.SearchTypes;
 import de.moogle.lucene.tools.Site;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +29,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 public class SearchController {
-
+	
+	private Main main;
 
 	@FXML
 	private MenuItem mbnew;
@@ -108,8 +111,7 @@ public class SearchController {
 
 	@FXML
 	private void handleNew() {
-		Main instance = Main.getInstance();
-		instance.showSearchLayout();
+		main.showSearchLayout();
 	}
 
 	@FXML
@@ -164,9 +166,6 @@ public class SearchController {
 
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
-		
-		// Main Instanz
-		Main mainInstance = Main.getInstance();
 
 		// Speichern des Suchtextes in Mainvariable
 		String text = suchtextfeld.getText();
@@ -199,14 +198,22 @@ public class SearchController {
 		}
 
 		// Abfrage des Suchzeitraums
-		LocalDate[] dates = {datefrom.getValue(), dateto.getValue()};
+		LocalDate dateFrom = datefrom.getValue();
+		LocalDate dateTo = dateto.getValue();
+		
+		SearchResults.addResult(text, choice, siteList, dateFrom, dateTo);
 
 		// Clearing der Suchfelder
 		handleClear();
 
 		// Wechsel zum Resultlayout
 
-		mainInstance.showResultLayout(text, choice, siteList, dates);
+		main.showResultLayout();
+
+	}
+	
+	public void setMain(Main main) {
+		this.main = main;
 	}
 
 	public MenuItem getMbnew() {
