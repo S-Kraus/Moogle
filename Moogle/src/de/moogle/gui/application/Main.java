@@ -34,19 +34,8 @@ public class Main extends Application {
 
 	private Stage primaryStage;
 	private int cFlag;
-	private SearchController controller1;
-	private ResultController controller2;
-	private String text;
-	private Boolean cbfourplayers;
-	private Boolean cbchip;
-	private Boolean cbgamepro;
-	private Boolean cbgamestar;
-	private Boolean cbgiga;
-	private Boolean cbgolem;
-	private Boolean cbign;
-	private LocalDate datefrom;
-	private LocalDate dateto;
-	private String choiceBox;
+	private SearchController searchController;
+	private ResultController resultController;
 
 	Thread rssThread;
 
@@ -78,107 +67,19 @@ public class Main extends Application {
 	}
 
 	public SearchController getController1() {
-		return controller1;
+		return searchController;
 	}
 
 	public void setController1(SearchController controller1) {
-		getInstance().controller1 = controller1;
+		getInstance().searchController = controller1;
 	}
 
 	public ResultController getController2() {
-		return controller2;
+		return resultController;
 	}
 
 	public void setController2(ResultController controller2) {
-		getInstance().controller2 = controller2;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		getInstance().text = text;
-	}
-
-	public Boolean getCbfourplayers() {
-		return cbfourplayers;
-	}
-
-	public void setCbfourplayers(Boolean cbfourplayers) {
-		getInstance().cbfourplayers = cbfourplayers;
-	}
-
-	public Boolean getCbchip() {
-		return cbchip;
-	}
-
-	public void setCbchip(Boolean cbchip) {
-		getInstance().cbchip = cbchip;
-	}
-
-	public Boolean getCbgamepro() {
-		return cbgamepro;
-	}
-
-	public void setCbgamepro(Boolean cbgamepro) {
-		getInstance().cbgamepro = cbgamepro;
-	}
-
-	public Boolean getCbgamestar() {
-		return cbgamestar;
-	}
-
-	public void setCbgamestar(Boolean cbgamestar) {
-		getInstance().cbgamestar = cbgamestar;
-	}
-
-	public Boolean getCbgiga() {
-		return cbgiga;
-	}
-
-	public void setCbgiga(Boolean cbgiga) {
-		getInstance().cbgiga = cbgiga;
-	}
-
-	public Boolean getCbgolem() {
-		return cbgolem;
-	}
-
-	public void setCbgolem(Boolean cbgolem) {
-		getInstance().cbgolem = cbgolem;
-	}
-
-	public Boolean getCbign() {
-		return cbign;
-	}
-
-	public void setCbign(Boolean cbign) {
-		getInstance().cbign = cbign;
-	}
-
-	public LocalDate getDatefrom() {
-		return datefrom;
-	}
-
-	public void setDatefrom(LocalDate datefrom) {
-		getInstance().datefrom = datefrom;
-	}
-
-	public LocalDate getDateto() {
-		return dateto;
-	}
-
-	public void setDateto(LocalDate dateto) {
-		getInstance().dateto = dateto;
-	}
-
-	public String getChoiceBox() {
-		return choiceBox;
-	}
-
-	public void setChoiceBox(String choiceBox) {
-		getInstance().choiceBox = choiceBox;
+		getInstance().resultController = controller2;
 	}
 
 	public static Logger getLogger() {

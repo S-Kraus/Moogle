@@ -39,95 +39,79 @@ import javafx.scene.text.Text;
 
 public class ResultController {
 
-	// Befüllung der Auswahlliste für die Suchart
-	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche", "Personen- und Organisationssuche");
 
 	@FXML
-	MenuItem mbnew;
+	private MenuItem mbnew;
 
 	@FXML
-	MenuItem mbexit;
+	private MenuItem mbexit;
 
 	@FXML
-	MenuItem mbclear;
+	private MenuItem mbclear;
 
 	@FXML
-	MenuItem mbhelp;
+	private MenuItem mbhelp;
 
 	@FXML
-	MenuItem mbabout;
+	private MenuItem mbabout;
 
 	@FXML
-	public
-	TextField suchtextfeld;
+	private TextField suchtextfeld;
 
 	@FXML
-	Button searchbutton;
+	private Button searchbutton;
 
 	@FXML
-	public
-	ChoiceBox<String> choiceBox;
+	private ChoiceBox<String> choiceBox;
 
 	@FXML
-	public
-	DatePicker datefrom;
+	private DatePicker datefrom;
 
 	@FXML
-	public
-	DatePicker dateto;
+	private DatePicker dateto;
 
 	@FXML
-	ImageView image;
+	private ImageView image;
 
 	@FXML
-	public
-	CheckBox cbfourplayers;
+	private CheckBox cbfourplayers;
 
 	@FXML
-	public
-	CheckBox cbgamestar;
+	private CheckBox cbgamestar;
 
 	@FXML
-	public
-	CheckBox cbchip;
+	private CheckBox cbchip;
 
 	@FXML
-	public
-	CheckBox cbgamepro;
+	private CheckBox cbgamepro;
 
 	@FXML
-	public
-	CheckBox cbgiga;
+	private CheckBox cbgiga;
 
 	@FXML
-	public
-	CheckBox cbgolem;
+	private CheckBox cbgolem;
 
 	@FXML
-	public
-	CheckBox cbign;
+	private CheckBox cbign;
 
 	@FXML
-	public
-	Text threadStatus;
+	private Text threadStatus;
 
 	@FXML
-	public
-	Circle threadStatusCircle;
+	private Circle threadStatusCircle;
 
 	@FXML
-	VBox resultvbox;
+	private VBox resultvbox;
 
 	@FXML
-	ScrollPane scrollpane;
+	private ScrollPane scrollpane;
 
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 
 		choiceBox.getItems().clear();
-		choiceBox.getItems().addAll(choiceboxList);
+		choiceBox.getItems().addAll(SearchTypes.getAllTypeNames());
 		choiceBox.getSelectionModel().select(0);
 
 		image.setOnMouseClicked((event) -> {

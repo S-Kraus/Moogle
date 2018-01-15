@@ -23,78 +23,73 @@ import javafx.scene.text.Text;
 
 public class SearchController {
 
-	// Befüllung der Auswahlliste für die Suchart
-	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche", "Personen- und Organisationssuche");
 
 	@FXML
-	MenuItem mbnew;
+	private MenuItem mbnew;
 
 	@FXML
-	MenuItem mbexit;
+	private MenuItem mbexit;
 
 	@FXML
-	MenuItem mbclear;
+	private MenuItem mbclear;
 
 	@FXML
-	MenuItem mbhelp;
+	private MenuItem mbhelp;
 
 	@FXML
-	MenuItem mbabout;
+	private MenuItem mbabout;
 
 	@FXML
-	TextField suchtextfeld;
+	private TextField suchtextfeld;
 
 	@FXML
-	Button searchbutton;
+	private Button searchbutton;
 
 	@FXML
-	ChoiceBox<String> choiceBox;
+	private ChoiceBox<String> choiceBox;
 
 	@FXML
-	DatePicker datefrom;
+	private DatePicker datefrom;
 
 	@FXML
-	DatePicker dateto;
+	private DatePicker dateto;
 
 	@FXML
-	ImageView image;
+	private ImageView image;
 
 	@FXML
-	CheckBox cbfourplayers;
+	private CheckBox cbfourplayers;
 
 	@FXML
-	CheckBox cbgamestar;
+	private CheckBox cbgamestar;
 
 	@FXML
-	CheckBox cbchip;
+	private CheckBox cbchip;
 
 	@FXML
-	CheckBox cbgamepro;
+	private CheckBox cbgamepro;
 
 	@FXML
-	CheckBox cbgiga;
+	private CheckBox cbgiga;
 
 	@FXML
-	CheckBox cbgolem;
+	private CheckBox cbgolem;
 
 	@FXML
-	CheckBox cbign;
+	private CheckBox cbign;
 
 	@FXML
-	public
-	Text threadStatus;
+	private Text threadStatus;
 
 	@FXML
-	public
-	Circle threadStatusCircle;
+	private Circle threadStatusCircle;
 
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 		// choiceBox.getItems().remove(choiceBox.getItems());
 		choiceBox.getItems().clear();
-		choiceBox.getItems().addAll(choiceboxList);
+		choiceBox.getItems().addAll(SearchTypes.getAllTypeNames());
 		choiceBox.getSelectionModel().select(0);
 
 		suchtextfeld.setOnAction((event) -> {
@@ -193,5 +188,89 @@ public class SearchController {
 		// Wechsel zum Resultlayout
 
 		mainInstance.showResultLayout();
+	}
+
+	public ObservableList<String> getChoiceboxList() {
+		return choiceboxList;
+	}
+
+	public MenuItem getMbnew() {
+		return mbnew;
+	}
+
+	public MenuItem getMbexit() {
+		return mbexit;
+	}
+
+	public MenuItem getMbclear() {
+		return mbclear;
+	}
+
+	public MenuItem getMbhelp() {
+		return mbhelp;
+	}
+
+	public MenuItem getMbabout() {
+		return mbabout;
+	}
+
+	public TextField getSuchtextfeld() {
+		return suchtextfeld;
+	}
+
+	public Button getSearchbutton() {
+		return searchbutton;
+	}
+
+	public ChoiceBox<String> getChoiceBox() {
+		return choiceBox;
+	}
+
+	public DatePicker getDatefrom() {
+		return datefrom;
+	}
+
+	public DatePicker getDateto() {
+		return dateto;
+	}
+
+	public ImageView getImage() {
+		return image;
+	}
+
+	public CheckBox getCbfourplayers() {
+		return cbfourplayers;
+	}
+
+	public CheckBox getCbgamestar() {
+		return cbgamestar;
+	}
+
+	public CheckBox getCbchip() {
+		return cbchip;
+	}
+
+	public CheckBox getCbgamepro() {
+		return cbgamepro;
+	}
+
+	public CheckBox getCbgiga() {
+		return cbgiga;
+	}
+
+	public CheckBox getCbgolem() {
+		return cbgolem;
+	}
+
+	public CheckBox getCbign() {
+		return cbign;
+	}
+
+	public Text getThreadStatus() {
+		return threadStatus;
+	}
+
+	public Circle getThreadStatusCircle() {
+		return threadStatusCircle;
 	}
 }
