@@ -166,32 +166,32 @@ public class SearchController {
 	protected void buttonPressed() throws IOException, ParseException {
 		
 		// Main Instanz
-		Main instance = Main.getInstance();
+		Main mainInstance = Main.getInstance();
 
 		// Speichern des Suchtextes in Mainvariable
-		instance.setText(suchtextfeld.getText());
+		mainInstance.setText(suchtextfeld.getText());
 
 		// Abfrage der Suchart
-		instance.setChoiceBox(choiceBox.getValue());
+		mainInstance.setChoiceBox(choiceBox.getValue());
 
 		// Abfrage der ChoiceBoxen
-		instance.setCbfourplayers(cbfourplayers.isSelected());
-		instance.setCbchip(cbchip.isSelected());
-		instance.setCbgamepro(cbgamepro.isSelected());
-		instance.setCbgamestar(cbgamestar.isSelected());
-		instance.setCbgiga(cbgiga.isSelected());
-		instance.setCbgolem(cbgolem.isSelected());
-		instance.setCbign(cbign.isSelected());
+		mainInstance.setCbfourplayers(cbfourplayers.isSelected());
+		mainInstance.setCbchip(cbchip.isSelected());
+		mainInstance.setCbgamepro(cbgamepro.isSelected());
+		mainInstance.setCbgamestar(cbgamestar.isSelected());
+		mainInstance.setCbgiga(cbgiga.isSelected());
+		mainInstance.setCbgolem(cbgolem.isSelected());
+		mainInstance.setCbign(cbign.isSelected());
 
 		// Abfrage des Suchzeitraums
-		instance.setDatefrom(datefrom.getValue());
-		instance.setDateto(dateto.getValue());
+		mainInstance.setDatefrom(datefrom.getValue());
+		mainInstance.setDateto(dateto.getValue());
 
 		// Clearing der Suchfelder
 		handleClear();
 
 		// Wechsel zum Resultlayout
 
-		instance.showResultLayout();
+		mainInstance.showResultLayout();
 	}
 }

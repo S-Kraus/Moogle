@@ -48,6 +48,8 @@ public class Main extends Application {
 	private LocalDate dateto;
 	private String choiceBox;
 
+	Thread rssThread;
+
 	public Main() {
 		instance = this;
 	}
@@ -227,23 +229,18 @@ public class Main extends Application {
 				}
 			}
 		};
-		Thread th = new Thread(task);
-		th.setDaemon(true);
-		th.start();
-
-		getPrimaryStage().setOnCloseRequest(event -> {
-			getLogger().info("Stopping Services ...");
-			getRss().interrupt();
-			th.interrupt();
-		});
+		rssThread = new Thread(task);
+		rssThread.setDaemon(true);
+		rssThread.start();
 	}
-	
-	
 
 	@Override
 	public void stop() throws Exception {
-		getRss().terminate();
-		System.exit(0);
+		getLogger().info("Stopping Services ...");
+		getRss().interrupt();
+		if (rssThread != null) {
+			rssThread.interrupt();
+		}
 		super.stop();
 	}
 
