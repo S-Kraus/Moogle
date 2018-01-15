@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.XMLConstants;
@@ -37,7 +38,7 @@ public class RSSParser {
 	}
 
 	public List<Message> readFeed() {
-		List<Message> list = null;
+		List<Message> list = new ArrayList<Message>();
 		try {
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
