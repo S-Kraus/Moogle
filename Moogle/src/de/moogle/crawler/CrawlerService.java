@@ -23,12 +23,6 @@ public class CrawlerService extends Thread {
 
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
 	
-	private volatile boolean running = true;
-
-    public void terminate() {
-        running = false;
-    }
-	
 	public static Logger getLogger() {
 		return logger;
 	}
@@ -37,7 +31,7 @@ public class CrawlerService extends Thread {
 		// public static void main(String[] args) throws IOException,
 		// ClassCastException, ClassNotFoundException {
 
-		while (running) {
+		while (isAlive()) {
 			NERDemo ner;
 			try {
 				ner = NERDemo.getInstance();
