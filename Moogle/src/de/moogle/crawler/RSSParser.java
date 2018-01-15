@@ -18,7 +18,6 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import com.sun.media.sound.FFT;
 
 public class RSSParser {
 
