@@ -333,4 +333,92 @@ public class ResultController {
 			}
 		}
 	}
+
+	public MenuItem getMbnew() {
+		return mbnew;
+	}
+
+	public MenuItem getMbexit() {
+		return mbexit;
+	}
+
+	public MenuItem getMbclear() {
+		return mbclear;
+	}
+
+	public MenuItem getMbhelp() {
+		return mbhelp;
+	}
+
+	public MenuItem getMbabout() {
+		return mbabout;
+	}
+
+	public TextField getSuchtextfeld() {
+		return suchtextfeld;
+	}
+
+	public Button getSearchbutton() {
+		return searchbutton;
+	}
+
+	public ChoiceBox<String> getChoiceBox() {
+		return choiceBox;
+	}
+
+	public DatePicker getDatefrom() {
+		return datefrom;
+	}
+
+	public DatePicker getDateto() {
+		return dateto;
+	}
+
+	public ImageView getImage() {
+		return image;
+	}
+
+	public CheckBox getCbfourplayers() {
+		return cbfourplayers;
+	}
+
+	public CheckBox getCbgamestar() {
+		return cbgamestar;
+	}
+
+	public CheckBox getCbchip() {
+		return cbchip;
+	}
+
+	public CheckBox getCbgamepro() {
+		return cbgamepro;
+	}
+
+	public CheckBox getCbgiga() {
+		return cbgiga;
+	}
+
+	public CheckBox getCbgolem() {
+		return cbgolem;
+	}
+
+	public CheckBox getCbign() {
+		return cbign;
+	}
+
+	public Text getThreadStatus() {
+		return threadStatus;
+	}
+
+	public Circle getThreadStatusCircle() {
+		return threadStatusCircle;
+	}
+
+	public VBox getResultvbox() {
+		return resultvbox;
+	}
+
+	public ScrollPane getScrollpane() {
+		return scrollpane;
+	}
 }

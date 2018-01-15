@@ -1,9 +1,14 @@
 package de.moogle.gui.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import de.moogle.gui.application.Main;
+import de.moogle.lucene.tools.Site;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -164,34 +169,44 @@ public class SearchController {
 		Main mainInstance = Main.getInstance();
 
 		// Speichern des Suchtextes in Mainvariable
-		mainInstance.setText(suchtextfeld.getText());
+		String text = suchtextfeld.getText();
 
 		// Abfrage der Suchart
-		mainInstance.setChoiceBox(choiceBox.getValue());
+		String choice = choiceBox.getValue();
 
 		// Abfrage der ChoiceBoxen
-		mainInstance.setCbfourplayers(cbfourplayers.isSelected());
-		mainInstance.setCbchip(cbchip.isSelected());
-		mainInstance.setCbgamepro(cbgamepro.isSelected());
-		mainInstance.setCbgamestar(cbgamestar.isSelected());
-		mainInstance.setCbgiga(cbgiga.isSelected());
-		mainInstance.setCbgolem(cbgolem.isSelected());
-		mainInstance.setCbign(cbign.isSelected());
+		List<Site> siteList = new ArrayList<>();
+		if (cbfourplayers.isSelected()) {
+			siteList.add(Site.FOURPLAYERS);
+		}
+		if (cbchip.isSelected()) {
+			siteList.add(Site.CHIP);
+		}
+		if (cbgamepro.isSelected()) {
+			siteList.add(Site.GAMEPRO);
+		}
+		if (cbgamestar.isSelected()) {
+			siteList.add(Site.GAMESTAR);
+		}
+		if (cbgiga.isSelected()) {
+			siteList.add(Site.GIGA);
+		}
+		if (cbgolem.isSelected()) {
+			siteList.add(Site.GOLEM);
+		}
+		if (cbign.isSelected()) {
+			siteList.add(Site.IGN);
+		}
 
 		// Abfrage des Suchzeitraums
-		mainInstance.setDatefrom(datefrom.getValue());
-		mainInstance.setDateto(dateto.getValue());
+		LocalDate[] dates = {datefrom.getValue(), dateto.getValue()};
 
 		// Clearing der Suchfelder
 		handleClear();
 
 		// Wechsel zum Resultlayout
 
-		mainInstance.showResultLayout();
-	}
-
-	public ObservableList<String> getChoiceboxList() {
-		return choiceboxList;
+		mainInstance.showResultLayout(text, choice, siteList, dates);
 	}
 
 	public MenuItem getMbnew() {

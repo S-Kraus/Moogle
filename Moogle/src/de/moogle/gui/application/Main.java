@@ -4,12 +4,14 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.moogle.crawler.CrawlerService;
 import de.moogle.gui.controller.ResultController;
 import de.moogle.gui.controller.SearchController;
+import de.moogle.lucene.tools.Site;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -24,13 +26,13 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	private static Main instance;
-
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
-	private static final CrawlerService rss = new CrawlerService();
 
 	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
 	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
+	
+	private CrawlerService rss;
+	private static Main instance;
 
 	private Stage primaryStage;
 	private int cFlag;
@@ -40,7 +42,6 @@ public class Main extends Application {
 	Thread rssThread;
 
 	public Main() {
-		instance = this;
 	}
 
 	public static Main getInstance() {
@@ -66,20 +67,20 @@ public class Main extends Application {
 		getInstance().cFlag = cFlag;
 	}
 
-	public SearchController getController1() {
+	public SearchController getSearchController() {
 		return searchController;
 	}
 
-	public void setController1(SearchController controller1) {
-		getInstance().searchController = controller1;
+	public void setSearchController(SearchController searchController) {
+		getInstance().searchController = searchController;
 	}
 
-	public ResultController getController2() {
+	public ResultController getResultController() {
 		return resultController;
 	}
 
-	public void setController2(ResultController controller2) {
-		getInstance().resultController = controller2;
+	public void setResultController(ResultController resultController) {
+		getInstance().resultController = resultController;
 	}
 
 	public static Logger getLogger() {
@@ -99,6 +100,7 @@ public class Main extends Application {
 	}
 
 	public void initServices() {
+		rss = new CrawlerService();
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws Exception {
@@ -107,22 +109,22 @@ public class Main extends Application {
 					if (getRss().getState().toString() == "RUNNABLE") {
 						Platform.runLater(() -> {
 							if (getcFlag() == 1) {
-								getController1().threadStatus.setText("RSS Crawler is running ... ");
-								getController1().threadStatusCircle.setFill(Color.GREEN);
+								getSearchController().getThreadStatus().setText("RSS Crawler is running ... ");
+								getSearchController().getThreadStatusCircle().setFill(Color.GREEN);
 							} else {
-								getController2().threadStatus.setText("RSS Crawler is running ... ");
-								getController2().threadStatusCircle.setFill(Color.GREEN);
+								getResultController().getThreadStatus().setText("RSS Crawler is running ... ");
+								getResultController().getThreadStatusCircle().setFill(Color.GREEN);
 							}
 						});
 						Thread.sleep(3000);
 					} else {
 						Platform.runLater(() -> {
 							if (getcFlag() == 1) {
-								getController1().threadStatus.setText("RSS Crawler is not running ");
-								getController1().threadStatusCircle.setFill(Color.RED);
+								getSearchController().getThreadStatus().setText("RSS Crawler is not running ");
+								getSearchController().getThreadStatusCircle().setFill(Color.RED);
 							} else {
-								getController2().threadStatus.setText("RSS Crawler is not running ");
-								getController2().threadStatusCircle.setFill(Color.RED);
+								getResultController().getThreadStatus().setText("RSS Crawler is not running ");
+								getResultController().getThreadStatusCircle().setFill(Color.RED);
 							}
 						});
 						Thread.sleep(3000);
@@ -165,10 +167,10 @@ public class Main extends Application {
 		fxmlLoader.setLocation(Main.class.getResource(fxml));
 		Pane p = (Pane) fxmlLoader.load();
 		if (SEARCH_LAYOUT_VIEW.equals(fxml)) {
-			setController1(fxmlLoader.getController());
+			setSearchController(fxmlLoader.getController());
 			setcFlag(1);
 		} else {
-			setController2(fxmlLoader.getController());
+			setResultController(fxmlLoader.getController());
 			setcFlag(2);
 			getController2().suchtextfeld.setText(getText());
 			getController2().choiceBox.setValue(getChoiceBox());
@@ -185,7 +187,7 @@ public class Main extends Application {
 			if (dateto != null) {
 				getController2().dateto.setValue(getDateto());
 			}
-			getController2().buttonPressed();
+			getResultController().buttonPressed();
 		}
 
 		Scene scene = getPrimaryStage().getScene();
@@ -210,7 +212,7 @@ public class Main extends Application {
 		// return fxml;
 	}
 
-	public void showResultLayout() {
+	public void showResultLayout(String text, String choice, List<Site> sites, LocalDate[] dates) {
 		try {
 			replaceSceneContent(RESULT_LAYOUT_VIEW);
 			// fxml = "RESULT_LAYOUT_VIEW";
