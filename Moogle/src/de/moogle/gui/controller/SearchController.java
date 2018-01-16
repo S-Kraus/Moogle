@@ -11,6 +11,7 @@ import de.moogle.gui.application.Main;
 import de.moogle.gui.application.SearchResults;
 import de.moogle.gui.application.SearchTypes;
 import de.moogle.lucene.tools.Site;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -116,7 +117,7 @@ public class SearchController {
 
 	@FXML
 	private void handleExit() {
-		System.exit(0);
+		Platform.exit();
 	}
 
 	@FXML

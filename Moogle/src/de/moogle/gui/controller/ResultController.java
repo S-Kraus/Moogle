@@ -21,6 +21,7 @@ import de.moogle.gui.application.TrefferAusgabe;
 import de.moogle.lucene.io.LuceneDocument;
 import de.moogle.lucene.io.LuceneSearcher;
 import de.moogle.lucene.tools.Site;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -143,7 +144,7 @@ public class ResultController {
 
 	@FXML
 	private void handleExit() {
-		System.exit(0);
+		Platform.exit();
 	}
 
 	@FXML

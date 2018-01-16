@@ -29,7 +29,6 @@ public class Main extends Application {
 	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
 	
 	private CrawlerService rss;
-	private static Main instance;
 
 	private Stage primaryStage;
 	private int cFlag;
