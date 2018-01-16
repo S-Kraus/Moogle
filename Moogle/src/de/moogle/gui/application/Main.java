@@ -123,10 +123,11 @@ public class Main extends Application {
 	@Override
 	public void stop() throws Exception {
 		getLogger().info("Stopping Services ...");
-		getRss().interrupt();
+		getRss().terminate();
 		if (rssThread != null) {
 			rssThread.interrupt();
 		}
+		System.exit(0);
 		super.stop();
 	}
 

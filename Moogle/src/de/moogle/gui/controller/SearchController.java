@@ -157,8 +157,7 @@ public class SearchController {
 
 		link.setOnAction((event) -> {
 			alert.close();
-			Main browser = new Main();
-			browser.showHyperlink(link);
+			main.showHyperlink(link);
 		});
 
 		alert.showAndWait();
