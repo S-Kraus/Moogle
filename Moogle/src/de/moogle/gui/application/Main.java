@@ -25,8 +25,8 @@ public class Main extends Application {
 
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
-	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
+	private static final String RESULT_LAYOUT_VIEW = "ResultLayout.fxml";
+	private static final String SEARCH_LAYOUT_VIEW = "SearchLayout.fxml";
 	
 	private CrawlerService rss;
 

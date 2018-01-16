@@ -36,7 +36,7 @@
                         <Glow />
                      </effect>
                      <image>
-                        <Image url="@../../../../../resources/Bild1.jpg" />
+                        <Image url="@Bild1.jpg" />
                      </image>
                   </ImageView>
                   <CheckBox fx:id="cbfourplayers" mnemonicParsing="false" text="4Players" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="90.0" />

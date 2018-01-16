@@ -34,7 +34,7 @@
                   <Glow />
                </effect>
                <image>
-                  <Image url="@../../../../../resources/Bild1.jpg" />
+                  <Image url="@Bild1.jpg" />
                </image>
             </ImageView>
             <Text fontSmoothingType="LCD" layoutX="239.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spielenews" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="25.0">

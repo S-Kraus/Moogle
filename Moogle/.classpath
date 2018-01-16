@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="libs/jdom2/jdom-2.0.6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/ner"/>
+	<classpathentry kind="lib" path="fxml"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
