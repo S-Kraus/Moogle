@@ -14,7 +14,6 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import de.l3s.boilerpipe.sax.BoilerpipeSAXInput;
 import de.l3s.boilerpipe.sax.HTMLFetcher;
 
-//Testkommentar
 
 public class Boilerpipe {
 	
@@ -27,9 +26,9 @@ public class Boilerpipe {
 			final TextDocument doc = in.getTextDocument();
 			return ArticleExtractor.INSTANCE.getText(doc);
 		} catch(FileNotFoundException e){
-			// Error Handling noch machen
 			return "";
 		} catch (MalformedURLException e) {
+			System.out.println(urlString);
 			e.printStackTrace();
 			return "";
 		} catch (BoilerpipeProcessingException e) {
