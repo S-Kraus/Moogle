@@ -5,18 +5,23 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import de.moogle.gui.application.Main;
+import de.moogle.gui.application.SearchResults;
+import de.moogle.gui.application.SearchTypes;
 import de.moogle.gui.application.TrefferAusgabe;
 import de.moogle.lucene.io.LuceneDocument;
 import de.moogle.lucene.io.LuceneSearcher;
 import de.moogle.lucene.tools.Site;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,95 +44,80 @@ import javafx.scene.text.Text;
 
 public class ResultController {
 
-	// Befüllung der Auswahlliste für die Suchart
-	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche", "Personen- und Organisationssuche");
+	private Main main;
 
 	@FXML
-	MenuItem mbnew;
+	private MenuItem mbnew;
 
 	@FXML
-	MenuItem mbexit;
+	private MenuItem mbexit;
 
 	@FXML
-	MenuItem mbclear;
+	private MenuItem mbclear;
 
 	@FXML
-	MenuItem mbhelp;
+	private MenuItem mbhelp;
 
 	@FXML
-	MenuItem mbabout;
+	private MenuItem mbabout;
 
 	@FXML
-	public
-	TextField suchtextfeld;
+	private TextField suchtextfeld;
 
 	@FXML
-	Button searchbutton;
+	private Button searchbutton;
 
 	@FXML
-	public
-	ChoiceBox<String> choiceBox;
+	private ChoiceBox<String> choiceBox;
 
 	@FXML
-	public
-	DatePicker datefrom;
+	private DatePicker datefrom;
 
 	@FXML
-	public
-	DatePicker dateto;
+	private DatePicker dateto;
 
 	@FXML
-	ImageView image;
+	private ImageView image;
 
 	@FXML
-	public
-	CheckBox cbfourplayers;
+	private CheckBox cbfourplayers;
 
 	@FXML
-	public
-	CheckBox cbgamestar;
+	private CheckBox cbgamestar;
 
 	@FXML
-	public
-	CheckBox cbchip;
+	private CheckBox cbchip;
 
 	@FXML
-	public
-	CheckBox cbgamepro;
+	private CheckBox cbgamepro;
 
 	@FXML
-	public
-	CheckBox cbgiga;
+	private CheckBox cbgiga;
 
 	@FXML
-	public
-	CheckBox cbgolem;
+	private CheckBox cbgolem;
 
 	@FXML
-	public
-	CheckBox cbign;
+	private CheckBox cbign;
 
 	@FXML
-	public
-	Text threadStatus;
+	private Text threadStatus;
 
 	@FXML
-	public
-	Circle threadStatusCircle;
+	private Circle threadStatusCircle;
 
 	@FXML
-	VBox resultvbox;
+	private VBox resultvbox;
 
 	@FXML
-	ScrollPane scrollpane;
+	private ScrollPane scrollpane;
 
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 
 		choiceBox.getItems().clear();
-		choiceBox.getItems().addAll(choiceboxList);
+		choiceBox.getItems().addAll(SearchTypes.getAllTypeNames());
 		choiceBox.getSelectionModel().select(0);
 
 		image.setOnMouseClicked((event) -> {
@@ -149,13 +139,12 @@ public class ResultController {
 
 	@FXML
 	private void handleNew() {
-		Main instance = Main.getInstance();
-		instance.showSearchLayout();
+		main.showSearchLayout();
 	}
 
 	@FXML
 	private void handleExit() {
-		System.exit(0);
+		Platform.exit();
 	}
 
 	@FXML
@@ -197,8 +186,7 @@ public class ResultController {
 
 		link.setOnAction((event) -> {
 			alert.close();
-			Main browser = new Main();
-			browser.showHyperlink(link);
+			main.showHyperlink(link);
 		});
 
 		alert.showAndWait();
@@ -207,8 +195,7 @@ public class ResultController {
 	// Link über Bild zurück zum SearchLayout
 	@FXML
 	private void MouseEvent() {
-		Main instance = Main.getInstance();
-		instance.showSearchLayout();
+		main.showSearchLayout();
 	}
 
 	@FXML
@@ -244,40 +231,28 @@ public class ResultController {
 			String selectedSearch = choiceBox.getSelectionModel().getSelectedItem();
 
 			// Auswahl Checkboxes für Spieleseiten
-			List<String> sitelist = new ArrayList<>();
-			sitelist.add("FOURPLAYERS");
-			sitelist.add("CHIP");
-			sitelist.add("GAMEPRO");
-			sitelist.add("GAMESTAR");
-			sitelist.add("GIGA");
-			sitelist.add("GOLEM");
-			sitelist.add("IGN");
+			List<Site> sitelist = new ArrayList<>();
 
-			if (cbfourplayers.selectedProperty().getValue() == false) {
-				sitelist.remove("FOURPLAYERS");
+			if (cbfourplayers.isSelected()) {
+				sitelist.add(Site.FOURPLAYERS);
 			}
-			if (cbchip.selectedProperty().getValue() == false) {
-				sitelist.remove("CHIP");
+			if (cbchip.isSelected()) {
+				sitelist.add(Site.CHIP);
 			}
-			if (cbgamepro.selectedProperty().getValue() == false) {
-				sitelist.remove("GAMEPRO");
+			if (cbgamepro.isSelected()) {
+				sitelist.add(Site.GAMEPRO);
 			}
-			if (cbgamestar.selectedProperty().getValue() == false) {
-				sitelist.remove("GAMESTAR");
+			if (cbgamestar.isSelected()) {
+				sitelist.add(Site.GAMESTAR);
 			}
-			if (cbgiga.selectedProperty().getValue() == false) {
-				sitelist.remove("GIGA");
+			if (cbgiga.isSelected()) {
+				sitelist.add(Site.GIGA);
 			}
-			if (cbgolem.selectedProperty().getValue() == false) {
-				sitelist.remove("GOLEM");
+			if (cbgolem.isSelected()) {
+				sitelist.add(Site.GOLEM);
 			}
-			if (cbign.selectedProperty().getValue() == false) {
-				sitelist.remove("IGN");
-			}
-
-			Site[] sites = new Site[sitelist.size()];
-			for (int k = 0; k < sites.length; k++) {
-				sites[k] = Site.valueOf(sitelist.get(k));
+			if (cbign.isSelected()) {
+				sitelist.add(Site.IGN);
 			}
 
 			// Auswahl des Suchzeitraums
@@ -295,31 +270,22 @@ public class ResultController {
 
 			// Lucene abfragen
 			LuceneSearcher searcher = LuceneSearcher.getInstance();
+			searcher = searcher.setSiteFilters(sitelist.toArray(new Site[sitelist.size()]))
+					.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
+					.setToDate(instantTo != null ? Date.from(instantTo) : null);
 			List<LuceneDocument> documents;
 			switch (selectedSearch) {
 			case "Personen- und Organisationssuche":
-				documents = searcher.setSiteFilters(sites)
-						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
-						.setToDate(instantTo != null ? Date.from(instantTo) : null)
-						.getSearchResults(LuceneSearcher.TYPE_PERSON_ORG_SEARCH, suchtext);
+				documents = searcher.getSearchResults(LuceneSearcher.TYPE_PERSON_ORG_SEARCH, suchtext);
 				break;
 			case "Personensuche":
-				documents = searcher.setSiteFilters(sites)
-						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
-						.setToDate(instantTo != null ? Date.from(instantTo) : null)
-						.getSearchResults(LuceneSearcher.TYPE_PERSON_SEARCH, suchtext);
+				documents = searcher.getSearchResults(LuceneSearcher.TYPE_PERSON_SEARCH, suchtext);
 				break;
 			case "Organisationssuche":
-				documents = searcher.setSiteFilters(sites)
-						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
-						.setToDate(instantTo != null ? Date.from(instantTo) : null)
-						.getSearchResults(LuceneSearcher.TYPE_ORG_SEARCH, suchtext);
+				documents = searcher.getSearchResults(LuceneSearcher.TYPE_ORG_SEARCH, suchtext);
 				break;
 			default:
-				documents = searcher.setSiteFilters(sites)
-						.setFromDate(instantFrom != null ? Date.from(instantFrom) : null)
-						.setToDate(instantTo != null ? Date.from(instantTo) : null)
-						.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
+				documents = searcher.getSearchResults(LuceneSearcher.TYPE_TEXT_SEARCH, suchtext);
 				break;
 			}
 
@@ -348,5 +314,129 @@ public class ResultController {
 				}
 			}
 		}
+	}
+	
+	public void initValues() {
+		Map<String, Object> result = SearchResults.getLastResult();
+		suchtextfeld.setText((String) result.get(SearchResults.TEXT));
+		choiceBox.setValue((String) result.get(SearchResults.TYPE));
+		List<Site> sites = (List<Site>) result.get(SearchResults.SITELIST);
+		for (Site site : sites) {
+			if (site.equals(Site.CHIP)) {
+				cbchip.setSelected(true);
+			}
+			if (site.equals(Site.FOURPLAYERS)) {
+				cbfourplayers.setSelected(true);
+			}
+			if (site.equals(Site.GAMEPRO)) {
+				cbgamepro.setSelected(true);
+			}
+			if (site.equals(Site.GAMESTAR)) {
+				cbgamestar.setSelected(true);
+			}
+			if (site.equals(Site.GIGA)) {
+				cbgiga.setSelected(true);
+			}
+			if (site.equals(Site.GOLEM)) {
+				cbgolem.setSelected(true);
+			}
+			if (site.equals(Site.IGN)) {
+				cbign.setSelected(true);
+			}
+		}
+		datefrom.setValue((LocalDate) result.get(SearchResults.DATE_FROM));
+		dateto.setValue((LocalDate) result.get(SearchResults.DATE_TO));
+	}
+	
+	public void setMain(Main main) {
+		this.main = main;
+	}
+
+	public MenuItem getMbnew() {
+		return mbnew;
+	}
+
+	public MenuItem getMbexit() {
+		return mbexit;
+	}
+
+	public MenuItem getMbclear() {
+		return mbclear;
+	}
+
+	public MenuItem getMbhelp() {
+		return mbhelp;
+	}
+
+	public MenuItem getMbabout() {
+		return mbabout;
+	}
+
+	public TextField getSuchtextfeld() {
+		return suchtextfeld;
+	}
+
+	public Button getSearchbutton() {
+		return searchbutton;
+	}
+
+	public ChoiceBox<String> getChoiceBox() {
+		return choiceBox;
+	}
+
+	public DatePicker getDatefrom() {
+		return datefrom;
+	}
+
+	public DatePicker getDateto() {
+		return dateto;
+	}
+
+	public ImageView getImage() {
+		return image;
+	}
+
+	public CheckBox getCbfourplayers() {
+		return cbfourplayers;
+	}
+
+	public CheckBox getCbgamestar() {
+		return cbgamestar;
+	}
+
+	public CheckBox getCbchip() {
+		return cbchip;
+	}
+
+	public CheckBox getCbgamepro() {
+		return cbgamepro;
+	}
+
+	public CheckBox getCbgiga() {
+		return cbgiga;
+	}
+
+	public CheckBox getCbgolem() {
+		return cbgolem;
+	}
+
+	public CheckBox getCbign() {
+		return cbign;
+	}
+
+	public Text getThreadStatus() {
+		return threadStatus;
+	}
+
+	public Circle getThreadStatusCircle() {
+		return threadStatusCircle;
+	}
+
+	public VBox getResultvbox() {
+		return resultvbox;
+	}
+
+	public ScrollPane getScrollpane() {
+		return scrollpane;
 	}
 }

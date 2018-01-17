@@ -15,19 +15,17 @@ public class ReadXMLFile {
 	private static ReadXMLFile instance;
 	static String descr;
 
-	public ReadXMLFile() {
-		setInstance(this);
+	private ReadXMLFile() {
 	}
 
 	public static ReadXMLFile getInstance() {
+		if (instance == null) {
+			instance = new ReadXMLFile();
+		}
 		return instance;
 	}
 
-	public static void setInstance(ReadXMLFile instance) {
-		ReadXMLFile.instance = instance;
-	}
-
-	public static String showXmlContent(String path) throws JDOMException, IOException {
+	public String showXmlContent(String path) throws JDOMException, IOException {
 
 			SAXBuilder jdomBuilder = new SAXBuilder();
 			Document jdomDocument = jdomBuilder.build(path);

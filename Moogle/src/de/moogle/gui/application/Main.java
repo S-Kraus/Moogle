@@ -3,7 +3,6 @@ package de.moogle.gui.application;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,47 +23,22 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	private static Main instance;
-
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
-	private static final CrawlerService rss = new CrawlerService();
 
-	private static final String RESULT_LAYOUT_VIEW = "../view/ResultLayout.fxml";
-	private static final String SEARCH_LAYOUT_VIEW = "../view/SearchLayout.fxml";
+	private static final String RESULT_LAYOUT_VIEW = "ResultLayout.fxml";
+	private static final String SEARCH_LAYOUT_VIEW = "SearchLayout.fxml";
+	
+	private CrawlerService rss;
 
 	private Stage primaryStage;
 	private int cFlag;
-	private SearchController controller1;
-	private ResultController controller2;
-	private String text;
-	private Boolean cbfourplayers;
-	private Boolean cbchip;
-	private Boolean cbgamepro;
-	private Boolean cbgamestar;
-	private Boolean cbgiga;
-	private Boolean cbgolem;
-	private Boolean cbign;
-	private LocalDate datefrom;
-	private LocalDate dateto;
-	private String choiceBox;
+	private SearchController searchController;
+	private ResultController resultController;
 
-	public Main() {
-		instance = this;
-	}
-
-	public static Main getInstance() {
-		if (instance == null) {
-			instance = new Main();
-		}
-		return instance;
-	}
+	Thread rssThread;
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
-	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		getInstance().primaryStage = primaryStage;
 	}
 
 	public int getcFlag() {
@@ -72,111 +46,23 @@ public class Main extends Application {
 	}
 
 	public void setcFlag(int cFlag) {
-		getInstance().cFlag = cFlag;
+		this.cFlag = cFlag;
 	}
 
-	public SearchController getController1() {
-		return controller1;
+	public SearchController getSearchController() {
+		return searchController;
 	}
 
-	public void setController1(SearchController controller1) {
-		getInstance().controller1 = controller1;
+	public void setSearchController(SearchController searchController) {
+		this.searchController = searchController;
 	}
 
-	public ResultController getController2() {
-		return controller2;
+	public ResultController getResultController() {
+		return resultController;
 	}
 
-	public void setController2(ResultController controller2) {
-		getInstance().controller2 = controller2;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		getInstance().text = text;
-	}
-
-	public Boolean getCbfourplayers() {
-		return cbfourplayers;
-	}
-
-	public void setCbfourplayers(Boolean cbfourplayers) {
-		getInstance().cbfourplayers = cbfourplayers;
-	}
-
-	public Boolean getCbchip() {
-		return cbchip;
-	}
-
-	public void setCbchip(Boolean cbchip) {
-		getInstance().cbchip = cbchip;
-	}
-
-	public Boolean getCbgamepro() {
-		return cbgamepro;
-	}
-
-	public void setCbgamepro(Boolean cbgamepro) {
-		getInstance().cbgamepro = cbgamepro;
-	}
-
-	public Boolean getCbgamestar() {
-		return cbgamestar;
-	}
-
-	public void setCbgamestar(Boolean cbgamestar) {
-		getInstance().cbgamestar = cbgamestar;
-	}
-
-	public Boolean getCbgiga() {
-		return cbgiga;
-	}
-
-	public void setCbgiga(Boolean cbgiga) {
-		getInstance().cbgiga = cbgiga;
-	}
-
-	public Boolean getCbgolem() {
-		return cbgolem;
-	}
-
-	public void setCbgolem(Boolean cbgolem) {
-		getInstance().cbgolem = cbgolem;
-	}
-
-	public Boolean getCbign() {
-		return cbign;
-	}
-
-	public void setCbign(Boolean cbign) {
-		getInstance().cbign = cbign;
-	}
-
-	public LocalDate getDatefrom() {
-		return datefrom;
-	}
-
-	public void setDatefrom(LocalDate datefrom) {
-		getInstance().datefrom = datefrom;
-	}
-
-	public LocalDate getDateto() {
-		return dateto;
-	}
-
-	public void setDateto(LocalDate dateto) {
-		getInstance().dateto = dateto;
-	}
-
-	public String getChoiceBox() {
-		return choiceBox;
-	}
-
-	public void setChoiceBox(String choiceBox) {
-		getInstance().choiceBox = choiceBox;
+	public void setResultController(ResultController resultController) {
+		this.resultController = resultController;
 	}
 
 	public static Logger getLogger() {
@@ -196,6 +82,7 @@ public class Main extends Application {
 	}
 
 	public void initServices() {
+		rss = new CrawlerService();
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws Exception {
@@ -204,22 +91,22 @@ public class Main extends Application {
 					if (getRss().getState().toString() == "RUNNABLE") {
 						Platform.runLater(() -> {
 							if (getcFlag() == 1) {
-								getController1().threadStatus.setText("RSS Crawler is running ... ");
-								getController1().threadStatusCircle.setFill(Color.GREEN);
+								getSearchController().getThreadStatus().setText("RSS Crawler is running ... ");
+								getSearchController().getThreadStatusCircle().setFill(Color.GREEN);
 							} else {
-								getController2().threadStatus.setText("RSS Crawler is running ... ");
-								getController2().threadStatusCircle.setFill(Color.GREEN);
+								getResultController().getThreadStatus().setText("RSS Crawler is running ... ");
+								getResultController().getThreadStatusCircle().setFill(Color.GREEN);
 							}
 						});
 						Thread.sleep(3000);
 					} else {
 						Platform.runLater(() -> {
 							if (getcFlag() == 1) {
-								getController1().threadStatus.setText("RSS Crawler is not running ");
-								getController1().threadStatusCircle.setFill(Color.RED);
+								getSearchController().getThreadStatus().setText("RSS Crawler is not running ");
+								getSearchController().getThreadStatusCircle().setFill(Color.RED);
 							} else {
-								getController2().threadStatus.setText("RSS Crawler is not running ");
-								getController2().threadStatusCircle.setFill(Color.RED);
+								getResultController().getThreadStatus().setText("RSS Crawler is not running ");
+								getResultController().getThreadStatusCircle().setFill(Color.RED);
 							}
 						});
 						Thread.sleep(3000);
@@ -227,22 +114,18 @@ public class Main extends Application {
 				}
 			}
 		};
-		Thread th = new Thread(task);
-		th.setDaemon(true);
-		th.start();
-
-		getPrimaryStage().setOnCloseRequest(event -> {
-			getLogger().info("Stopping Services ...");
-			getRss().interrupt();
-			th.interrupt();
-		});
+		rssThread = new Thread(task);
+		rssThread.setDaemon(true);
+		rssThread.start();
 	}
-	
-	
 
 	@Override
 	public void stop() throws Exception {
+		getLogger().info("Stopping Services ...");
 		getRss().terminate();
+		if (rssThread != null) {
+			rssThread.interrupt();
+		}
 		System.exit(0);
 		super.stop();
 	}
@@ -250,8 +133,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			setPrimaryStage(primaryStage);
-			getPrimaryStage().setTitle("Moogle - Das LeckSieCon");
+			this.primaryStage = primaryStage;
+			primaryStage.setTitle("Moogle - Das LeckSieCon");
 
 			showSearchLayout();
 			getPrimaryStage().show();
@@ -267,27 +150,15 @@ public class Main extends Application {
 		fxmlLoader.setLocation(Main.class.getResource(fxml));
 		Pane p = (Pane) fxmlLoader.load();
 		if (SEARCH_LAYOUT_VIEW.equals(fxml)) {
-			setController1(fxmlLoader.getController());
+			setSearchController(fxmlLoader.getController());
+			getSearchController().setMain(this);
 			setcFlag(1);
 		} else {
-			setController2(fxmlLoader.getController());
+			setResultController(fxmlLoader.getController());
+			getResultController().setMain(this);
 			setcFlag(2);
-			getController2().suchtextfeld.setText(getText());
-			getController2().choiceBox.setValue(getChoiceBox());
-			getController2().cbfourplayers.setSelected(getCbfourplayers());
-			getController2().cbchip.setSelected(getCbchip());
-			getController2().cbgamepro.setSelected(getCbgamepro());
-			getController2().cbgamestar.setSelected(getCbgamestar());
-			getController2().cbgiga.setSelected(getCbgiga());
-			getController2().cbgolem.setSelected(getCbgolem());
-			getController2().cbign.setSelected(getCbign());
-			if (datefrom != null) {
-				getController2().datefrom.setValue(getDatefrom());
-			}
-			if (dateto != null) {
-				getController2().dateto.setValue(getDateto());
-			}
-			getController2().buttonPressed();
+			getResultController().initValues();
+			getResultController().buttonPressed();
 		}
 
 		Scene scene = getPrimaryStage().getScene();

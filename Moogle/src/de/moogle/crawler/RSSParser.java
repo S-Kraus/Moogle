@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.XMLConstants;
@@ -16,6 +17,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
+
 
 public class RSSParser {
 
@@ -35,7 +37,7 @@ public class RSSParser {
 	}
 
 	public List<Message> readFeed() {
-		List<Message> list = null;
+		List<Message> list = new ArrayList<Message>();
 		try {
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
@@ -44,10 +46,13 @@ public class RSSParser {
 			saxFactory.setSchema(schema);
 			SAXParser parser = saxFactory.newSAXParser();
 			InputStream in = read();
-			RSSHandler handler = new RSSHandler();
-			parser.parse(in, handler);
-			list = handler.getItems();
-			in.close();
+			if(in != null) {
+				RSSHandler handler = new RSSHandler();
+				parser.parse(in, handler);
+				list = handler.getItems();
+				in.close();
+			}
+
 
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -68,7 +73,8 @@ public class RSSParser {
 		try {
 			return url.openStream();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			System.out.println("Seite "+ url + " nicht erreichbar");
+			return null;
 		}
 	}
 

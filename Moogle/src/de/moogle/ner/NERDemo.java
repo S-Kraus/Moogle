@@ -23,8 +23,10 @@ public class NERDemo {
 	
 	private static NERDemo ner;
 	
-	String serializedClassifier;
-	AbstractSequenceClassifier<CoreLabel> classifier;
+	private String serializedClassifierDE;
+	private AbstractSequenceClassifier<CoreLabel> classifierDE;
+	private String serializedClassifierEN;
+	private AbstractSequenceClassifier<CoreLabel> classifierEN;
 	
 	private LinkedHashSet<String> orgs = new LinkedHashSet<String>();
 
@@ -39,8 +41,10 @@ public class NERDemo {
 	
 	
 	private NERDemo() throws ClassCastException, ClassNotFoundException, IOException {
-		serializedClassifier = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
-		classifier = CRFClassifier.getClassifier(serializedClassifier);
+		serializedClassifierDE = "edu/stanford/nlp/models/ner/german.conll.hgc_175m_600.crf.ser.gz";
+		classifierDE = CRFClassifier.getClassifier(serializedClassifierDE);
+		serializedClassifierEN = "english.all.3class.distsim.crf.ser.gz";
+		classifierEN = CRFClassifier.getClassifier(serializedClassifierEN);
 	}
 	/**
 	 * 
@@ -56,8 +60,8 @@ public class NERDemo {
 		 */
 
 		// String fileContents = IOUtils.slurpFile(file);
-		List<Triple<String, Integer, Integer>> list = classifier.classifyToCharacterOffsets(fileContents);
-		for (Triple<String, Integer, Integer> item : list) {
+		List<Triple<String, Integer, Integer>> listDE = classifierDE.classifyToCharacterOffsets(fileContents);
+		for (Triple<String, Integer, Integer> item : listDE) {
 			String identifier = item.first();
 			String name = fileContents.substring(item.second(), item.third());
 			switch (identifier) {
@@ -65,6 +69,21 @@ public class NERDemo {
 				orgs.add(name);
 				break;
 			case "I-PER":
+				pers.add(name);
+				break;
+			}
+			// log.info(item.first() + ": " + fileContents.substring(item.second(),
+			// item.third()));
+		}
+		List<Triple<String, Integer, Integer>> listEN = classifierEN.classifyToCharacterOffsets(fileContents);
+		for (Triple<String, Integer, Integer> item : listEN) {
+			String identifier = item.first();
+			String name = fileContents.substring(item.second(), item.third());
+			switch (identifier) {
+			case "ORGANIZATION":
+				orgs.add(name);
+				break;
+			case "PERSON":
 				pers.add(name);
 				break;
 			}

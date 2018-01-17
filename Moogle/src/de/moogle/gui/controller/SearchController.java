@@ -1,9 +1,17 @@
 package de.moogle.gui.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import de.moogle.gui.application.Main;
+import de.moogle.gui.application.SearchResults;
+import de.moogle.gui.application.SearchTypes;
+import de.moogle.lucene.tools.Site;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,79 +30,75 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 public class SearchController {
-
-	// Befüllung der Auswahlliste für die Suchart
-	ObservableList<String> choiceboxList = FXCollections.observableArrayList("Volltextsuche", "Personensuche",
-			"Organisationssuche", "Personen- und Organisationssuche");
+	
+	private Main main;
 
 	@FXML
-	MenuItem mbnew;
+	private MenuItem mbnew;
 
 	@FXML
-	MenuItem mbexit;
+	private MenuItem mbexit;
 
 	@FXML
-	MenuItem mbclear;
+	private MenuItem mbclear;
 
 	@FXML
-	MenuItem mbhelp;
+	private MenuItem mbhelp;
 
 	@FXML
-	MenuItem mbabout;
+	private MenuItem mbabout;
 
 	@FXML
-	TextField suchtextfeld;
+	private TextField suchtextfeld;
 
 	@FXML
-	Button searchbutton;
+	private Button searchbutton;
 
 	@FXML
-	ChoiceBox<String> choiceBox;
+	private ChoiceBox<String> choiceBox;
 
 	@FXML
-	DatePicker datefrom;
+	private DatePicker datefrom;
 
 	@FXML
-	DatePicker dateto;
+	private DatePicker dateto;
 
 	@FXML
-	ImageView image;
+	private ImageView image;
 
 	@FXML
-	CheckBox cbfourplayers;
+	private CheckBox cbfourplayers;
 
 	@FXML
-	CheckBox cbgamestar;
+	private CheckBox cbgamestar;
 
 	@FXML
-	CheckBox cbchip;
+	private CheckBox cbchip;
 
 	@FXML
-	CheckBox cbgamepro;
+	private CheckBox cbgamepro;
 
 	@FXML
-	CheckBox cbgiga;
+	private CheckBox cbgiga;
 
 	@FXML
-	CheckBox cbgolem;
+	private CheckBox cbgolem;
 
 	@FXML
-	CheckBox cbign;
+	private CheckBox cbign;
 
 	@FXML
-	public
-	Text threadStatus;
+	private Text threadStatus;
 
 	@FXML
-	public
-	Circle threadStatusCircle;
+	private Circle threadStatusCircle;
 
 	// JavaFX Elemente initialisieren
 	@FXML
 	public void initialize() {
 		// choiceBox.getItems().remove(choiceBox.getItems());
 		choiceBox.getItems().clear();
-		choiceBox.getItems().addAll(choiceboxList);
+		choiceBox.getItems().addAll(SearchTypes.getAllTypeNames());
 		choiceBox.getSelectionModel().select(0);
 
 		suchtextfeld.setOnAction((event) -> {
@@ -108,13 +112,12 @@ public class SearchController {
 
 	@FXML
 	private void handleNew() {
-		Main instance = Main.getInstance();
-		instance.showSearchLayout();
+		main.showSearchLayout();
 	}
 
 	@FXML
 	private void handleExit() {
-		System.exit(0);
+		Platform.exit();
 	}
 
 	@FXML
@@ -155,8 +158,7 @@ public class SearchController {
 
 		link.setOnAction((event) -> {
 			alert.close();
-			Main browser = new Main();
-			browser.showHyperlink(link);
+			main.showHyperlink(link);
 		});
 
 		alert.showAndWait();
@@ -164,34 +166,133 @@ public class SearchController {
 
 	@FXML
 	protected void buttonPressed() throws IOException, ParseException {
-		
-		// Main Instanz
-		Main instance = Main.getInstance();
 
 		// Speichern des Suchtextes in Mainvariable
-		instance.setText(suchtextfeld.getText());
+		String text = suchtextfeld.getText();
 
 		// Abfrage der Suchart
-		instance.setChoiceBox(choiceBox.getValue());
+		String choice = choiceBox.getValue();
 
 		// Abfrage der ChoiceBoxen
-		instance.setCbfourplayers(cbfourplayers.isSelected());
-		instance.setCbchip(cbchip.isSelected());
-		instance.setCbgamepro(cbgamepro.isSelected());
-		instance.setCbgamestar(cbgamestar.isSelected());
-		instance.setCbgiga(cbgiga.isSelected());
-		instance.setCbgolem(cbgolem.isSelected());
-		instance.setCbign(cbign.isSelected());
+		List<Site> siteList = new ArrayList<>();
+		if (cbfourplayers.isSelected()) {
+			siteList.add(Site.FOURPLAYERS);
+		}
+		if (cbchip.isSelected()) {
+			siteList.add(Site.CHIP);
+		}
+		if (cbgamepro.isSelected()) {
+			siteList.add(Site.GAMEPRO);
+		}
+		if (cbgamestar.isSelected()) {
+			siteList.add(Site.GAMESTAR);
+		}
+		if (cbgiga.isSelected()) {
+			siteList.add(Site.GIGA);
+		}
+		if (cbgolem.isSelected()) {
+			siteList.add(Site.GOLEM);
+		}
+		if (cbign.isSelected()) {
+			siteList.add(Site.IGN);
+		}
 
 		// Abfrage des Suchzeitraums
-		instance.setDatefrom(datefrom.getValue());
-		instance.setDateto(dateto.getValue());
+		LocalDate dateFrom = datefrom.getValue();
+		LocalDate dateTo = dateto.getValue();
+		
+		SearchResults.addResult(text, choice, siteList, dateFrom, dateTo);
 
 		// Clearing der Suchfelder
 		handleClear();
 
 		// Wechsel zum Resultlayout
 
-		instance.showResultLayout();
+		main.showResultLayout();
+
+	}
+	
+	public void setMain(Main main) {
+		this.main = main;
+	}
+
+	public MenuItem getMbnew() {
+		return mbnew;
+	}
+
+	public MenuItem getMbexit() {
+		return mbexit;
+	}
+
+	public MenuItem getMbclear() {
+		return mbclear;
+	}
+
+	public MenuItem getMbhelp() {
+		return mbhelp;
+	}
+
+	public MenuItem getMbabout() {
+		return mbabout;
+	}
+
+	public TextField getSuchtextfeld() {
+		return suchtextfeld;
+	}
+
+	public Button getSearchbutton() {
+		return searchbutton;
+	}
+
+	public ChoiceBox<String> getChoiceBox() {
+		return choiceBox;
+	}
+
+	public DatePicker getDatefrom() {
+		return datefrom;
+	}
+
+	public DatePicker getDateto() {
+		return dateto;
+	}
+
+	public ImageView getImage() {
+		return image;
+	}
+
+	public CheckBox getCbfourplayers() {
+		return cbfourplayers;
+	}
+
+	public CheckBox getCbgamestar() {
+		return cbgamestar;
+	}
+
+	public CheckBox getCbchip() {
+		return cbchip;
+	}
+
+	public CheckBox getCbgamepro() {
+		return cbgamepro;
+	}
+
+	public CheckBox getCbgiga() {
+		return cbgiga;
+	}
+
+	public CheckBox getCbgolem() {
+		return cbgolem;
+	}
+
+	public CheckBox getCbign() {
+		return cbign;
+	}
+
+	public Text getThreadStatus() {
+		return threadStatus;
+	}
+
+	public Circle getThreadStatusCircle() {
+		return threadStatusCircle;
 	}
 }

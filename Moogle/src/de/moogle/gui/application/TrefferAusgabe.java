@@ -73,7 +73,7 @@ public class TrefferAusgabe extends VBox {
 
 		textArea = new TextArea();
 		try {
-			textArea.setText(ReadXMLFile.showXmlContent(path));
+			textArea.setText(ReadXMLFile.getInstance().showXmlContent(path));
 			textArea.setWrapText(true);
 		} catch (JDOMException e) {
 			e.printStackTrace();
