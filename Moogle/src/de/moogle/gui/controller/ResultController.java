@@ -218,6 +218,9 @@ public class ResultController {
 		map.put(new String("simon"), new String("Hallo Simon"));
 		map.put(new String("andreas"), new String("Schön das du da bist und nicht hier :-)"));
 		map.put(new String("stephan"), new String("Was soll mann dazu sagen? Du geiler Typ!"));
+		map.put(new String("göbel"), new String("Bester Dozent des Jahres und nicht nur weil er dieses Projekt mit 15 Punkten bewertet :-)"));
+		map.put(new String("goebel"), new String("Bester Dozent des Jahres und nicht nur weil er dieses Projekt mit 15 Punkten bewertet :-)"));
+		
 
 		// Motivator abfragen
 		// Textübergabe an Main
