@@ -14,6 +14,8 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import de.l3s.boilerpipe.sax.BoilerpipeSAXInput;
 import de.l3s.boilerpipe.sax.HTMLFetcher;
 
+//Testkommentar
+
 public class Boilerpipe {
 	
 	public static String useBoilerpipe(String urlString){
